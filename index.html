@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clarity — Living Foundations</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:#F7F3EC;color:#2C3A2E}
+.app{display:flex;min-height:100vh}
+
+/* Sidebar */
+.sidebar{width:220px;background:#2C3A2E;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh}
+.sidebar-title{padding:1.5rem 1.25rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar-title h1{font-family:Georgia,serif;font-size:16px;font-weight:400;color:#F7F3EC;line-height:1.4}
+.sidebar-title p{font-size:11px;color:#7A9E7E;margin-top:4px;letter-spacing:0.05em;text-transform:uppercase}
+.nav{flex:1;padding:1rem 0;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 1.25rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;color:rgba(247,243,236,0.55);font-size:13px;transition:all 0.15s;border-left:3px solid transparent}
+.nav-item:hover{background:rgba(255,255,255,0.05);color:#F7F3EC}
+.nav-item.active{background:rgba(181,97,58,0.15);color:#F7F3EC;border-left-color:#B5613A}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(247,243,236,0.2);flex-shrink:0}
+.nav-item.active .nav-dot{background:#B5613A}
+.nav-bonus{margin-top:auto;padding:0.75rem 0 0;border-top:1px solid rgba(255,255,255,0.08)}
+.nav-bonus .nav-item{color:rgba(122,158,126,0.7);font-style:italic}
+.nav-bonus .nav-item.active{color:#7A9E7E;border-left-color:#7A9E7E}
+.nav-bonus .nav-item.active .nav-dot{background:#7A9E7E}
+
+/* Content */
+.content{flex:1;overflow-y:auto;padding:2.5rem 3rem}
+.page{display:none;max-width:700px}
+.page.active{display:block}
+.page-eyebrow{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#B5613A;margin-bottom:0.5rem}
+.page-title{font-family:Georgia,serif;font-size:28px;font-weight:400;color:#2C3A2E;line-height:1.3;margin-bottom:0.75rem}
+.page-intro{font-size:15px;line-height:1.75;color:#4A5E4C;margin-bottom:2rem;max-width:560px}
+
+/* Tabs */
+.tab-row{display:flex;gap:10px;margin-bottom:1.75rem}
+.tab-btn{border:1px solid #D4C9B8;border-radius:8px;padding:8px 18px;font-size:13px;cursor:pointer;transition:all 0.15s;background:#E8DFD0;color:#4A5E4C}
+.tab-btn.active{background:#2C3A2E;color:#F7F3EC;border-color:#2C3A2E}
+
+/* Cards */
+.section-card{background:#fff;border-radius:12px;border:1px solid #E8DFD0;padding:1.5rem;margin-bottom:1.25rem}
+.section-card h3{font-family:Georgia,serif;font-size:16px;font-weight:400;color:#2C3A2E;margin-bottom:0.5rem}
+.section-card p{font-size:14px;line-height:1.7;color:#4A5E4C}
+.concept-block{background:#F0EBE2;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;border-left:3px solid #B5613A}
+.concept-block p{font-size:14px;line-height:1.75;color:#3A4E3C}
+
+/* Ikigai grid */
+.ikigai-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.ikigai-card{background:#fff;border-radius:10px;padding:1.25rem;border:1px solid #E8DFD0}
+.ikigai-card .label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#B5613A;margin-bottom:6px}
+.ikigai-card h4{font-family:Georgia,serif;font-size:15px;font-weight:400;color:#2C3A2E;margin-bottom:6px}
+.ikigai-card p{font-size:13px;color:#6A7E6C;line-height:1.6}
+.overlap-row{display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.overlap-pill{background:#E8DFD0;border-radius:20px;padding:6px 14px;font-size:12px;color:#4A5E4C;border:1px solid #D4C9B8}
+.overlap-pill span{font-weight:500;color:#B5613A}
+
+/* Questions */
+.cat-header{display:flex;align-items:center;gap:10px;margin:2rem 0 1rem}
+.cat-header .line{flex:1;height:1px;background:#E8DFD0}
+.cat-header span{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#B5613A;white-space:nowrap}
+.q-block{background:#fff;border-radius:12px;border:1px solid #E8DFD0;margin-bottom:0.875rem;overflow:hidden}
+.q-header{padding:1rem 1.25rem;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:background 0.15s}
+.q-header:hover{background:#FDFAF6}
+.q-num{width:26px;height:26px;border-radius:50%;background:#F0EBE2;border:1px solid #E8DFD0;display:flex;align-items:center;justify-content:center;font-size:11px;color:#B5613A;flex-shrink:0;font-weight:500;margin-top:2px}
+.q-text{font-size:14px;color:#2C3A2E;line-height:1.6;flex:1}
+.q-sub{font-size:12px;color:#7A9E7E;margin-top:3px}
+.q-body{padding:0 1.25rem 1.25rem 3.5rem;display:none}
+.q-body.open{display:block}
+.q-body textarea{width:100%;min-height:90px;border:1px solid #E8DFD0;border-radius:8px;padding:0.75rem;font-size:13px;color:#2C3A2E;background:#FDFAF6;resize:vertical;font-family:inherit;line-height:1.6}
+.q-body textarea:focus{outline:none;border-color:#B5613A;background:#fff}
+.q-body textarea::placeholder{color:#A0B0A2}
+.q-tip{font-size:12px;color:#7A9E7E;margin-top:8px;line-height:1.5;font-style:italic}
+
+/* Goal breakdown per category */
+.goal-cat-section{background:#fff;border-radius:12px;border:1px solid #E8DFD0;margin-bottom:1.25rem;overflow:hidden}
+.goal-cat-header{padding:1rem 1.25rem;background:#F7F3EC;border-bottom:1px solid #E8DFD0;display:flex;align-items:center;gap:10px}
+.goal-cat-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0}
+.goal-cat-header h3{font-family:Georgia,serif;font-size:15px;font-weight:400;color:#2C3A2E}
+.goal-rows{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:0.75rem}
+.goal-row{display:flex;gap:12px;align-items:flex-start}
+.goal-row-label{font-size:11px;color:#B5613A;width:80px;flex-shrink:0;padding-top:10px;text-align:right;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+.goal-row textarea{flex:1;min-height:48px;border:1px solid #E8DFD0;border-radius:8px;padding:8px 12px;font-size:13px;color:#2C3A2E;background:#FDFAF6;resize:vertical;font-family:inherit;line-height:1.55}
+.goal-row textarea:focus{outline:none;border-color:#B5613A;background:#fff}
+.goal-row textarea::placeholder{color:#A0B0A2;font-size:12px}
+
+/* Analyze section */
+.analyze-section{margin-top:2.5rem;padding:1.5rem;background:#fff;border-radius:12px;border:1px solid #E8DFD0}
+.analyze-section h3{font-family:Georgia,serif;font-size:16px;font-weight:400;color:#2C3A2E;margin-bottom:0.5rem}
+.analyze-section p{font-size:13px;color:#6A7E6C;line-height:1.6;margin-bottom:1.25rem}
+.analyze-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-analyze{background:#B5613A;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;cursor:pointer;transition:opacity 0.15s;font-weight:500}
+.btn-analyze:hover{opacity:0.88}
+.btn-analyze:disabled{opacity:0.5;cursor:not-allowed}
+.btn-copy{background:#fff;color:#2C3A2E;border:1px solid #D4C9B8;border-radius:8px;padding:10px 18px;font-size:13px;cursor:pointer;transition:all 0.15s}
+.btn-copy:hover{background:#F0EBE2;border-color:#B5613A}
+.btn-copy:disabled{opacity:0.4;cursor:not-allowed}
+.analysis-result{margin-top:1.25rem;display:none}
+.analysis-result.visible{display:block}
+.analysis-box{background:#FDFAF6;border:1px solid #E8DFD0;border-radius:10px;padding:1.25rem;font-size:14px;color:#2C3A2E;line-height:1.75;white-space:pre-wrap;min-height:80px}
+.analysis-loading{display:flex;align-items:center;gap:10px;padding:1.25rem;color:#7A9E7E;font-size:13px;font-style:italic}
+.loading-dots span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#B5613A;animation:pulse 1.2s ease-in-out infinite}
+.loading-dots span:nth-child(2){animation-delay:0.2s}
+.loading-dots span:nth-child(3){animation-delay:0.4s}
+@keyframes pulse{0%,80%,100%{opacity:0.2}40%{opacity:1}}
+.copy-success{font-size:12px;color:#7A9E7E;margin-top:6px;display:none}
+
+/* Life categories */
+.life-cats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.life-cat{background:#fff;border-radius:10px;padding:1.25rem;border:1px solid #E8DFD0}
+.life-cat .cat-name{font-family:Georgia,serif;font-size:14px;color:#2C3A2E;margin-bottom:4px}
+.life-cat .cat-subs{font-size:12px;color:#7A9E7E;line-height:1.6}
+
+/* Timeline */
+.timeline{margin:1.5rem 0}
+.t-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.t-label{font-size:12px;color:#B5613A;width:80px;text-align:right;flex-shrink:0;font-weight:500}
+.t-bar{flex:1;background:#E8DFD0;border-radius:20px;height:8px}
+.t-bar-fill{height:8px;border-radius:20px;background:#B5613A}
+.t-desc{font-size:11px;color:#7A9E7E;width:120px;flex-shrink:0}
+
+/* Shadow */
+.shadow-header{background:#2C3A2E;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
+.shadow-header h2{font-family:Georgia,serif;font-size:20px;font-weight:400;color:#F7F3EC;margin-bottom:0.5rem}
+.shadow-header p{font-size:13px;color:rgba(247,243,236,0.7);line-height:1.6}
+.method-card{background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1.25rem;margin-bottom:0.75rem;display:flex;gap:12px}
+.method-num{width:32px;height:32px;border-radius:8px;background:#2C3A2E;color:#7A9E7E;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;font-weight:500}
+.method-body h4{font-size:14px;color:#2C3A2E;margin-bottom:4px;font-weight:500}
+.method-body p{font-size:13px;color:#6A7E6C;line-height:1.6}
+
+/* Home steps */
+.step-row{display:flex;align-items:center;gap:12px;font-size:13px;color:#4A5E4C}
+.step-dot{width:6px;height:6px;border-radius:50%;background:#B5613A;flex-shrink:0}
+
+/* Responsive */
+@media(max-width:640px){
+  .sidebar{width:180px}
+  .content{padding:1.5rem}
+  .ikigai-grid,.life-cats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-title">
+      <h1>Clarity</h1>
+      <p>Living Foundations</p>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" onclick="showPage('home',this)"><div class="nav-dot"></div>Start here</button>
+      <button class="nav-item" onclick="showPage('part1',this)"><div class="nav-dot"></div>Part 1 — Ikigai</button>
+      <button class="nav-item" onclick="showPage('part2',this)"><div class="nav-dot"></div>Part 2 — Your values</button>
+      <button class="nav-item" onclick="showPage('part3',this)"><div class="nav-dot"></div>Part 3 — Goals</button>
+    </nav>
+    <div class="nav-bonus">
+      <button class="nav-item" onclick="showPage('shadow',this)"><div class="nav-dot"></div>Shadow work</button>
+      <button class="nav-item" onclick="showPage('journal',this)"><div class="nav-dot"></div>How to journal</button>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- HOME -->
+    <div id="page-home" class="page active">
+      <p class="page-eyebrow">Welcome</p>
+      <h2 class="page-title">Your companion to finding purpose</h2>
+      <p class="page-intro">This app walks alongside the three-part Clarity video series by Living Foundations. Each section has a guide and a questions section where you write and reflect — with built-in AI analysis at the end of each part.</p>
+      <div class="section-card">
+        <h3>How to use this</h3>
+        <p>Watch each video first, then come back here. Read the guide, answer the questions honestly, and use the "Analyse my answers" button at the end to get a personal insight summary — no copy-pasting required.</p>
+      </div>
+      <div class="section-card">
+        <h3>The journey ahead</h3>
+        <p style="margin-bottom:1rem">Three parts, one bonus. Start with Part 1, move through to Part 3, then explore Shadow Work any time.</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="step-row"><div class="step-dot"></div>Part 1 — Discover your Ikigai across 4 dimensions</div>
+          <div class="step-row"><div class="step-dot"></div>Part 2 — Surface your real values through daily journaling</div>
+          <div class="step-row"><div class="step-dot"></div>Part 3 — Set goals across 4 life areas and break them down to today</div>
+          <div class="step-row"><div class="step-dot" style="background:#7A9E7E"></div><span style="color:#6A7E6C;font-style:italic">Bonus — Shadow work to meet your hidden self</span></div>
+          <div class="step-row"><div class="step-dot" style="background:#7A9E7E"></div><span style="color:#6A7E6C;font-style:italic">Bonus — How to journal effectively</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div id="page-part1" class="page">
+      <p class="page-eyebrow">Part 1</p>
+      <h2 class="page-title">Your Ikigai</h2>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('p1','guide',this)">Guide</button>
+        <button class="tab-btn" onclick="switchTab('p1','questions',this)">Questions</button>
+      </div>
+
+      <div id="p1-guide">
+        <div class="concept-block"><p>Ikigai is a Japanese concept meaning "reason for being." A popular framework breaks your life purpose into four overlapping circles — and where they all meet is your Ikigai.</p></div>
+        <div class="ikigai-grid">
+          <div class="ikigai-card"><div class="label">Circle 1</div><h4>What you love</h4><p>Activities where time disappears. Pure joy — nothing to do with how skilled you are.</p></div>
+          <div class="ikigai-card"><div class="label">Circle 2</div><h4>What you're good at</h4><p>Natural strengths or built skills. People notice. You feel genuinely confident here.</p></div>
+          <div class="ikigai-card"><div class="label">Circle 3</div><h4>What the world needs</h4><p>Problems that bother you deeply. Gaps you see that others seem to ignore.</p></div>
+          <div class="ikigai-card"><div class="label">Circle 4</div><h4>What you can be paid for</h4><p>Skills with real market value — now or with time invested.</p></div>
+        </div>
+        <div class="cat-header"><div class="line"></div><span>Where circles overlap</span><div class="line"></div></div>
+        <div class="overlap-row">
+          <div class="overlap-pill"><span>Love</span> + <span>Good at</span> = Passion</div>
+          <div class="overlap-pill"><span>Good at</span> + <span>Paid for</span> = Profession</div>
+          <div class="overlap-pill"><span>Paid for</span> + <span>World needs</span> = Vocation</div>
+          <div class="overlap-pill"><span>Love</span> + <span>World needs</span> = Mission</div>
+        </div>
+        <div class="concept-block"><p>Your goal is to find the one thing sitting at the centre of all four. These questions are a one-time deep exercise — they take 45 minutes to 2 hours. Do them with full focus.</p></div>
+      </div>
+
+      <div id="p1-questions" style="display:none">
+        <div class="cat-header"><div class="line"></div><span>What you love</span><div class="line"></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">1</div><div><div class="q-text">What are 3–5 activities — from childhood or now — where time completely disappeared for you?</div><div class="q-sub">Aim for 5. More answers = deeper insight.</div></div></div><div class="q-body"><textarea id="p1_q1" placeholder="e.g. Drawing, hiking in nature, building things with my hands..."></textarea><div class="q-tip">Think of moments where you looked up and were shocked hours had passed.</div></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">2</div><div><div class="q-text">What are 3–5 hobbies you've had from childhood to now — things others would always find you doing?</div></div></div><div class="q-body"><textarea id="p1_q2" placeholder="If your parents described your biggest hobby, what would they say?"></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">3</div><div><div class="q-text">What 3–5 experiences have you had that you wish everyone would try — things the world doesn't talk about enough?</div></div></div><div class="q-body"><textarea id="p1_q3" placeholder="Things you'd want to stand on stage and tell the world about..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">4</div><div><div class="q-text">Name 3–5 people you deeply admire. Next to each name, write one sentence on why.</div></div></div><div class="q-body"><textarea id="p1_q4" placeholder="Real or fictional, alive or not. e.g. My father — he sacrificed everything for family without complaint."></textarea><div class="q-tip">What you admire in others often reflects what you secretly want to express yourself.</div></div></div>
+
+        <div class="cat-header"><div class="line"></div><span>What you're good at</span><div class="line"></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">5</div><div><div class="q-text">What 3–5 things are you consistently complimented on?</div></div></div><div class="q-body"><textarea id="p1_q5" placeholder="Teaching, fashion sense, problem solving, emotional support..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">6</div><div><div class="q-text">What 3–5 tasks — if someone challenged you right now — would you say "absolutely, no problem"?</div></div></div><div class="q-body"><textarea id="p1_q6" placeholder="Things you feel genuinely confident delivering..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">7</div><div><div class="q-text">What do people consistently ask you for help with? What problem do they bring to you?</div></div></div><div class="q-body"><textarea id="p1_q7" placeholder="Tech support? Emotional advice? Financial thinking? Creative work?"></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">8</div><div><div class="q-text">If a company had all your data and assigned you 3–5 job profiles you'd naturally succeed in — what would they be?</div></div></div><div class="q-body"><textarea id="p1_q8" placeholder="Regardless of whether you'd enjoy these — just where you'd likely excel..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">9</div><div><div class="q-text">If you had unlimited money, the world's best teachers, and 3–5 years — what field could you reach an exceptional level in?</div></div></div><div class="q-body"><textarea id="p1_q9" placeholder="Be honest — this needs natural talent AND drive. What feels genuinely true?"></textarea><div class="q-tip">This is a hard question. Take time with it.</div></div></div>
+
+        <div class="cat-header"><div class="line"></div><span>What the world needs</span><div class="line"></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">10</div><div><div class="q-text">Who are 3–5 people across all of history who you feel have done the most good for humanity — and why?</div></div></div><div class="q-body"><textarea id="p1_q10" placeholder="Ancient or modern. Note what they did next to each name."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">11</div><div><div class="q-text">What are the 3–5 biggest problems you see in the world today? Why does each bother you more than others?</div></div></div><div class="q-body"><textarea id="p1_q11" placeholder="Relationships? Climate? Politics? AI? Write and rank them."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">12</div><div><div class="q-text">If you could introduce 3–5 laws for your country or the world, what would they be — and why?</div></div></div><div class="q-body"><textarea id="p1_q12" placeholder="What change would make this world meaningfully better?"></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">13</div><div><div class="q-text">What 3–5 mistakes do people make most often in life — things you wish they'd stop doing?</div></div></div><div class="q-body"><textarea id="p1_q13" placeholder="Not listening? Lying? Poor savings? Bad civic sense?"></textarea></div></div>
+
+        <div class="cat-header"><div class="line"></div><span>What you can be paid for</span><div class="line"></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">14</div><div><div class="q-text">What 3–5 fields do you see where people seem genuinely happy AND earning well?</div></div></div><div class="q-body"><textarea id="p1_q14" placeholder="Not just rich — but visibly content in their work..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">15</div><div><div class="q-text">What 3–5 skills do you have (or nearly have) where you feel real money is possible with more time?</div></div></div><div class="q-body"><textarea id="p1_q15" placeholder="A skill close to monetisable with a bit more time or guidance..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">16</div><div><div class="q-text">What 3–5 fields, if you spent 3–5 years learning them, feel like they'd pay very well with little financial risk?</div></div></div><div class="q-body"><textarea id="p1_q16" placeholder="e.g. Sales & marketing, law, healthcare, engineering, design..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">17</div><div><div class="q-text">What 3–5 professions feel like there's no ceiling on earning — the harder you work, the more unlimited the upside?</div></div></div><div class="q-body"><textarea id="p1_q17" placeholder="Where effort and income feel truly uncapped together..."></textarea></div></div>
+
+        <!-- ANALYZE -->
+        <div class="analyze-section">
+          <h3>Analyse your Ikigai answers</h3>
+          <p>Done answering? Click below to get a personal insight summary based on everything you've written. Or copy your answers to paste into your own AI.</p>
+          <div class="analyze-btns">
+            <button class="btn-analyze" onclick="analyzeAnswers('p1')">✦ Analyse my answers</button>
+            <button class="btn-copy" onclick="copyAnswers('p1')">Copy to clipboard</button>
+          </div>
+          <div class="copy-success" id="p1-copy-success">Copied to clipboard!</div>
+          <div class="analysis-result" id="p1-analysis">
+            <div class="analysis-loading" id="p1-loading" style="display:none">
+              <div class="loading-dots"><span></span><span></span><span></span></div>
+              Analysing your answers...
+            </div>
+            <div class="analysis-box" id="p1-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div id="page-part2" class="page">
+      <p class="page-eyebrow">Part 2</p>
+      <h2 class="page-title">Surfacing your real values</h2>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('p2','guide',this)">Guide</button>
+        <button class="tab-btn" onclick="switchTab('p2','questions',this)">Questions</button>
+      </div>
+
+      <div id="p2-guide">
+        <div class="concept-block"><p>Life purpose isn't assigned to you from the outside. It's built from your values — the things you actually spend time, money, and energy on without anyone pushing you. Not what you say matters, but what you do.</p></div>
+        <div class="section-card">
+          <h3>What a value really is</h3>
+          <p>A value is something you do automatically — no motivation needed. Watch your actual behaviour, not your stated beliefs. If you say you value money but never save — money isn't truly high on your value scale yet.</p>
+        </div>
+        <div class="section-card">
+          <h3>The 5 clarity questions — your daily practice</h3>
+          <p style="margin-bottom:1rem">These 5 questions take 25 minutes total (5 minutes each). Do them every day without looking at yesterday's answers. After 2 weeks, the repeating patterns are your true values.</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;gap:10px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="min-width:20px;height:20px;border-radius:50%;background:#B5613A;color:white;display:flex;align-items:center;justify-content:center;font-size:10px">1</div><span>If you had ₹1 crore to spend in a year (savings aside), how would you divide it?</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="min-width:20px;height:20px;border-radius:50%;background:#B5613A;color:white;display:flex;align-items:center;justify-content:center;font-size:10px">2</div><span>If a genie gave you unlimited wishes — what would you wish for? No filter.</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="min-width:20px;height:20px;border-radius:50%;background:#B5613A;color:white;display:flex;align-items:center;justify-content:center;font-size:10px">3</div><span>What are your risky rewards — things you'd do if fear wasn't in the way?</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="min-width:20px;height:20px;border-radius:50%;background:#B5613A;color:white;display:flex;align-items:center;justify-content:center;font-size:10px">4</div><span>What are your biggest current pains — the things eating at you most?</span></div>
+            <div style="display:flex;gap:10px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="min-width:20px;height:20px;border-radius:50%;background:#B5613A;color:white;display:flex;align-items:center;justify-content:center;font-size:10px">5</div><span>Take top 3 from each question (12 points). With only 6 months — what would you do for each?</span></div>
+          </div>
+        </div>
+        <div class="concept-block"><p>The final step of question 5: ask yourself — "What is one practical thing I can do TODAY?" Write it down. Then go do it.</p></div>
+      </div>
+
+      <div id="p2-questions" style="display:none">
+        <p style="font-size:13px;color:#7A9E7E;margin-bottom:1.5rem;font-style:italic">Do this every day for at least 2 weeks. Set a 5-minute timer per question. Don't read yesterday's answers — start fresh.</p>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">1</div><div><div class="q-text">If you had ₹1 crore to spend in one year (savings already set aside) — how would you divide it?</div><div class="q-sub">List every category and an estimated amount. Keep going until the crore is fully allocated.</div></div></div><div class="q-body"><textarea id="p2_q1" style="min-height:110px" placeholder="Fitness coaching: ₹6L&#10;Travel with friends: ₹12L&#10;Home studio setup: ₹12L&#10;Family support: ₹18L&#10;...keep going until ₹1cr is spent"></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">2</div><div><div class="q-text">If a genie appeared and granted you unlimited wishes — what would you wish for?</div><div class="q-sub">No filter, no judgment. Silly or serious. Write everything that comes.</div></div></div><div class="q-body"><textarea id="p2_q2" style="min-height:110px" placeholder="Write freely — dream body, dream relationships, dream career, wild ideas, everything..."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">3</div><div><div class="q-text">What are your risky rewards — things you deeply want but haven't done because fear is in the way?</div><div class="q-sub">If all risk were removed, what would you do?</div></div></div><div class="q-body"><textarea id="p2_q3" style="min-height:110px" placeholder="Talking to someone, starting a business, solo travel, quitting your job...&#10;List the reward AND what risk is holding you back."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">4</div><div><div class="q-text">What are your biggest pains right now — the things in your life eating at you most?</div><div class="q-sub">Relationships, health, money, work — be honest. Then rank them.</div></div></div><div class="q-body"><textarea id="p2_q4" style="min-height:110px" placeholder="List them. Then rank: 1 = biggest pain right now."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">5</div><div><div class="q-text">Take your top 3 from each question above (12 points). With only 6 months to improve each — what would you actually do?</div><div class="q-sub">End with: one thing you can do TODAY.</div></div></div><div class="q-body"><textarea id="p2_q5" style="min-height:160px" placeholder="For each of your 12 points, write 1–2 lines on what 6 months of focused effort looks like...&#10;&#10;My one action today:"></textarea><div class="q-tip">The daily action is the most important line you write. Keep it small and concrete — one call, one search, one email.</div></div></div>
+
+        <div class="analyze-section">
+          <h3>Analyse your values answers</h3>
+          <p>Click below to get a personalised summary of your values, priorities, and what your answers reveal about what you truly want.</p>
+          <div class="analyze-btns">
+            <button class="btn-analyze" onclick="analyzeAnswers('p2')">✦ Analyse my answers</button>
+            <button class="btn-copy" onclick="copyAnswers('p2')">Copy to clipboard</button>
+          </div>
+          <div class="copy-success" id="p2-copy-success">Copied to clipboard!</div>
+          <div class="analysis-result" id="p2-analysis">
+            <div class="analysis-loading" id="p2-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your answers...</div>
+            <div class="analysis-box" id="p2-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div id="page-part3" class="page">
+      <p class="page-eyebrow">Part 3</p>
+      <h2 class="page-title">Turning clarity into action</h2>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('p3','guide',this)">Guide</button>
+        <button class="tab-btn" onclick="switchTab('p3','questions',this)">Questions</button>
+      </div>
+
+      <div id="p3-guide">
+        <div class="concept-block"><p>Your mission comes from two sources: natural interests you've always had, and voids — painful gaps from your past that drive you to fill them for others. Most people's life purpose lives in one of these two places.</p></div>
+        <div class="section-card" style="margin-bottom:1.25rem">
+          <h3>Your 4 life areas</h3>
+          <p style="margin-bottom:1rem">Set goals in all four for a complete picture of your life.</p>
+          <div class="life-cats">
+            <div class="life-cat"><div class="cat-name">Health</div><div class="cat-subs">Physical fitness<br>Mental wellbeing & stress</div></div>
+            <div class="life-cat"><div class="cat-name">Relationships</div><div class="cat-subs">Close personal bonds<br>Social & professional circles</div></div>
+            <div class="life-cat"><div class="cat-name">Career</div><div class="cat-subs">Passion projects & craft<br>Professional service & skills</div></div>
+            <div class="life-cat"><div class="cat-name">Finance</div><div class="cat-subs">Active income & growth<br>Passive income & investments</div></div>
+          </div>
+        </div>
+        <div class="section-card">
+          <h3>The goal breakdown system</h3>
+          <p style="margin-bottom:1rem">Take your 1-year goal and reverse-engineer it all the way down to today. Each level gets smaller and more concrete.</p>
+          <div class="timeline">
+            <div class="t-row"><div class="t-label">1 year</div><div class="t-bar"><div class="t-bar-fill" style="width:100%"></div></div><div class="t-desc">The big goal</div></div>
+            <div class="t-row"><div class="t-label">9 months</div><div class="t-bar"><div class="t-bar-fill" style="width:82%"></div></div><div class="t-desc">Major milestone</div></div>
+            <div class="t-row"><div class="t-label">6 months</div><div class="t-bar"><div class="t-bar-fill" style="width:64%"></div></div><div class="t-desc">Halfway check</div></div>
+            <div class="t-row"><div class="t-label">3 months</div><div class="t-bar"><div class="t-bar-fill" style="width:46%"></div></div><div class="t-desc">Quarterly target</div></div>
+            <div class="t-row"><div class="t-label">1 month</div><div class="t-bar"><div class="t-bar-fill" style="width:30%"></div></div><div class="t-desc">Monthly habit</div></div>
+            <div class="t-row"><div class="t-label">1 week</div><div class="t-bar"><div class="t-bar-fill" style="width:16%"></div></div><div class="t-desc">Weekly action</div></div>
+          </div>
+        </div>
+        <div class="concept-block"><p>Every Sunday, review your week. Too easy — push harder next week. Too hard — dial it back. You're training your ability to estimate your own capacity. That self-knowledge is itself a superpower.</p></div>
+      </div>
+
+      <div id="p3-questions" style="display:none">
+        <p style="font-size:13px;color:#7A9E7E;margin-bottom:1.75rem;font-style:italic">For each of the 4 life areas: set your 1-year goal first, then break it down step by step to the present week.</p>
+
+        <!-- HEALTH -->
+        <div class="goal-cat-section">
+          <div class="goal-cat-header">
+            <div class="goal-cat-icon" style="background:#FEF0E8;color:#B5613A">H</div>
+            <h3>Health</h3>
+          </div>
+          <div class="goal-rows">
+            <div class="goal-row"><div class="goal-row-label">1 year</div><textarea id="p3_h_1y" placeholder="Where do you want to be physically and mentally in 1 year? Be specific."></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">9 months</div><textarea id="p3_h_9m" placeholder="What needs to be true by month 9 to stay on track?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">6 months</div><textarea id="p3_h_6m" placeholder="What does the halfway point look like?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">3 months</div><textarea id="p3_h_3m" placeholder="What's your 3-month target?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">1 month</div><textarea id="p3_h_1m" placeholder="What habit or milestone for this month?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">This week</div><textarea id="p3_h_1w" placeholder="What's one concrete thing you'll do this week?"></textarea></div>
+          </div>
+        </div>
+
+        <!-- RELATIONSHIPS -->
+        <div class="goal-cat-section">
+          <div class="goal-cat-header">
+            <div class="goal-cat-icon" style="background:#E8F3E8;color:#3A6E3A">R</div>
+            <h3>Relationships</h3>
+          </div>
+          <div class="goal-rows">
+            <div class="goal-row"><div class="goal-row-label">1 year</div><textarea id="p3_r_1y" placeholder="What do you want your close relationships to look like in 1 year?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">9 months</div><textarea id="p3_r_9m" placeholder="What needs to shift by month 9?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">6 months</div><textarea id="p3_r_6m" placeholder="What does progress look like at 6 months?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">3 months</div><textarea id="p3_r_3m" placeholder="3-month relationship target?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">1 month</div><textarea id="p3_r_1m" placeholder="One thing to work on this month?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">This week</div><textarea id="p3_r_1w" placeholder="One action this week for your relationships?"></textarea></div>
+          </div>
+        </div>
+
+        <!-- CAREER -->
+        <div class="goal-cat-section">
+          <div class="goal-cat-header">
+            <div class="goal-cat-icon" style="background:#EAE8F8;color:#5248A0">C</div>
+            <h3>Career</h3>
+          </div>
+          <div class="goal-rows">
+            <div class="goal-row"><div class="goal-row-label">1 year</div><textarea id="p3_c_1y" placeholder="Where do you want to be professionally in 1 year?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">9 months</div><textarea id="p3_c_9m" placeholder="What career milestone by month 9?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">6 months</div><textarea id="p3_c_6m" placeholder="6-month career checkpoint?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">3 months</div><textarea id="p3_c_3m" placeholder="3-month career target?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">1 month</div><textarea id="p3_c_1m" placeholder="What skill, project, or action this month?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">This week</div><textarea id="p3_c_1w" placeholder="One career action this week?"></textarea></div>
+          </div>
+        </div>
+
+        <!-- FINANCE -->
+        <div class="goal-cat-section">
+          <div class="goal-cat-header">
+            <div class="goal-cat-icon" style="background:#FDF4E0;color:#A07828">F</div>
+            <h3>Finance</h3>
+          </div>
+          <div class="goal-rows">
+            <div class="goal-row"><div class="goal-row-label">1 year</div><textarea id="p3_f_1y" placeholder="What does your financial life look like in 1 year?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">9 months</div><textarea id="p3_f_9m" placeholder="Financial milestone by month 9?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">6 months</div><textarea id="p3_f_6m" placeholder="6-month financial checkpoint?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">3 months</div><textarea id="p3_f_3m" placeholder="3-month financial target?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">1 month</div><textarea id="p3_f_1m" placeholder="One financial habit or action this month?"></textarea></div>
+            <div class="goal-row"><div class="goal-row-label">This week</div><textarea id="p3_f_1w" placeholder="One financial step this week?"></textarea></div>
+          </div>
+        </div>
+
+        <div class="analyze-section">
+          <h3>Analyse your goals</h3>
+          <p>Click below to get feedback on your goals — whether they're specific enough, what patterns emerge, and what to prioritise first.</p>
+          <div class="analyze-btns">
+            <button class="btn-analyze" onclick="analyzeAnswers('p3')">✦ Analyse my goals</button>
+            <button class="btn-copy" onclick="copyAnswers('p3')">Copy to clipboard</button>
+          </div>
+          <div class="copy-success" id="p3-copy-success">Copied to clipboard!</div>
+          <div class="analysis-result" id="p3-analysis">
+            <div class="analysis-loading" id="p3-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your goals...</div>
+            <div class="analysis-box" id="p3-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHADOW WORK -->
+    <div id="page-shadow" class="page">
+      <p class="page-eyebrow" style="color:#7A9E7E">Bonus</p>
+      <h2 class="page-title">Shadow work</h2>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('sw','guide',this)">Guide</button>
+        <button class="tab-btn" onclick="switchTab('sw','questions',this)">Questions</button>
+      </div>
+
+      <div id="sw-guide">
+        <div class="shadow-header">
+          <h2>The part of you you've been hiding from</h2>
+          <p>Every person has a shadow — the suppressed, hidden parts of yourself you don't acknowledge. Not because you're bad, but because life taught you to push them away. Ignored, they control you silently. Faced, they become your greatest source of wholeness.</p>
+        </div>
+        <div class="section-card">
+          <h3>Why do shadow work?</h3>
+          <p>Your blind spots run your life whether you look at them or not. The gambler who can't see his addiction. The anger you can't explain. Shadow work is shining a light on what's been running in the dark. You can't improve what you can't see.</p>
+        </div>
+        <p style="font-size:13px;font-weight:500;color:#2C3A2E;margin:1.5rem 0 0.75rem">Three ways to find your shadow</p>
+        <div class="method-card"><div class="method-num">1</div><div class="method-body"><h4>Meditation</h4><p>Sit quietly and observe your patterns and reactions without judgment. Notice what feelings arise around certain people, memories, or situations.</p></div></div>
+        <div class="method-card"><div class="method-num">2</div><div class="method-body"><h4>Ask people who know you deeply</h4><p>Go to 3–5 close friends or family. Ask: "What 3–5 things about me do you feel hold me back?" Where their answers sting or surprise you — that's your shadow.</p></div></div>
+        <div class="method-card"><div class="method-num">3</div><div class="method-body"><h4>Shadow journaling</h4><p>Answer specific questions fully and honestly. These questions act as a torch — shining light on the parts of your mind you've kept in the dark. The more honest you are, the more you'll find.</p></div></div>
+      </div>
+
+      <div id="sw-questions" style="display:none">
+        <div style="background:#2C3A2E;border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem">
+          <p style="font-size:13px;color:rgba(247,243,236,0.75);line-height:1.7">These questions require real honesty. There are no wrong answers — only honest ones and comfortable lies. The more you squirm writing something, the more important it is.</p>
+        </div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">1</div><div><div class="q-text">What do you hate most in other people?</div><div class="q-sub">What you despise in others is often what you've suppressed in yourself.</div></div></div><div class="q-body"><textarea id="sw_q1" placeholder="Be specific. What behaviours or traits in others make you genuinely angry or disgusted?"></textarea><div class="q-tip">Ask yourself: was there ever a time I did this same thing, or secretly wanted to?</div></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">2</div><div><div class="q-text">What consistently triggers your anger or irritation — even in small moments?</div></div></div><div class="q-body"><textarea id="sw_q2" placeholder="Someone interrupting you? Being ignored? Being controlled? Trace it to a root memory if you can."></textarea><div class="q-tip">Strong reactions usually have a story. When did this wound first happen?</div></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">3</div><div><div class="q-text">What topics make you anxious or want to change the subject?</div></div></div><div class="q-body"><textarea id="sw_q3" placeholder="Death? Money? Your weight? A past failure? Write what you avoid."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">4</div><div><div class="q-text">What are you most ashamed of — things you hope no one ever asks you about?</div></div></div><div class="q-body"><textarea id="sw_q4" placeholder="Shame loses power when you acknowledge it honestly — even just to yourself on this page."></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">5</div><div><div class="q-text">What would you do at someone else's expense to get something you deeply want?</div><div class="q-sub">Be honest — this reveals hidden desires and moral blind spots.</div></div></div><div class="q-body"><textarea id="sw_q5" placeholder="If no one would ever find out, what might you do to get what you deeply want?"></textarea></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">6</div><div><div class="q-text">What negative traits in others secretly impress or attract you?</div></div></div><div class="q-body"><textarea id="sw_q6" placeholder="Someone who doesn't care what others think. Someone who takes what they want. What do you secretly admire?"></textarea><div class="q-tip">What you admire in the "wrong" people is often a quality you've forbidden yourself to have.</div></div></div>
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">7</div><div><div class="q-text">What are the hidden benefits of your most negative traits or habits?</div></div></div><div class="q-body"><textarea id="sw_q7" placeholder="e.g. Being passive lets me avoid conflict. Anger keeps people at a safe distance.&#10;Every shadow has a job it thinks it's doing for you."></textarea><div class="q-tip">Your shadow isn't evil. It was trying to protect you. What was it protecting you from?</div></div></div>
+
+        <div style="margin-top:1.5rem;padding:1.25rem;background:#F0EBE2;border-radius:10px;border-left:3px solid #7A9E7E;margin-bottom:1.5rem">
+          <p style="font-size:13px;color:#4A5E4C;line-height:1.75">The goal of shadow work isn't to fix yourself. It's to see yourself fully — the whole person, not just the parts you approve of. A tree's highest branches require the deepest roots.</p>
+        </div>
+
+        <div class="analyze-section">
+          <h3>Analyse your shadow work</h3>
+          <p>Click below to get a compassionate, honest reflection on what your answers reveal about your hidden patterns and blind spots.</p>
+          <div class="analyze-btns">
+            <button class="btn-analyze" onclick="analyzeAnswers('sw')">✦ Analyse my answers</button>
+            <button class="btn-copy" onclick="copyAnswers('sw')">Copy to clipboard</button>
+          </div>
+          <div class="copy-success" id="sw-copy-success">Copied to clipboard!</div>
+          <div class="analysis-result" id="sw-analysis">
+            <div class="analysis-loading" id="sw-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your answers...</div>
+            <div class="analysis-box" id="sw-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- HOW TO JOURNAL -->
+    <div id="page-journal" class="page">
+      <p class="page-eyebrow" style="color:#7A9E7E">Bonus</p>
+      <h2 class="page-title">How to journal</h2>
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchTab('jn','guide',this)">Guide</button>
+        <button class="tab-btn" onclick="switchTab('jn','practice',this)">Templates</button>
+      </div>
+
+      <div id="jn-guide">
+        <div class="concept-block">
+          <p>Journaling is downloading your thoughts onto paper — turning the noise in your head into written form so you can actually see it, revisit it, and work with it. Done right, it's the most powerful tool you have for clarity.</p>
+        </div>
+
+        <div class="section-card">
+          <h3>Journaling vs diary writing</h3>
+          <p style="margin-bottom:0.75rem">These are not the same thing, and the difference matters.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:0.75rem">
+            <div style="background:#F7F3EC;border-radius:8px;padding:1rem;border:1px solid #E8DFD0">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#7A9E7E;margin-bottom:6px">Diary</div>
+              <p style="font-size:13px;color:#4A5E4C;line-height:1.65">Stream of consciousness. "Today I woke up at 8, had a fight with X, didn't get my promotion." No direction. Pure download.</p>
+            </div>
+            <div style="background:#F7F3EC;border-radius:8px;padding:1rem;border:1px solid #E8DFD0">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#B5613A;margin-bottom:6px">Journaling</div>
+              <p style="font-size:13px;color:#4A5E4C;line-height:1.65">Question-driven. Intentional. You ask your mind something specific and let it answer. It has direction and purpose.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>Think of it as your best friend</h3>
+          <p style="margin-bottom:0.75rem">Journaling is like having a best friend who always has time for you, never judges, asks great questions, and has unlimited patience. The difference from a real friend? Your journal:</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:0.5rem">
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#4A5E4C"><div style="color:#7A9E7E;margin-top:2px;flex-shrink:0">✓</div>Never has a bad day or bad mood</div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#4A5E4C"><div style="color:#7A9E7E;margin-top:2px;flex-shrink:0">✓</div>Never gives you biased advice based on their own life</div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#4A5E4C"><div style="color:#7A9E7E;margin-top:2px;flex-shrink:0">✓</div>Always focuses entirely on you and your question</div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#4A5E4C"><div style="color:#7A9E7E;margin-top:2px;flex-shrink:0">✓</div>Remembers everything you've told it — it's all written down</div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>The real superpower: better questions</h3>
+          <p style="margin-bottom:0.75rem">The quality of your journal is determined entirely by the quality of questions you ask. Ask small questions, get small answers. Ask big, honest questions and your mind opens up.</p>
+          <div style="background:#F0EBE2;border-radius:8px;padding:1rem;margin-top:0.75rem">
+            <div style="font-size:12px;color:#B5613A;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em">Example of a powerful question</div>
+            <p style="font-size:13px;color:#3A4E3C;font-style:italic;line-height:1.65">"If I only had one year left to live — how would I spend it? What would I stop doing? What would I finally start?"</p>
+            <p style="font-size:12px;color:#7A9E7E;margin-top:8px">This single question dissolves petty worries and instantly clarifies what actually matters to you.</p>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>Morning vs evening journaling</h3>
+          <p style="margin-bottom:0.75rem">Both are valuable — but they serve different purposes.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:0.75rem">
+            <div style="background:#F7F3EC;border-radius:8px;padding:1rem;border:1px solid #E8DFD0">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#B5613A;margin-bottom:8px">Morning</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">Sets the direction for your day</div>
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">Deep perspective questions work best</div>
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">Identify your one most important action</div>
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">Tunes your mindset before the noise hits</div>
+              </div>
+            </div>
+            <div style="background:#F7F3EC;border-radius:8px;padding:1rem;border:1px solid #E8DFD0">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#7A9E7E;margin-bottom:8px">Evening</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">Reflects on what happened</div>
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">What did I learn? What am I proud of?</div>
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">Closes the day with intention</div>
+                <div style="font-size:13px;color:#4A5E4C;line-height:1.5">Sets up tomorrow's first action</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>Practical notes</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:0.25rem">
+            <div style="display:flex;gap:12px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="color:#B5613A;flex-shrink:0;font-weight:500">Format</div><span>Phone, laptop, or pen and paper — all work. Handwriting engages the brain slightly more deeply, but the best format is the one you'll actually use.</span></div>
+            <div style="display:flex;gap:12px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="color:#B5613A;flex-shrink:0;font-weight:500">Time</div><span>5 minutes on a quiet day. 30 minutes on an eventful one. Let the question decide.</span></div>
+            <div style="display:flex;gap:12px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="color:#B5613A;flex-shrink:0;font-weight:500">Consistency</div><span>A journal done daily at an average level beats a brilliant journal done occasionally. The habit is the point.</span></div>
+            <div style="display:flex;gap:12px;font-size:13px;color:#4A5E4C;align-items:flex-start"><div style="color:#B5613A;flex-shrink:0;font-weight:500">Questions</div><span>Mix daily reflection questions (what happened today) with evergreen perspective questions (the big life ones). Both matter.</span></div>
+          </div>
+        </div>
+
+        <div class="concept-block">
+          <p>The most successful, clear-minded people journal consistently — not because they have more interesting lives, but because they process their lives more intentionally. Journaling is how a wild, scattered mind learns to run in a direction.</p>
+        </div>
+      </div>
+
+      <div id="jn-practice" style="display:none">
+        <p style="font-size:13px;color:#7A9E7E;margin-bottom:1.75rem;font-style:italic">Use these templates as a starting point. Adapt them — remove what doesn't fit, add questions that matter to you. Your journal should feel like yours.</p>
+
+        <!-- MORNING -->
+        <div class="cat-header"><div class="line"></div><span>Morning template</span><div class="line"></div></div>
+        <p style="font-size:13px;color:#4A5E4C;margin-bottom:1.25rem;line-height:1.65">Do this before you check your phone. Sets the tone for the whole day. Takes 10–15 minutes.</p>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">M1</div><div><div class="q-text">What is the one most important thing I must do today?</div><div class="q-sub">If you do nothing else — what's the one action that moves your life forward most?</div></div></div><div class="q-body"><textarea id="jn_m1" placeholder="Be specific. Not 'work on my project' — 'finish the introduction section of my report'..."></textarea><div class="q-tip">Everything else in your day is secondary to this. Protect time for it first.</div></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">M2</div><div><div class="q-text">If I only had one year left to live — how would I spend today differently?</div><div class="q-sub">A perspective question to dissolve small worries and bring what truly matters into focus.</div></div></div><div class="q-body"><textarea id="jn_m2" placeholder="What would you stop worrying about? What would you make time for? Who would you call?"></textarea><div class="q-tip">You don't need to act on everything — just let the question shift your lens for the day.</div></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">M3</div><div><div class="q-text">If my wisest self could give me two pieces of advice for today — what would they be?</div><div class="q-sub">Imagine a version of you who has already lived through today perfectly. What do they know?</div></div></div><div class="q-body"><textarea id="jn_m3" placeholder="Think about what situations you're likely to face today. What does your wiser self warn you about or encourage?"></textarea></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">M4</div><div><div class="q-text">What am I looking forward to today — even something small?</div></div></div><div class="q-body"><textarea id="jn_m4" placeholder="A meal, a conversation, a task you actually enjoy, a moment of quiet..."></textarea><div class="q-tip">Starting the day by finding something to anticipate trains your mind toward positivity without faking it.</div></div></div>
+
+        <!-- EVENING -->
+        <div class="cat-header" style="margin-top:2.5rem"><div class="line"></div><span>Evening template</span><div class="line"></div></div>
+        <p style="font-size:13px;color:#4A5E4C;margin-bottom:1.25rem;line-height:1.65">Do this before bed. Closes the day with reflection and sets up tomorrow. Takes 10–20 minutes.</p>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">E1</div><div><div class="q-text">What are three things I learned today?</div><div class="q-sub">Big or small — anything that was new information, a new skill, or a new perspective.</div></div></div><div class="q-body"><textarea id="jn_e1" placeholder="e.g. Learned a shortcut in my editing software / Realised I work better in the afternoon / Had a conversation that changed my view on X..."></textarea></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">E2</div><div><div class="q-text">What are three things I could have done better today?</div><div class="q-sub">Not self-criticism — honest observation. Where did you leave room on the table?</div></div></div><div class="q-body"><textarea id="jn_e2" placeholder="e.g. I got distracted in the morning and wasted an hour / I reacted too quickly in that conversation / I skipped my workout again..."></textarea><div class="q-tip">The goal isn't guilt — it's calibration. You're becoming a better observer of yourself.</div></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">E3</div><div><div class="q-text">What am I proud of today?</div><div class="q-sub">No standard required. It can be tiny. It's yours.</div></div></div><div class="q-body"><textarea id="jn_e3" placeholder="e.g. I went to the gym even though I really didn't want to / I stayed calm in a tough conversation / I finished what I started..."></textarea><div class="q-tip">Pride doesn't need comparison to others. Something as small as "I went to bed on time" absolutely counts.</div></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">E4</div><div><div class="q-text">What am I genuinely excited about right now?</div></div></div><div class="q-body"><textarea id="jn_e4" placeholder="Something upcoming, something you're building, something you're looking forward to — big or small..."></textarea></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">E5</div><div><div class="q-text">What was one interesting or unexpected observation from today?</div><div class="q-sub">Something you noticed, heard, read, or felt that felt worth remembering.</div></div></div><div class="q-body"><textarea id="jn_e5" placeholder="A random thought, something someone said, a pattern you noticed, a moment that felt different..."></textarea><div class="q-tip">This is your curiosity muscle. Some days it'll be empty. Some days it'll surprise you.</div></div></div>
+
+        <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">E6</div><div><div class="q-text">What is my one power action for tomorrow?</div><div class="q-sub">The single thing that — if done — would make tomorrow genuinely well spent.</div></div></div><div class="q-body"><textarea id="jn_e6" placeholder="Write tomorrow's most important action tonight, so you wake up already knowing what to do..."></textarea><div class="q-tip">This is the bridge between today and tomorrow. Don't skip it.</div></div></div>
+
+        <!-- PERSPECTIVE QUESTIONS BANK -->
+        <div class="cat-header" style="margin-top:2.5rem"><div class="line"></div><span>Perspective questions — use any time</span><div class="line"></div></div>
+        <p style="font-size:13px;color:#4A5E4C;margin-bottom:1.25rem;line-height:1.65">These are deeper, evergreen questions. Pick one and sit with it for 10–20 minutes. They're designed to shift how you see things, not just describe what happened.</p>
+
+        <div style="display:grid;grid-template-columns:1fr;gap:0.75rem">
+          <div style="background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1rem 1.25rem">
+            <p style="font-size:13px;color:#2C3A2E;font-style:italic;line-height:1.65;margin-bottom:6px">"If a wise, kind version of me looked at my life right now — what would they lovingly tell me to stop doing? What would they encourage me to start?"</p>
+            <div style="font-size:11px;color:#7A9E7E">Good for: getting unstuck, cutting through self-deception</div>
+          </div>
+          <div style="background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1rem 1.25rem">
+            <p style="font-size:13px;color:#2C3A2E;font-style:italic;line-height:1.65;margin-bottom:6px">"What am I tolerating in my life right now that I know I shouldn't be? What am I waiting for to change it?"</p>
+            <div style="font-size:11px;color:#7A9E7E">Good for: identifying where you're settling or avoiding</div>
+          </div>
+          <div style="background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1rem 1.25rem">
+            <p style="font-size:13px;color:#2C3A2E;font-style:italic;line-height:1.65;margin-bottom:6px">"If I imagine myself 5 years from now, having lived exactly as I'm living today — how does that future person feel? What do they wish I had started sooner?"</p>
+            <div style="font-size:11px;color:#7A9E7E">Good for: long-term perspective, urgency without panic</div>
+          </div>
+          <div style="background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1rem 1.25rem">
+            <p style="font-size:13px;color:#2C3A2E;font-style:italic;line-height:1.65;margin-bottom:6px">"What would I do differently if I knew I couldn't fail? What does that tell me about what I actually want?"</p>
+            <div style="font-size:11px;color:#7A9E7E">Good for: clarity on desires hidden behind fear</div>
+          </div>
+          <div style="background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1rem 1.25rem">
+            <p style="font-size:13px;color:#2C3A2E;font-style:italic;line-height:1.65;margin-bottom:6px">"What is the story I keep telling myself about why I can't have what I want? Is that story actually true?"</p>
+            <div style="font-size:11px;color:#7A9E7E">Good for: challenging limiting beliefs</div>
+          </div>
+          <div style="background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1rem 1.25rem">
+            <p style="font-size:13px;color:#2C3A2E;font-style:italic;line-height:1.65;margin-bottom:6px">"Who do I need to become to have the life I want? What's the gap between that person and who I am today?"</p>
+            <div style="font-size:11px;color:#7A9E7E">Good for: identity-level reflection, not just goal-setting</div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.75rem;padding:1.25rem;background:#F0EBE2;border-radius:10px;border-left:3px solid #7A9E7E">
+          <p style="font-size:13px;color:#4A5E4C;line-height:1.75">You don't need all of these every day. Pick two or three that resonate and make them yours. The best journaling practice is the one you keep coming back to — because it feels honest, not because it looks impressive.</p>
+        </div>
+
+        <div class="analyze-section" style="margin-top:1.5rem">
+          <h3>Analyse my journal entries</h3>
+          <p>Filled in your morning or evening template? Click below to get a reflection on what your entries reveal about your current mindset, energy, and direction.</p>
+          <div class="analyze-btns">
+            <button class="btn-analyze" onclick="analyzeAnswers('jn')">✦ Analyse my entries</button>
+            <button class="btn-copy" onclick="copyAnswers('jn')">Copy to clipboard</button>
+          </div>
+          <div class="copy-success" id="jn-copy-success">Copied to clipboard!</div>
+          <div class="analysis-result" id="jn-analysis">
+            <div class="analysis-loading" id="jn-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your entries...</div>
+            <div class="analysis-box" id="jn-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleQ(header) {
+  var body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+function switchTab(prefix, tab, btn) {
+  var tabRow = btn.closest('.tab-row');
+  var page = tabRow.closest('.page');
+  if (!page) return;
+  var allTabContent = page.querySelectorAll('[id^="' + prefix + '-"]');
+  allTabContent.forEach(function(el) { el.style.display = 'none'; });
+  var target = document.getElementById(prefix + '-' + tab);
+  if (target) target.style.display = 'block';
+  var tabBtns = tabRow.querySelectorAll('.tab-btn');
+  tabBtns.forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+var SW_QUESTIONS = [
+  "What do you hate most in other people?",
+  "What consistently triggers your anger or irritation?",
+  "What topics make you anxious or want to change the subject?",
+  "What are you most ashamed of?",
+  "What would you do at someone else's expense to get something you deeply want?",
+  "What negative traits in others secretly impress or attract you?",
+  "What are the hidden benefits of your most negative traits or habits?"
+];
+
+var JN_MORNING = [
+  "What is the one most important thing I must do today?",
+  "If I only had one year left to live — how would I spend today differently?",
+  "If my wisest self could give me two pieces of advice for today — what would they be?",
+  "What am I looking forward to today — even something small?"
+];
+
+var JN_EVENING = [
+  "What are three things I learned today?",
+  "What are three things I could have done better today?",
+  "What am I proud of today?",
+  "What am I genuinely excited about right now?",
+  "What was one interesting or unexpected observation from today?",
+  "What is my one power action for tomorrow?"
+];
+
+function gatherSW() {
+  var text = "SHADOW WORK JOURNAL — Living Foundations Clarity Series\n\n";
+  SW_QUESTIONS.forEach(function(q, i) {
+    var ans = (document.getElementById('sw_q' + (i+1)) || {}).value || '';
+    text += "Question " + (i+1) + ": " + q + "\n";
+    text += "Answer: " + (ans.trim() || "(not answered)") + "\n\n";
+  });
+  return text;
+}
+
+function gatherJN() {
+  var text = "JOURNAL ENTRIES — Living Foundations Clarity Series\n\n";
+  text += "=== MORNING ENTRIES ===\n";
+  JN_MORNING.forEach(function(q, i) {
+    var ans = (document.getElementById('jn_m' + (i+1)) || {}).value || '';
+    text += "Q: " + q + "\nA: " + (ans.trim() || "(not answered)") + "\n\n";
+  });
+  text += "=== EVENING ENTRIES ===\n";
+  JN_EVENING.forEach(function(q, i) {
+    var ans = (document.getElementById('jn_e' + (i+1)) || {}).value || '';
+    text += "Q: " + q + "\nA: " + (ans.trim() || "(not answered)") + "\n\n";
+  });
+  return text;
+}
+
+var P1_QUESTIONS = [
+  ["What you love","What are 3–5 activities from childhood or now where time completely disappeared for you?"],
+  ["What you love","What are 3–5 hobbies you've had that others would always find you doing?"],
+  ["What you love","What 3–5 experiences do you wish everyone would try?"],
+  ["What you love","Name 3–5 people you deeply admire and why."],
+  ["What you're good at","What 3–5 things are you consistently complimented on?"],
+  ["What you're good at","What 3–5 tasks would you say 'no problem' to if challenged right now?"],
+  ["What you're good at","What do people consistently ask you for help with?"],
+  ["What you're good at","What 3–5 job profiles would you naturally succeed in?"],
+  ["What you're good at","With unlimited money, the best teachers, and 3–5 years — what field could you reach exceptional level in?"],
+  ["What the world needs","Who are 3–5 people in history who've done the most good for humanity — and why?"],
+  ["What the world needs","What are the 3–5 biggest problems you see in the world today?"],
+  ["What the world needs","If you could introduce 3–5 laws for the world, what would they be?"],
+  ["What the world needs","What 3–5 mistakes do people make most often in life?"],
+  ["What you can be paid for","What 3–5 fields do people seem genuinely happy AND earning well in?"],
+  ["What you can be paid for","What 3–5 skills do you have where real money feels possible with more time?"],
+  ["What you can be paid for","What 3–5 fields, learned over 3–5 years, would pay very well with low financial risk?"],
+  ["What you can be paid for","What 3–5 professions feel like there's truly no ceiling on earnings?"]
+];
+
+var P2_QUESTIONS = [
+  ["1 Crore Question","If you had ₹1 crore to spend in one year (after savings), how would you divide it?"],
+  ["Magic Wishes","If a genie gave you unlimited wishes — what would you wish for?"],
+  ["Risky Rewards","What are your risky rewards — things you'd do if fear wasn't in the way?"],
+  ["Biggest Pains","What are your biggest pains right now?"],
+  ["6 Month Plan","Take your top 3 from each above (12 points). With only 6 months to improve each — what would you do? End with: one thing you can do TODAY."]
+];
+
+var P3_CATEGORIES = [
+  {name:"Health", keys:["p3_h_1y","p3_h_9m","p3_h_6m","p3_h_3m","p3_h_1m","p3_h_1w"]},
+  {name:"Relationships", keys:["p3_r_1y","p3_r_9m","p3_r_6m","p3_r_3m","p3_r_1m","p3_r_1w"]},
+  {name:"Career", keys:["p3_c_1y","p3_c_9m","p3_c_6m","p3_c_3m","p3_c_1m","p3_c_1w"]},
+  {name:"Finance", keys:["p3_f_1y","p3_f_9m","p3_f_6m","p3_f_3m","p3_f_1m","p3_f_1w"]}
+];
+var P3_LABELS = ["1 year goal","9 month milestone","6 month checkpoint","3 month target","1 month action","This week's action"];
+
+function gatherP1() {
+  var text = "IKIGAI SELF-REFLECTION — Living Foundations Clarity Series\n\n";
+  for (var i = 0; i < P1_QUESTIONS.length; i++) {
+    var ans = (document.getElementById('p1_q' + (i+1)) || {}).value || '';
+    text += "Category: " + P1_QUESTIONS[i][0] + "\n";
+    text += "Question " + (i+1) + ": " + P1_QUESTIONS[i][1] + "\n";
+    text += "Answer: " + (ans.trim() || "(not answered)") + "\n\n";
+  }
+  return text;
+}
+
+function gatherP2() {
+  var text = "CLARITY VALUES JOURNAL — Living Foundations Clarity Series\n\n";
+  for (var i = 0; i < P2_QUESTIONS.length; i++) {
+    var ans = (document.getElementById('p2_q' + (i+1)) || {}).value || '';
+    text += "Section: " + P2_QUESTIONS[i][0] + "\n";
+    text += "Question " + (i+1) + ": " + P2_QUESTIONS[i][1] + "\n";
+    text += "Answer: " + (ans.trim() || "(not answered)") + "\n\n";
+  }
+  return text;
+}
+
+function gatherP3() {
+  var text = "GOAL BREAKDOWN PLAN — Living Foundations Clarity Series\n\n";
+  P3_CATEGORIES.forEach(function(cat) {
+    text += "=== " + cat.name.toUpperCase() + " ===\n";
+    cat.keys.forEach(function(key, i) {
+      var ans = (document.getElementById(key) || {}).value || '';
+      text += P3_LABELS[i] + ": " + (ans.trim() || "(not answered)") + "\n";
+    });
+    text += "\n";
+  });
+  return text;
+}
+
+var SYSTEM_PROMPTS = {
+  p1: "You are a compassionate life purpose coach. A person has completed the Ikigai self-reflection exercise from the Living Foundations Clarity Series. Your job is to carefully read all their answers and write a warm, personal, insightful summary (400-600 words) that: 1) Identifies the clearest patterns you see across their four Ikigai circles (what they love, what they're good at, what the world needs, what they can be paid for), 2) Points out where their circles naturally overlap and what their potential Ikigai might look like, 3) Highlights 2-3 specific things their answers reveal about them as a person, 4) Ends with a warm, encouraging nudge about their next step. Write in warm, direct second-person (you/your). Be specific — reference their actual answers, not generic advice.",
+  p2: "You are a compassionate life coach. A person has completed the 5 Clarity Questions from the Living Foundations series — a values-surfacing journaling exercise. Read all their answers carefully and write a warm, insightful summary (400-600 words) that: 1) Identifies what their answers reveal about their true values (what they actually prioritise, based on evidence in their answers), 2) Points out patterns between what they spend money on, what they wish for, what they fear, and what pains them, 3) Highlights what their 6-month plan reveals about their priorities and readiness for change, 4) Identifies the one daily action they wrote and affirms why it matters. Write in warm second-person. Be specific — reference their actual answers.",
+  p3: "You are a compassionate life coach reviewing someone's 1-year goal breakdown across Health, Relationships, Career, and Finance from the Living Foundations Clarity Series. Read their goals carefully and write a thoughtful review (400-600 words) that: 1) Affirms what's strong and specific in their plan, 2) Gently identifies any goals that are vague or unrealistic and suggests how to sharpen them, 3) Points out the area where they seem most ready to take action right now, 4) Notes if any life area seems neglected or overloaded, 5) Ends with an encouraging, specific next step. Write in warm second-person. Be specific about their actual goals.",
+  sw: "You are a compassionate, insightful therapist and shadow work guide. A person has honestly answered 7 shadow work questions from the Living Foundations Clarity Series. Your job is to read their answers carefully and write a warm, non-judgmental, deeply insightful reflection (400-600 words) that: 1) Identifies the 2-3 most significant shadow patterns their answers reveal — what suppressed parts of themselves are showing up, 2) Gently connects the dots between what they hate in others and what they may have denied in themselves, 3) Points out what their triggers and shame reveal about their unmet needs or unhealed wounds, 4) Acknowledges the hidden 'job' their shadow traits are doing (protection, control, safety), 5) Ends with a warm, encouraging note about what integration — not elimination — of these parts could unlock for them. Write with warmth, zero judgment, and deep respect. This is sensitive territory — be kind but honest.",
+  jn: "You are a warm, insightful journaling coach. A person has filled in their morning and/or evening journal prompts from the Living Foundations How to Journal template. Read their entries and write a brief, encouraging reflection (300-400 words) that: 1) Notices the overall emotional tone and energy in their entries, 2) Highlights what their entries suggest about what matters most to them right now, 3) Gently points out any tension between what they're proud of and what they want to improve, 4) Affirms their power action or most important task and why it matters, 5) Ends with one warm, specific encouragement for tomorrow. Write in warm second-person. Keep it grounded and real — not generic cheerleading."
+};
+
+async function analyzeAnswers(part) {
+  var gathered = part === 'p1' ? gatherP1() : part === 'p2' ? gatherP2() : part === 'p3' ? gatherP3() : part === 'sw' ? gatherSW() : gatherJN();
+  var loadingEl = document.getElementById(part + '-loading');
+  var resultEl = document.getElementById(part + '-result');
+  var analysisEl = document.getElementById(part + '-analysis');
+  var btn = event.target;
+
+  btn.disabled = true;
+  btn.textContent = 'Analysing...';
+  loadingEl.style.display = 'flex';
+  resultEl.textContent = '';
+  analysisEl.classList.add('visible');
+
+  try {
+    var response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: SYSTEM_PROMPTS[part],
+        messages: [{role: "user", content: gathered}]
+      })
+    });
+    var data = await response.json();
+    loadingEl.style.display = 'none';
+    if (data.content && data.content[0] && data.content[0].text) {
+      resultEl.textContent = data.content[0].text;
+    } else {
+      resultEl.textContent = "Something went wrong. Please try again, or use the 'Copy to clipboard' button to paste your answers into your own AI.";
+    }
+  } catch(e) {
+    loadingEl.style.display = 'none';
+    resultEl.textContent = "Could not connect to the analysis service. Please use the 'Copy to clipboard' button to analyse your answers in your own AI tool.";
+  }
+
+  btn.disabled = false;
+  var labels = {p1:'✦ Analyse my answers', p2:'✦ Analyse my answers', p3:'✦ Analyse my goals', sw:'✦ Analyse my answers', jn:'✦ Analyse my entries'};
+  btn.textContent = labels[part] || '✦ Analyse my answers';
+}
+
+function copyAnswers(part) {
+  var text = part === 'p1' ? gatherP1() : part === 'p2' ? gatherP2() : part === 'p3' ? gatherP3() : part === 'sw' ? gatherSW() : gatherJN();
+  var prompts = {
+    p1: "\n\nPlease analyse my Ikigai answers above. Identify patterns across the four circles, where they overlap, what my potential Ikigai might look like, and give me 2-3 specific insights about myself. Be warm, direct, and specific to my actual answers.",
+    p2: "\n\nPlease analyse my answers above. Identify what they reveal about my true values, patterns between what I spend money on, what I fear, and what pains me. What does my 6-month plan reveal? Be warm, specific, and reference my actual answers.",
+    p3: "\n\nPlease review my goal breakdown above. What's strong and specific? What's vague or needs sharpening? Where am I most ready to take action? Is any life area neglected? Give me a warm, honest, specific review.",
+    sw: "\n\nPlease reflect on my shadow work answers above. What patterns do you notice? What suppressed parts of me are showing up? What do my triggers and shame reveal? Be compassionate, non-judgmental, and honest. What could integrating these shadow parts unlock for me?",
+    jn: "\n\nPlease reflect on my journal entries above. What does the overall tone suggest about my current energy and mindset? What matters most to me right now based on these entries? Point out any tension between what I'm proud of and what I want to improve. End with one specific encouragement for tomorrow."
+  };
+  navigator.clipboard.writeText(text + prompts[part]).then(function() {
+    var el = document.getElementById(part + '-copy-success');
+    el.style.display = 'block';
+    setTimeout(function(){ el.style.display = 'none'; }, 2500);
+  });
+}
+</script>
+</body>
+</html>
