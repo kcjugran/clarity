@@ -133,10 +133,104 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 .step-dot{width:6px;height:6px;border-radius:50%;background:#B5613A;flex-shrink:0}
 
 /* Responsive */
-@media(max-width:640px){
-  .sidebar{width:180px}
-  .content{padding:1.5rem}
+@media(max-width:768px){
+  .app{flex-direction:column}
+  .sidebar{
+    width:100%;
+    height:auto;
+    position:sticky;
+    top:0;
+    flex-direction:row;
+    align-items:center;
+    z-index:10;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .sidebar-title{
+    padding:0.75rem 1rem;
+    border-bottom:none;
+    border-right:1px solid rgba(255,255,255,0.1);
+    flex-shrink:0;
+    white-space:nowrap;
+  }
+  .sidebar-title h1{font-size:14px}
+  .sidebar-title p{display:none}
+  .nav{
+    display:flex;
+    flex:none;
+    padding:0;
+    overflow-x:auto;
+    overflow-y:visible;
+  }
+  .nav-item{
+    flex-shrink:0;
+    border-left:none;
+    border-bottom:3px solid transparent;
+    padding:0.85rem 0.9rem;
+    white-space:nowrap;
+    font-size:12px;
+  }
+  .nav-item.active{border-left-color:transparent;border-bottom-color:#B5613A}
+  .nav-bonus{
+    margin-top:0;
+    padding:0;
+    border-top:none;
+    border-left:1px solid rgba(255,255,255,0.08);
+    display:flex;
+    flex-shrink:0;
+  }
+  .nav-bonus .nav-item.active{border-left-color:transparent;border-bottom-color:#7A9E7E}
+
+  .content{padding:1.25rem 1rem}
+  .page{max-width:100%}
+  .page-title{font-size:22px}
+  .page-intro{font-size:14px}
+
+  .tab-row{gap:8px}
+  .tab-btn{padding:8px 14px;font-size:12px;flex:1;text-align:center}
+
   .ikigai-grid,.life-cats{grid-template-columns:1fr}
+
+  .q-header{padding:0.85rem 1rem;gap:10px}
+  .q-text{font-size:13.5px}
+  .q-body{padding:0 1rem 1rem 1rem}
+  .q-num{margin-top:0}
+
+  .section-card{padding:1.1rem}
+  .concept-block{padding:1rem}
+
+  .overlap-row{gap:0.5rem}
+  .overlap-pill{font-size:11px;padding:5px 10px}
+
+  /* Goal rows stack on mobile */
+  .goal-row{flex-direction:column;gap:6px}
+  .goal-row-label{
+    width:auto;
+    text-align:left;
+    padding-top:0;
+    font-size:10px;
+  }
+  .goal-cat-header{padding:0.85rem 1rem}
+  .goal-rows{padding:0.85rem 1rem}
+
+  /* Timeline stacks */
+  .t-row{flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .t-label{width:auto;text-align:left;flex:1}
+  .t-bar{flex:0 0 100%;order:3}
+  .t-desc{width:auto;text-align:right;flex:1}
+
+  .analyze-section{padding:1.1rem}
+  .analyze-btns{flex-direction:column}
+  .btn-analyze,.btn-copy{width:100%;text-align:center}
+
+  .method-card{padding:1rem}
+  .shadow-header{padding:1.1rem}
+  .shadow-header h2{font-size:17px}
+}
+
+@media(max-width:420px){
+  .nav-item{font-size:11px;padding:0.8rem 0.7rem}
+  .page-title{font-size:20px}
 }
 </style>
 </head>
@@ -819,6 +913,8 @@ var SYSTEM_PROMPTS = {
   jn: "You are a warm, insightful journaling coach. A person has filled in their morning and/or evening journal prompts from the Living Foundations How to Journal template. Read their entries and write a brief, encouraging reflection (300-400 words) that: 1) Notices the overall emotional tone and energy in their entries, 2) Highlights what their entries suggest about what matters most to them right now, 3) Gently points out any tension between what they're proud of and what they want to improve, 4) Affirms their power action or most important task and why it matters, 5) Ends with one warm, specific encouragement for tomorrow. Write in warm second-person. Keep it grounded and real — not generic cheerleading."
 };
 
+var PROXY_URL = "https://YOUR_VERCEL_PROJECT.vercel.app/api/analyse";
+
 async function analyzeAnswers(part) {
   var gathered = part === 'p1' ? gatherP1() : part === 'p2' ? gatherP2() : part === 'p3' ? gatherP3() : part === 'sw' ? gatherSW() : gatherJN();
   var loadingEl = document.getElementById(part + '-loading');
@@ -833,20 +929,22 @@ async function analyzeAnswers(part) {
   analysisEl.classList.add('visible');
 
   try {
-    var response = await fetch("https://api.anthropic.com/v1/messages", {
+    var response = await fetch(PROXY_URL, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
+        model: "llama-3.3-70b-versatile",
         max_tokens: 1000,
-        system: SYSTEM_PROMPTS[part],
-        messages: [{role: "user", content: gathered}]
+        messages: [
+          {role: "system", content: SYSTEM_PROMPTS[part]},
+          {role: "user", content: gathered}
+        ]
       })
     });
     var data = await response.json();
     loadingEl.style.display = 'none';
-    if (data.content && data.content[0] && data.content[0].text) {
-      resultEl.textContent = data.content[0].text;
+    if (data.choices && data.choices[0] && data.choices[0].message) {
+      resultEl.textContent = data.choices[0].message.content;
     } else {
       resultEl.textContent = "Something went wrong. Please try again, or use the 'Copy to clipboard' button to paste your answers into your own AI.";
     }
