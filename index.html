@@ -121,6 +121,10 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 
 /* Shadow */
 .shadow-header{background:#2C3A2E;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
+
+/* Video embed */
+.video-embed{position:relative;width:100%;padding-bottom:56.25%;border-radius:12px;overflow:hidden;margin-bottom:1.5rem;background:#000}
+.video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 .shadow-header h2{font-family:Georgia,serif;font-size:20px;font-weight:400;color:#F7F3EC;margin-bottom:0.5rem}
 .shadow-header p{font-size:13px;color:rgba(247,243,236,0.7);line-height:1.6}
 .method-card{background:#fff;border-radius:10px;border:1px solid #E8DFD0;padding:1.25rem;margin-bottom:0.75rem;display:flex;gap:12px}
@@ -135,6 +139,28 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 /* Mobile top bar (hidden on desktop) */
 .mobile-topbar{display:none}
 .mobile-overlay{display:none}
+
+/* Saved indicator */
+.saved-indicator{
+  position:fixed;
+  bottom:1.25rem;
+  right:1.25rem;
+  background:#2C3A2E;
+  color:#7A9E7E;
+  font-size:12px;
+  padding:8px 16px;
+  border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+  opacity:0;
+  transform:translateY(10px);
+  transition:all 0.25s ease;
+  pointer-events:none;
+  z-index:50;
+}
+.saved-indicator.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){
+  .saved-indicator{bottom:1rem;right:1rem;left:1rem;text-align:center}
+}
 .menu-toggle{display:none}
 
 /* Responsive */
@@ -271,6 +297,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
   </button>
 </div>
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileNav()"></div>
+<div class="saved-indicator" id="savedIndicator">Saved on this device ✓</div>
 
 <div class="app">
   <aside class="sidebar" id="sidebar">
@@ -324,6 +351,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
       </div>
 
       <div id="p1-guide">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/8DIwdh67RQs" title="Part 1 — Ikigai" allowfullscreen></iframe></div>
         <div class="concept-block"><p>Ikigai is a Japanese concept meaning "reason for being." A popular framework breaks your life purpose into four overlapping circles — and where they all meet is your Ikigai.</p></div>
         <div class="ikigai-grid">
           <div class="ikigai-card"><div class="label">Circle 1</div><h4>What you love</h4><p>Activities where time disappears. Pure joy — nothing to do with how skilled you are.</p></div>
@@ -397,6 +425,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
       </div>
 
       <div id="p2-guide">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/_F_nBRWcsis" title="Part 2 — Your values" allowfullscreen></iframe></div>
         <div class="concept-block"><p>Life purpose isn't assigned to you from the outside. It's built from your values — the things you actually spend time, money, and energy on without anyone pushing you. Not what you say matters, but what you do.</p></div>
         <div class="section-card">
           <h3>What a value really is</h3>
@@ -451,6 +480,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
       </div>
 
       <div id="p3-guide">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/4dL0p7fta60" title="Part 3 — Turning clarity into action" allowfullscreen></iframe></div>
         <div class="concept-block"><p>Your mission comes from two sources: natural interests you've always had, and voids — painful gaps from your past that drive you to fill them for others. Most people's life purpose lives in one of these two places.</p></div>
         <div class="section-card" style="margin-bottom:1.25rem">
           <h3>Your 4 life areas</h3>
@@ -570,6 +600,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
       </div>
 
       <div id="sw-guide">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/eUTKGdSkKus" title="Shadow Work" allowfullscreen></iframe></div>
         <div class="shadow-header">
           <h2>The part of you you've been hiding from</h2>
           <p>Every person has a shadow — the suppressed, hidden parts of yourself you don't acknowledge. Not because you're bad, but because life taught you to push them away. Ignored, they control you silently. Faced, they become your greatest source of wholeness.</p>
@@ -628,6 +659,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
       </div>
 
       <div id="jn-guide">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/h1ifhFa_JAc" title="How to Journal" allowfullscreen></iframe></div>
         <div class="concept-block">
           <p>Journaling is downloading your thoughts onto paper — turning the noise in your head into written form so you can actually see it, revisit it, and work with it. Done right, it's the most powerful tool you have for clarity.</p>
         </div>
@@ -823,6 +855,37 @@ function closeMobileNav() {
   document.getElementById('menuToggle').classList.remove('open');
 }
 
+/* ---- Local autosave for all answer fields ---- */
+var STORAGE_PREFIX = 'clarity_lf_';
+
+function initAutosave() {
+  var fields = document.querySelectorAll('textarea[id]');
+  fields.forEach(function(field) {
+    var key = STORAGE_PREFIX + field.id;
+    var saved = localStorage.getItem(key);
+    if (saved !== null) {
+      field.value = saved;
+    }
+    field.addEventListener('input', function() {
+      localStorage.setItem(key, field.value);
+      showSavedIndicator();
+    });
+  });
+}
+
+var savedIndicatorTimeout = null;
+function showSavedIndicator() {
+  var el = document.getElementById('savedIndicator');
+  if (!el) return;
+  el.classList.add('visible');
+  clearTimeout(savedIndicatorTimeout);
+  savedIndicatorTimeout = setTimeout(function() {
+    el.classList.remove('visible');
+  }, 1500);
+}
+
+document.addEventListener('DOMContentLoaded', initAutosave);
+
 function toggleQ(header) {
   var body = header.nextElementSibling;
   body.classList.toggle('open');
@@ -971,7 +1034,7 @@ var SYSTEM_PROMPTS = {
   jn: "You are a warm, insightful journaling coach. A person has filled in their morning and/or evening journal prompts from the Living Foundations How to Journal template. Read their entries and write a brief, encouraging reflection (300-400 words) that: 1) Notices the overall emotional tone and energy in their entries, 2) Highlights what their entries suggest about what matters most to them right now, 3) Gently points out any tension between what they're proud of and what they want to improve, 4) Affirms their power action or most important task and why it matters, 5) Ends with one warm, specific encouragement for tomorrow. Write in warm second-person. Keep it grounded and real — not generic cheerleading."
 };
 
-var PROXY_URL = "https://YOUR_VERCEL_PROJECT.vercel.app/api/analyse";
+var GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE";
 
 async function analyzeAnswers(part) {
   var gathered = part === 'p1' ? gatherP1() : part === 'p2' ? gatherP2() : part === 'p3' ? gatherP3() : part === 'sw' ? gatherSW() : gatherJN();
@@ -980,6 +1043,12 @@ async function analyzeAnswers(part) {
   var analysisEl = document.getElementById(part + '-analysis');
   var btn = event.target;
 
+  if (!GROQ_API_KEY || GROQ_API_KEY === "YOUR_GROQ_API_KEY_HERE") {
+    analysisEl.classList.add('visible');
+    resultEl.textContent = "AI analysis isn't set up yet. Use the 'Copy to clipboard' button below to paste your answers into ChatGPT, Claude, or any AI of your choice for a free analysis.";
+    return;
+  }
+
   btn.disabled = true;
   btn.textContent = 'Analysing...';
   loadingEl.style.display = 'flex';
@@ -987,9 +1056,12 @@ async function analyzeAnswers(part) {
   analysisEl.classList.add('visible');
 
   try {
-    var response = await fetch(PROXY_URL, {
+    var response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + GROQ_API_KEY
+      },
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         max_tokens: 1000,
