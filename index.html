@@ -314,6 +314,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
     <div class="nav-bonus">
       <button class="nav-item" onclick="showPage('shadow',this)"><div class="nav-dot"></div>Shadow work</button>
       <button class="nav-item" onclick="showPage('journal',this)"><div class="nav-dot"></div>How to journal</button>
+      <button class="nav-item" onclick="showPage('breathe',this)"><div class="nav-dot"></div>Breathwork</button>
     </div>
   </aside>
 
@@ -822,6 +823,62 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
       </div>
     </div>
 
+    <!-- BREATHE -->
+    <div id="page-breathe" class="page">
+      <p class="page-eyebrow" style="color:#7A9E7E">Bonus</p>
+      <h2 class="page-title">Breathwork</h2>
+      <p class="page-intro">Pick a pattern, set how long you'd like to practise, and follow the circle. Inhale as it expands, hold while it's still, exhale as it contracts. No account, no tracking — just your breath.</p>
+
+      <div class="section-card">
+        <h3>Choose a pattern</h3>
+        <div class="tab-row" id="breathe-presets" style="flex-wrap:wrap">
+          <button class="tab-btn active" data-preset="box">Box · 4-4-4-4</button>
+          <button class="tab-btn" data-preset="relax">Relax · 4-7-8</button>
+          <button class="tab-btn" data-preset="coherent">Coherent · 5.5-5.5</button>
+          <button class="tab-btn" data-preset="energise">Energise · 6-2-4-2</button>
+          <button class="tab-btn" data-preset="ascending">Ascending</button>
+          <button class="tab-btn" data-preset="custom">Custom</button>
+        </div>
+        <p id="breathe-preset-desc" style="font-size:13px;color:#4A5E4C;line-height:1.65;margin-top:0.25rem"></p>
+      </div>
+
+      <div class="section-card">
+        <h3>Settings</h3>
+        <div id="breathe-simple-settings" style="display:flex;flex-direction:column;gap:14px">
+          <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:#4A5E4C">
+            <span>Cycle length tweak (seconds)</span>
+            <input id="breathe-scale" type="number" min="1" max="60" step="0.5" value="4" style="width:90px;padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;color:#2C3A2E;font-size:13px">
+          </label>
+          <p id="breathe-scale-hint" style="font-size:12px;color:#7A9E7E;line-height:1.5;margin:0">Base unit for this pattern. Each phase scales from this number.</p>
+        </div>
+        <div id="breathe-custom-settings" style="display:none;flex-direction:column;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Inhale (s)<input id="c-inhale" type="number" min="0" max="30" step="0.5" value="4" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Hold in (s)<input id="c-hold1" type="number" min="0" max="30" step="0.5" value="4" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Exhale (s)<input id="c-exhale" type="number" min="0" max="30" step="0.5" value="4" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Hold out (s)<input id="c-hold2" type="number" min="0" max="30" step="0.5" value="4" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+          </div>
+        </div>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:#4A5E4C;margin-top:14px">
+          <span>Session length (minutes, 0 = unlimited)</span>
+          <input id="breathe-duration" type="number" min="0" max="120" step="1" value="0" style="width:90px;padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;color:#2C3A2E;font-size:13px">
+        </label>
+      </div>
+
+      <div class="section-card" style="text-align:center;padding:2rem 1.5rem">
+        <div id="breathe-stage" style="font-family:Georgia,serif;font-size:22px;color:#2C3A2E;letter-spacing:0.02em;min-height:30px;margin-bottom:1rem">Ready</div>
+        <div id="breathe-circle-wrap" style="display:flex;align-items:center;justify-content:center;height:280px">
+          <div id="breathe-circle" style="width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #C97B58, #B5613A 60%, #8A4626 100%);box-shadow:0 12px 40px -10px rgba(181,97,58,0.55), inset 0 -8px 20px rgba(0,0,0,0.15);transition:transform linear,opacity linear;transform:scale(1)"></div>
+        </div>
+        <div id="breathe-count" style="font-size:32px;font-family:Georgia,serif;color:#B5613A;margin-top:0.75rem;min-height:42px"></div>
+        <div id="breathe-timer" style="font-size:12px;color:#7A9E7E;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;min-height:18px"></div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:1.25rem">
+          <button id="breathe-start" class="tab-btn" style="background:#2C3A2E;color:#F7F3EC;border-color:#2C3A2E;padding:10px 28px">Start</button>
+          <button id="breathe-stop" class="tab-btn" style="padding:10px 28px;display:none">Stop</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -1103,6 +1160,169 @@ function copyAnswers(part) {
     setTimeout(function(){ el.style.display = 'none'; }, 2500);
   });
 }
+
+
+// ============ Breathwork ============
+(function(){
+  var PRESETS = {
+    box:       { name:'Box breathing',   desc:'Equal four-count cycle. Calms the nervous system and sharpens focus.', phases:['inhale','hold1','exhale','hold2'], ratio:[1,1,1,1] },
+    relax:     { name:'4-7-8 relax',     desc:'Long exhale, gentle hold. Great before sleep or after stress.',       phases:['inhale','hold1','exhale'],          ratio:[4/4, 7/4, 8/4] },
+    coherent:  { name:'Coherent breath', desc:'Smooth 5.5 in / 5.5 out. Balances heart-rate variability.',           phases:['inhale','exhale'],                  ratio:[5.5/4, 5.5/4] },
+    energise:  { name:'Energising',      desc:'Long inhale, short holds, quick exhale. Wakes you up.',               phases:['inhale','hold1','exhale','hold2'], ratio:[6/4, 2/4, 4/4, 2/4] },
+    ascending: { name:'Ascending',       desc:'Each cycle adds one second to every phase, climbing in difficulty.',  phases:['inhale','hold1','exhale','hold2'], ratio:[1,1,1,1], ascending:true },
+    custom:    { name:'Custom',          desc:'Set every phase yourself.', custom:true }
+  };
+  var LABELS = { inhale:'Breathe in', hold1:'Hold', exhale:'Breathe out', hold2:'Hold' };
+
+  var current = 'box';
+  var running = false;
+  var timers = [];
+  var sessionEndAt = 0;
+  var ascCycle = 0;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var presetsEl = $('breathe-presets');
+  var descEl = $('breathe-preset-desc');
+  var simpleSettings = $('breathe-simple-settings');
+  var customSettings = $('breathe-custom-settings');
+  var scaleInput = $('breathe-scale');
+  var scaleHint = $('breathe-scale-hint');
+  var durInput = $('breathe-duration');
+  var circle = $('breathe-circle');
+  var stage = $('breathe-stage');
+  var countEl = $('breathe-count');
+  var timerEl = $('breathe-timer');
+  var startBtn = $('breathe-start');
+  var stopBtn = $('breathe-stop');
+
+  function selectPreset(key){
+    current = key;
+    Array.prototype.forEach.call(presetsEl.querySelectorAll('.tab-btn'), function(b){
+      b.classList.toggle('active', b.dataset.preset === key);
+    });
+    var p = PRESETS[key];
+    descEl.textContent = p.desc;
+    if (p.custom) {
+      simpleSettings.style.display = 'none';
+      customSettings.style.display = 'flex';
+    } else {
+      simpleSettings.style.display = 'flex';
+      customSettings.style.display = 'none';
+      scaleHint.textContent = p.ascending
+        ? 'Starting unit for cycle 1. Every cycle adds 1 s to each phase.'
+        : 'Base unit. Phase ratios: ' + p.phases.map(function(ph,i){ return LABELS[ph]+' '+(p.ratio[i]*parseFloat(scaleInput.value||4)).toFixed(1)+'s'; }).join(' · ');
+    }
+  }
+
+  Array.prototype.forEach.call(presetsEl.querySelectorAll('.tab-btn'), function(b){
+    b.addEventListener('click', function(){ selectPreset(b.dataset.preset); });
+  });
+  scaleInput.addEventListener('input', function(){ if (!PRESETS[current].custom) selectPreset(current); });
+
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+  function getPhases(){
+    var p = PRESETS[current];
+    if (p.custom){
+      return [
+        { name:'inhale', seconds:parseFloat($('c-inhale').value)||0 },
+        { name:'hold1',  seconds:parseFloat($('c-hold1').value)||0 },
+        { name:'exhale', seconds:parseFloat($('c-exhale').value)||0 },
+        { name:'hold2',  seconds:parseFloat($('c-hold2').value)||0 }
+      ].filter(function(x){ return x.seconds > 0; });
+    }
+    var unit = parseFloat(scaleInput.value)||4;
+    if (p.ascending) unit = unit + ascCycle;
+    return p.phases.map(function(ph,i){
+      return { name:ph, seconds:Math.max(0.5, p.ratio[i]*unit) };
+    });
+  }
+
+  function setVisual(name, seconds){
+    stage.textContent = LABELS[name] || '';
+    var scale = 1, opacity = 1;
+    if (name === 'inhale'){ scale = 2.2; }
+    else if (name === 'exhale'){ scale = 1; }
+    else if (name === 'hold1'){ scale = 2.2; opacity = 0.95; }
+    else if (name === 'hold2'){ scale = 1;   opacity = 0.85; }
+    circle.style.transitionDuration = seconds + 's';
+    circle.style.transform = 'scale(' + scale + ')';
+    circle.style.opacity = opacity;
+  }
+
+  function tickCountdown(secs){
+    countEl.textContent = Math.ceil(secs);
+    var start = Date.now();
+    function loop(){
+      if (!running) return;
+      var left = secs - (Date.now()-start)/1000;
+      if (left <= 0){ countEl.textContent = ''; return; }
+      countEl.textContent = Math.ceil(left);
+      timers.push(setTimeout(loop, 200));
+    }
+    timers.push(setTimeout(loop, 200));
+  }
+
+  function runCycle(){
+    if (!running) return;
+    if (sessionEndAt && Date.now() >= sessionEndAt){ stop(); return; }
+    var phases = getPhases();
+    var i = 0;
+    function nextPhase(){
+      if (!running) return;
+      if (i >= phases.length){
+        if (PRESETS[current].ascending) ascCycle++;
+        runCycle();
+        return;
+      }
+      var ph = phases[i++];
+      setVisual(ph.name, ph.seconds);
+      tickCountdown(ph.seconds);
+      timers.push(setTimeout(nextPhase, ph.seconds*1000));
+    }
+    nextPhase();
+  }
+
+  function updateSessionTimer(){
+    if (!running) return;
+    if (!sessionEndAt){ timerEl.textContent = 'Unlimited'; }
+    else {
+      var left = Math.max(0, sessionEndAt - Date.now());
+      var m = Math.floor(left/60000), s = Math.floor((left%60000)/1000);
+      timerEl.textContent = m + ':' + (s<10?'0':'') + s + ' left';
+    }
+    timers.push(setTimeout(updateSessionTimer, 500));
+  }
+
+  function start(){
+    if (running) return;
+    running = true;
+    ascCycle = 0;
+    var mins = parseFloat(durInput.value)||0;
+    sessionEndAt = mins > 0 ? Date.now() + mins*60000 : 0;
+    startBtn.style.display = 'none';
+    stopBtn.style.display = 'inline-block';
+    updateSessionTimer();
+    runCycle();
+  }
+  function stop(){
+    running = false;
+    clearTimers();
+    circle.style.transitionDuration = '0.6s';
+    circle.style.transform = 'scale(1)';
+    circle.style.opacity = '1';
+    stage.textContent = 'Done — well breathed';
+    countEl.textContent = '';
+    timerEl.textContent = '';
+    startBtn.style.display = 'inline-block';
+    stopBtn.style.display = 'none';
+  }
+  startBtn.addEventListener('click', start);
+  stopBtn.addEventListener('click', stop);
+
+  selectPreset('box');
+})();
 </script>
+
 </body>
 </html>
