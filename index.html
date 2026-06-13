@@ -95,6 +95,8 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 .btn-copy{background:#fff;color:#2C3A2E;border:1px solid #D4C9B8;border-radius:8px;padding:10px 18px;font-size:13px;cursor:pointer;transition:all 0.15s}
 .btn-copy:hover{background:#F0EBE2;border-color:#B5613A}
 .btn-copy:disabled{opacity:0.4;cursor:not-allowed}
+.btn-clear-all{background:none;color:#B5613A;border:1px solid #E8C9BA;border-radius:8px;padding:9px 18px;font-size:12.5px;cursor:pointer;transition:all 0.15s;margin-top:0.75rem}
+.btn-clear-all:hover{background:#FEF0E8;border-color:#B5613A}
 .analysis-result{margin-top:1.25rem;display:none}
 .analysis-result.visible{display:block}
 .analysis-box{background:#FDFAF6;border:1px solid #E8DFD0;border-radius:10px;padding:1.25rem;font-size:14px;color:#2C3A2E;line-height:1.75;white-space:pre-wrap;min-height:80px}
@@ -139,6 +141,11 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 /* Mobile top bar (hidden on desktop) */
 .mobile-topbar{display:none}
 .mobile-overlay{display:none}
+
+/* Brand logo */
+.brand-logo{width:28px;height:28px;border-radius:8px;object-fit:cover;flex-shrink:0;vertical-align:middle}
+.sidebar-title-row{display:flex;align-items:center;gap:10px}
+
 
 /* Saved indicator */
 .saved-indicator{
@@ -222,15 +229,16 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
     transition:transform 0.25s ease;
     z-index:40;
     box-shadow:4px 0 24px rgba(0,0,0,0.2);
+    justify-content:flex-start;
   }
   .sidebar.open{transform:translateX(0)}
 
   .sidebar-title{display:none}
 
-  .nav{flex:1;padding:1.25rem 0 0;overflow-y:visible}
-  .nav-item{font-size:14px;padding:12px 1.25rem}
+  .nav{flex:none;padding:1rem 0 0;overflow-y:visible}
+  .nav-item{font-size:14px;padding:11px 1.25rem}
 
-  .nav-bonus{margin-top:0;padding-top:0.75rem}
+  .nav-bonus{margin-top:0;padding-top:0.5rem;flex:none}
 
   .content{padding:1.25rem 1rem}
   .page{max-width:100%}
@@ -289,7 +297,8 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 
 <div class="mobile-topbar">
   <div class="mobile-topbar-title">
-    <span style="font-family:Georgia,serif;font-size:16px;color:#F7F3EC">Clarity</span>
+    <img src="data:image/jpeg;base64,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" alt="Living Foundations logo" class="brand-logo">
+    <span style="font-family:Georgia,serif;font-size:16px;color:#F7F3EC;margin-left:8px">Clarity</span>
     <span style="font-size:10px;color:#7A9E7E;text-transform:uppercase;letter-spacing:0.05em;margin-left:6px">Living Foundations</span>
   </div>
   <button class="menu-toggle" onclick="toggleMobileNav()" id="menuToggle">
@@ -302,7 +311,10 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 <div class="app">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-title">
-      <h1>Clarity</h1>
+      <div class="sidebar-title-row">
+        <img src="data:image/jpeg;base64,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" alt="Living Foundations logo" class="brand-logo">
+        <h1>Clarity</h1>
+      </div>
       <p>Living Foundations</p>
     </div>
     <nav class="nav">
@@ -327,7 +339,8 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
       <p class="page-intro">This app walks alongside the three-part Clarity video series by Living Foundations. Each section has a guide and a questions section where you write and reflect — with built-in AI analysis at the end of each part.</p>
       <div class="section-card">
         <h3>How to use this</h3>
-        <p>Watch each video first, then come back here. Read the guide, answer the questions honestly, and use the "Analyse my answers" button at the end to get a personal insight summary — no copy-pasting required.</p>
+        <p>Watch the video in the Guide tab first to get context, then move to the Questions tab and write your answers honestly. At the end of each section, use the "Copy to clipboard" button and paste it into your LLM of choice (ChatGPT, Claude, etc.) to get further insights on your answers.</p>
+        <p style="margin-top:0.75rem;font-style:italic;color:#7A9E7E">Note: "Analyse my answers" is not functional yet, but will be available very soon.</p>
       </div>
       <div class="section-card">
         <h3>The journey ahead</h3>
@@ -401,7 +414,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
           <h3>Analyse your Ikigai answers</h3>
           <p>Done answering? Click below to get a personal insight summary based on everything you've written. Or copy your answers to paste into your own AI.</p>
           <div class="analyze-btns">
-            <button class="btn-analyze" onclick="analyzeAnswers('p1')">✦ Analyse my answers</button>
+            <button class="btn-analyze" onclick="analyzeAnswers('p1')">✦ Analyse my answers (coming soon)</button>
             <button class="btn-copy" onclick="copyAnswers('p1')">Copy to clipboard</button>
           </div>
           <div class="copy-success" id="p1-copy-success">Copied to clipboard!</div>
@@ -412,7 +425,9 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
             </div>
             <div class="analysis-box" id="p1-result"></div>
           </div>
+          <button class="btn-clear-all" onclick="clearAllAnswers('p1')">Clear all answers in this section</button>
         </div>
+      </div>
       </div>
     </div>
 
@@ -459,7 +474,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
           <h3>Analyse your values answers</h3>
           <p>Click below to get a personalised summary of your values, priorities, and what your answers reveal about what you truly want.</p>
           <div class="analyze-btns">
-            <button class="btn-analyze" onclick="analyzeAnswers('p2')">✦ Analyse my answers</button>
+            <button class="btn-analyze" onclick="analyzeAnswers('p2')">✦ Analyse my answers (coming soon)</button>
             <button class="btn-copy" onclick="copyAnswers('p2')">Copy to clipboard</button>
           </div>
           <div class="copy-success" id="p2-copy-success">Copied to clipboard!</div>
@@ -467,6 +482,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
             <div class="analysis-loading" id="p2-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your answers...</div>
             <div class="analysis-box" id="p2-result"></div>
           </div>
+          <button class="btn-clear-all" onclick="clearAllAnswers('p2')">Clear all answers in this section</button>
         </div>
       </div>
     </div>
@@ -579,7 +595,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
           <h3>Analyse your goals</h3>
           <p>Click below to get feedback on your goals — whether they're specific enough, what patterns emerge, and what to prioritise first.</p>
           <div class="analyze-btns">
-            <button class="btn-analyze" onclick="analyzeAnswers('p3')">✦ Analyse my goals</button>
+            <button class="btn-analyze" onclick="analyzeAnswers('p3')">✦ Analyse my goals (coming soon)</button>
             <button class="btn-copy" onclick="copyAnswers('p3')">Copy to clipboard</button>
           </div>
           <div class="copy-success" id="p3-copy-success">Copied to clipboard!</div>
@@ -587,6 +603,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
             <div class="analysis-loading" id="p3-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your goals...</div>
             <div class="analysis-box" id="p3-result"></div>
           </div>
+          <button class="btn-clear-all" onclick="clearAllAnswers('p3')">Clear all answers in this section</button>
         </div>
       </div>
     </div>
@@ -637,7 +654,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
           <h3>Analyse your shadow work</h3>
           <p>Click below to get a compassionate, honest reflection on what your answers reveal about your hidden patterns and blind spots.</p>
           <div class="analyze-btns">
-            <button class="btn-analyze" onclick="analyzeAnswers('sw')">✦ Analyse my answers</button>
+            <button class="btn-analyze" onclick="analyzeAnswers('sw')">✦ Analyse my answers (coming soon)</button>
             <button class="btn-copy" onclick="copyAnswers('sw')">Copy to clipboard</button>
           </div>
           <div class="copy-success" id="sw-copy-success">Copied to clipboard!</div>
@@ -645,6 +662,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
             <div class="analysis-loading" id="sw-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your answers...</div>
             <div class="analysis-box" id="sw-result"></div>
           </div>
+          <button class="btn-clear-all" onclick="clearAllAnswers('sw')">Clear all answers in this section</button>
         </div>
       </div>
     </div>
@@ -811,7 +829,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
           <h3>Analyse my journal entries</h3>
           <p>Filled in your morning or evening template? Click below to get a reflection on what your entries reveal about your current mindset, energy, and direction.</p>
           <div class="analyze-btns">
-            <button class="btn-analyze" onclick="analyzeAnswers('jn')">✦ Analyse my entries</button>
+            <button class="btn-analyze" onclick="analyzeAnswers('jn')">✦ Analyse my entries (coming soon)</button>
             <button class="btn-copy" onclick="copyAnswers('jn')">Copy to clipboard</button>
           </div>
           <div class="copy-success" id="jn-copy-success">Copied to clipboard!</div>
@@ -819,6 +837,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
             <div class="analysis-loading" id="jn-loading" style="display:none"><div class="loading-dots"><span></span><span></span><span></span></div>Analysing your entries...</div>
             <div class="analysis-box" id="jn-result"></div>
           </div>
+          <button class="btn-clear-all" onclick="clearAllAnswers('jn')">Clear all answers in this section</button>
         </div>
       </div>
     </div>
@@ -859,9 +878,27 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
             <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Hold out (s)<input id="c-hold2" type="number" min="0" max="30" step="0.5" value="4" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
           </div>
         </div>
+        <div id="breathe-ascending-settings" style="display:none;flex-direction:column;gap:10px">
+          <p style="font-size:12px;color:#7A9E7E;line-height:1.5;margin:0 0 4px">Set your starting pattern (seconds per phase), how long to stay at each level, and how much each phase grows per step.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Inhale start (s)<input id="a-inhale" type="number" min="0" max="30" step="0.5" value="1" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Hold in start (s)<input id="a-hold1" type="number" min="0" max="30" step="0.5" value="1" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Exhale start (s)<input id="a-exhale" type="number" min="0" max="30" step="0.5" value="1" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Hold out start (s)<input id="a-hold2" type="number" min="0" max="30" step="0.5" value="1" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px">
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Step increase (s)<input id="a-step" type="number" min="0.5" max="10" step="0.5" value="1" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+            <label style="display:flex;flex-direction:column;gap:4px;font-size:12px;color:#4A5E4C">Time at each level (s)<input id="a-level-duration" type="number" min="4" max="600" step="1" value="60" style="padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;font-size:13px"></label>
+          </div>
+          <p style="font-size:12px;color:#7A9E7E;line-height:1.5;margin:4px 0 0">Example: with the defaults above, you'll breathe 1-1-1-1 for 60 seconds, then it becomes 2-2-2-2 for the next 60 seconds, then 3-3-3-3, and so on.</p>
+        </div>
         <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:#4A5E4C;margin-top:14px">
           <span>Session length (minutes, 0 = unlimited)</span>
           <input id="breathe-duration" type="number" min="0" max="120" step="1" value="0" style="width:90px;padding:6px 10px;border:1px solid #D4C9B8;border-radius:6px;background:#F7F3EC;color:#2C3A2E;font-size:13px">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:#4A5E4C;margin-top:14px">
+          <span>Phase change sound</span>
+          <input id="breathe-sound" type="checkbox" checked style="width:20px;height:20px;accent-color:#B5613A;cursor:pointer">
         </label>
       </div>
 
@@ -931,9 +968,10 @@ function initAutosave() {
 }
 
 var savedIndicatorTimeout = null;
-function showSavedIndicator() {
+function showSavedIndicator(text) {
   var el = document.getElementById('savedIndicator');
   if (!el) return;
+  el.textContent = text || 'Saved on this device ✓';
   el.classList.add('visible');
   clearTimeout(savedIndicatorTimeout);
   savedIndicatorTimeout = setTimeout(function() {
@@ -942,6 +980,17 @@ function showSavedIndicator() {
 }
 
 document.addEventListener('DOMContentLoaded', initAutosave);
+
+function clearAllAnswers(part) {
+  var confirmed = window.confirm("This will permanently erase all answers you've written in this section on this device. This can't be undone. Continue?");
+  if (!confirmed) return;
+  var fields = document.querySelectorAll('textarea[id^="' + part + '_"]');
+  fields.forEach(function(field) {
+    field.value = '';
+    localStorage.removeItem(STORAGE_PREFIX + field.id);
+  });
+  showSavedIndicator('Answers cleared ✓');
+}
 
 function toggleQ(header) {
   var body = header.nextElementSibling;
@@ -1169,7 +1218,7 @@ function copyAnswers(part) {
     relax:     { name:'4-7-8 relax',     desc:'Long exhale, gentle hold. Great before sleep or after stress.',       phases:['inhale','hold1','exhale'],          ratio:[4/4, 7/4, 8/4] },
     coherent:  { name:'Coherent breath', desc:'Smooth 5.5 in / 5.5 out. Balances heart-rate variability.',           phases:['inhale','exhale'],                  ratio:[5.5/4, 5.5/4] },
     energise:  { name:'Energising',      desc:'Long inhale, short holds, quick exhale. Wakes you up.',               phases:['inhale','hold1','exhale','hold2'], ratio:[6/4, 2/4, 4/4, 2/4] },
-    ascending: { name:'Ascending',       desc:'Each cycle adds one second to every phase, climbing in difficulty.',  phases:['inhale','hold1','exhale','hold2'], ratio:[1,1,1,1], ascending:true },
+    ascending: { name:'Ascending',       desc:'Starts at your chosen pattern, then grows every level — fully customisable below.',  phases:['inhale','hold1','exhale','hold2'], ascending:true },
     custom:    { name:'Custom',          desc:'Set every phase yourself.', custom:true }
   };
   var LABELS = { inhale:'Breathe in', hold1:'Hold', exhale:'Breathe out', hold2:'Hold' };
@@ -1178,22 +1227,72 @@ function copyAnswers(part) {
   var running = false;
   var timers = [];
   var sessionEndAt = 0;
-  var ascCycle = 0;
+  var ascStartedAt = 0;
 
   var $ = function(id){ return document.getElementById(id); };
   var presetsEl = $('breathe-presets');
   var descEl = $('breathe-preset-desc');
   var simpleSettings = $('breathe-simple-settings');
   var customSettings = $('breathe-custom-settings');
+  var ascendingSettings = $('breathe-ascending-settings');
   var scaleInput = $('breathe-scale');
   var scaleHint = $('breathe-scale-hint');
   var durInput = $('breathe-duration');
+  var soundToggle = $('breathe-sound');
   var circle = $('breathe-circle');
   var stage = $('breathe-stage');
   var countEl = $('breathe-count');
   var timerEl = $('breathe-timer');
   var startBtn = $('breathe-start');
   var stopBtn = $('breathe-stop');
+
+  var audioCtx = null;
+  function getAudioCtx(){
+    if (!audioCtx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AC();
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+
+  function beep(freq, duration, volume){
+    if (!soundToggle.checked) return;
+    try {
+      var ctx = getAudioCtx();
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.value = 0.0001;
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      var now = ctx.currentTime;
+      gain.gain.exponentialRampToValueAtTime(volume || 0.12, now + 0.015);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+      osc.start(now);
+      osc.stop(now + duration + 0.05);
+    } catch(e) {}
+  }
+
+  // Tone settings per phase type. Inhale and exhale sit close in pitch but
+  // are distinguishable; holds use a different timbre/duration entirely.
+  var PHASE_TONES = {
+    inhale: { start:700, tick:760, duration:0.16, volume:0.11 },
+    exhale: { start:520, tick:480, duration:0.16, volume:0.11 },
+    hold1:  { start:340, tick:340, duration:0.07, volume:0.08 },
+    hold2:  { start:340, tick:340, duration:0.07, volume:0.08 }
+  };
+
+  function playPhaseStartSound(name){
+    var t = PHASE_TONES[name] || PHASE_TONES.hold1;
+    beep(t.start, t.duration + 0.06, t.volume + 0.02);
+  }
+
+  function playTickSound(name){
+    var t = PHASE_TONES[name] || PHASE_TONES.hold1;
+    beep(t.tick, t.duration, t.volume);
+  }
 
   function selectPreset(key){
     current = key;
@@ -1205,12 +1304,16 @@ function copyAnswers(part) {
     if (p.custom) {
       simpleSettings.style.display = 'none';
       customSettings.style.display = 'flex';
+      ascendingSettings.style.display = 'none';
+    } else if (p.ascending) {
+      simpleSettings.style.display = 'none';
+      customSettings.style.display = 'none';
+      ascendingSettings.style.display = 'flex';
     } else {
       simpleSettings.style.display = 'flex';
       customSettings.style.display = 'none';
-      scaleHint.textContent = p.ascending
-        ? 'Starting unit for cycle 1. Every cycle adds 1 s to each phase.'
-        : 'Base unit. Phase ratios: ' + p.phases.map(function(ph,i){ return LABELS[ph]+' '+(p.ratio[i]*parseFloat(scaleInput.value||4)).toFixed(1)+'s'; }).join(' · ');
+      ascendingSettings.style.display = 'none';
+      scaleHint.textContent = 'Base unit. Phase ratios: ' + p.phases.map(function(ph,i){ return LABELS[ph]+' '+(p.ratio[i]*parseFloat(scaleInput.value||4)).toFixed(1)+'s'; }).join(' · ');
     }
   }
 
@@ -1231,8 +1334,22 @@ function copyAnswers(part) {
         { name:'hold2',  seconds:parseFloat($('c-hold2').value)||0 }
       ].filter(function(x){ return x.seconds > 0; });
     }
+    if (p.ascending){
+      var step = parseFloat($('a-step').value) || 1;
+      var levelDur = parseFloat($('a-level-duration').value) || 60;
+      var elapsed = ascStartedAt ? (Date.now() - ascStartedAt) / 1000 : 0;
+      var level = Math.floor(elapsed / levelDur);
+      var starts = {
+        inhale: parseFloat($('a-inhale').value) || 1,
+        hold1:  parseFloat($('a-hold1').value)  || 0,
+        exhale: parseFloat($('a-exhale').value) || 1,
+        hold2:  parseFloat($('a-hold2').value)  || 0
+      };
+      return p.phases.map(function(ph){
+        return { name:ph, seconds:Math.max(0.5, starts[ph] + level*step) };
+      }).filter(function(x){ return x.seconds > 0; });
+    }
     var unit = parseFloat(scaleInput.value)||4;
-    if (p.ascending) unit = unit + ascCycle;
     return p.phases.map(function(ph,i){
       return { name:ph, seconds:Math.max(0.5, p.ratio[i]*unit) };
     });
@@ -1250,17 +1367,23 @@ function copyAnswers(part) {
     circle.style.opacity = opacity;
   }
 
-  function tickCountdown(secs){
+  function tickCountdown(secs, phaseName){
     countEl.textContent = Math.ceil(secs);
     var start = Date.now();
+    var lastWhole = Math.ceil(secs);
     function loop(){
       if (!running) return;
       var left = secs - (Date.now()-start)/1000;
       if (left <= 0){ countEl.textContent = ''; return; }
-      countEl.textContent = Math.ceil(left);
-      timers.push(setTimeout(loop, 200));
+      var wholeLeft = Math.ceil(left);
+      countEl.textContent = wholeLeft;
+      if (wholeLeft !== lastWhole) {
+        lastWhole = wholeLeft;
+        playTickSound(phaseName);
+      }
+      timers.push(setTimeout(loop, 100));
     }
-    timers.push(setTimeout(loop, 200));
+    timers.push(setTimeout(loop, 100));
   }
 
   function runCycle(){
@@ -1271,13 +1394,13 @@ function copyAnswers(part) {
     function nextPhase(){
       if (!running) return;
       if (i >= phases.length){
-        if (PRESETS[current].ascending) ascCycle++;
         runCycle();
         return;
       }
       var ph = phases[i++];
       setVisual(ph.name, ph.seconds);
-      tickCountdown(ph.seconds);
+      playPhaseStartSound(ph.name);
+      tickCountdown(ph.seconds, ph.name);
       timers.push(setTimeout(nextPhase, ph.seconds*1000));
     }
     nextPhase();
@@ -1296,8 +1419,9 @@ function copyAnswers(part) {
 
   function start(){
     if (running) return;
+    getAudioCtx();
     running = true;
-    ascCycle = 0;
+    ascStartedAt = Date.now();
     var mins = parseFloat(durInput.value)||0;
     sessionEndAt = mins > 0 ? Date.now() + mins*60000 : 0;
     startBtn.style.display = 'none';
