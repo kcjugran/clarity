@@ -221,14 +221,15 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
   .sidebar{
     position:fixed;
     top:0;
-    left:0;
+    left:auto;
+    right:0;
     bottom:0;
     width:240px;
     height:100vh;
-    transform:translateX(-100%);
+    transform:translateX(100%);
     transition:transform 0.25s ease;
     z-index:40;
-    box-shadow:4px 0 24px rgba(0,0,0,0.2);
+    box-shadow:-4px 0 24px rgba(0,0,0,0.2);
     justify-content:flex-start;
   }
   .sidebar.open{transform:translateX(0)}
@@ -236,22 +237,27 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
   .sidebar-title{display:none}
 
   .nav{flex:none;padding:1rem 0 0;overflow-y:visible}
-  .nav-item{font-size:14px;padding:11px 1.25rem}
+  .nav-item{font-size:15.5px;padding:13px 1.25rem}
 
   .nav-bonus{margin-top:0;padding-top:0.5rem;flex:none}
 
-  .content{padding:1.25rem 1rem}
+  .content{padding:1.5rem 1.15rem}
   .page{max-width:100%}
-  .page-title{font-size:22px}
-  .page-intro{font-size:14px}
+  .page-eyebrow{font-size:12px}
+  .page-title{font-size:27px;line-height:1.25}
+  .page-intro{font-size:16px;line-height:1.7;color:#3A4E3C}
+
+  .section-card h3{font-size:18px}
+  .section-card p{font-size:15.5px;color:#3A4E3C}
+  .concept-block p{font-size:15.5px}
 
   .tab-row{gap:8px}
-  .tab-btn{padding:8px 14px;font-size:12px;flex:1;text-align:center}
+  .tab-btn{padding:10px 14px;font-size:14px;flex:1;text-align:center}
 
   .ikigai-grid,.life-cats{grid-template-columns:1fr}
 
-  .q-header{padding:0.85rem 1rem;gap:10px}
-  .q-text{font-size:13.5px}
+  .q-header{padding:0.95rem 1rem;gap:10px}
+  .q-text{font-size:15px;line-height:1.55}
   .q-body{padding:0 1rem 1rem 1rem}
   .q-num{margin-top:0}
 
@@ -288,8 +294,9 @@ html,body{height:100%;font-family:system-ui,-apple-system,sans-serif;background:
 }
 
 @media(max-width:420px){
-  .nav-item{font-size:13px;padding:11px 1.1rem}
-  .page-title{font-size:20px}
+  .nav-item{font-size:15px;padding:12px 1.1rem}
+  .page-title{font-size:24px}
+  .page-intro{font-size:15.5px}
 }
 </style>
 </head>
