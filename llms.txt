@@ -2,7 +2,7 @@
 
 > Clarity is a free, guided companion for finding your life purpose, created by Karan Jugran (Living Foundations). It pairs a written guide series with an interactive web app for four practices: discovering your Ikigai, surfacing your real values, setting and breaking down goals, and doing shadow work and journaling. All answers are stored privately in the user's browser.
 
-Author: Karan Jugran — Founder, Living Foundations (https://www.youtube.com/@KaranJugran)
+Author: Karan (KC) Jugran — CHEK Holistic Lifestyle Coach and founder of Living Foundations. YouTube: https://www.youtube.com/@KaranJugran · Coaching manual: https://kcjugran.github.io/personal-training-foundations/
 
 ## Guides
 
