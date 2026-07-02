@@ -1,0 +1,21 @@
+# Clarity by Living Foundations
+
+> Clarity is a free, guided companion for finding your life purpose, created by Karan Jugran (Living Foundations). It pairs a written guide series with an interactive web app for four practices: discovering your Ikigai, surfacing your real values, setting and breaking down goals, and doing shadow work and journaling. All answers are stored privately in the user's browser.
+
+Author: Karan Jugran — Founder, Living Foundations (https://www.youtube.com/@KaranJugran)
+
+## Guides
+
+- [How to Find Your Ikigai](https://kcjugran.github.io/clarity/ikigai.html): The four-circle framework (what you love, what you're good at, what the world needs, what you can be paid for), how the circles overlap into passion/profession/vocation/mission, and the questions that reveal your purpose.
+- [How to Find Your Real Values](https://kcjugran.github.io/clarity/values.html): Why values live in behaviour not words, and the five clarity questions practised daily for two weeks to surface your true values.
+- [How to Set Goals That Stick](https://kcjugran.github.io/clarity/goals.html): The four life areas (health, relationships, career, finance) and the system for reverse-engineering a one-year goal down to this week's action.
+- [Shadow Work: What It Is and How to Start](https://kcjugran.github.io/clarity/shadow-work.html): What the psychological shadow is, why facing it matters, three ways to find yours, and honest journal prompts to begin.
+- [How to Journal for Clarity](https://kcjugran.github.io/clarity/how-to-journal.html): Journaling versus diary writing, why the quality of your questions decides everything, morning versus evening journaling, and starter prompts.
+
+## App
+
+- [Clarity interactive app](https://kcjugran.github.io/clarity/): Work through all four practices with guided questions saved privately on your device, plus a breathwork timer.
+
+## Source
+
+- Video series: Living Foundations on YouTube (https://www.youtube.com/@KaranJugran)
