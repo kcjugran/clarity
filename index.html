@@ -45,12 +45,13 @@ body{
 
 /* Floating shell on wide screens — turns dead space into intentional margin */
 @media(min-width:1360px){
+  html,body{height:100%;overflow:hidden}
   body{padding:28px}
   .app{
     max-width:1300px;
     margin:0 auto;
     min-height:0;
-    height:calc(100vh - 56px);
+    height:100%;
     border-radius:22px;
     overflow:hidden;
     box-shadow:0 30px 70px -32px rgba(44,58,46,0.42), 0 6px 20px -8px rgba(44,58,46,0.14);
