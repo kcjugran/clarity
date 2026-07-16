@@ -179,6 +179,11 @@ body{
 .genie-tile{background:#fff;border:1px solid rgba(232,223,208,0.8);border-radius:14px;padding:1.25rem 1.3rem;text-align:left;cursor:pointer;box-shadow:var(--card-shadow);transition:box-shadow 220ms var(--ease-out),transform 220ms var(--ease-out),border-color 220ms var(--ease-out);display:flex;flex-direction:column;gap:5px}
 .genie-tile:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px);border-color:rgba(181,97,58,0.3)}
 .genie-tile:active{transform:scale(0.985)}
+.card-glyph{width:34px;height:34px;display:block;margin-bottom:8px}
+.cat-glyph{width:30px;height:30px;display:block;margin-bottom:6px}
+.hdr-glyph{width:19px;height:19px;display:inline-block;vertical-align:-4px;margin-right:7px}
+.shadow-glyph{width:38px;height:38px;display:block;margin-bottom:10px}
+.goal-cat-icon svg{width:17px;height:17px;display:block}
 .genie-tile .gt-icon{display:block;width:40px;height:40px;margin-bottom:4px}
 .genie-tile .gt-icon svg{width:100%;height:100%;transition:transform 260ms var(--ease-out)}
 .genie-tile:hover .gt-icon svg{transform:translateY(-2px) rotate(-3deg)}
@@ -599,10 +604,10 @@ body{
         <div class="video-embed"><iframe src="https://www.youtube.com/embed/8DIwdh67RQs" title="Part 1 — Ikigai" allowfullscreen></iframe></div>
         <div class="concept-block"><p>Ikigai is a Japanese concept meaning "reason for being." A popular framework breaks your life purpose into four overlapping circles — and where they all meet is your Ikigai.</p></div>
         <div class="ikigai-grid">
-          <div class="ikigai-card"><div class="label">Circle 1</div><h4>What you love</h4><p>Activities where time disappears. Pure joy — nothing to do with how skilled you are.</p></div>
-          <div class="ikigai-card"><div class="label">Circle 2</div><h4>What you're good at</h4><p>Natural strengths or built skills. People notice. You feel genuinely confident here.</p></div>
-          <div class="ikigai-card"><div class="label">Circle 3</div><h4>What the world needs</h4><p>Problems that bother you deeply. Gaps you see that others seem to ignore.</p></div>
-          <div class="ikigai-card"><div class="label">Circle 4</div><h4>What you can be paid for</h4><p>Skills with real market value — now or with time invested.</p></div>
+          <div class="ikigai-card"><svg class="card-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 38 C11 29 8 19 15 14 C20 10.5 24 15 24 18 C24 15 28 10.5 33 14 C40 19 37 29 24 38 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="38" cy="10" r="2.4" fill="#B5613A"/></svg><div class="label">Circle 1</div><h4>What you love</h4><p>Activities where time disappears. Pure joy — nothing to do with how skilled you are.</p></div>
+          <div class="ikigai-card"><svg class="card-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 9 C25 17 28 21 36 24 C28 27 25 31 24 39 C23 31 20 27 12 24 C20 21 23 17 24 9 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="37" cy="12" r="2.4" fill="#B5613A"/></svg><div class="label">Circle 2</div><h4>What you're good at</h4><p>Natural strengths or built skills. People notice. You feel genuinely confident here.</p></div>
+          <div class="ikigai-card"><svg class="card-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="14" stroke="#2C3A2E" stroke-width="2.4"/><path d="M24 10 C18 18 18 30 24 38 M24 10 C30 18 30 30 24 38 M10.5 21 H37.5" stroke="#2C3A2E" stroke-width="2"/><circle cx="31" cy="30" r="2.4" fill="#B5613A"/></svg><div class="label">Circle 3</div><h4>What the world needs</h4><p>Problems that bother you deeply. Gaps you see that others seem to ignore.</p></div>
+          <div class="ikigai-card"><svg class="card-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="13.5" stroke="#2C3A2E" stroke-width="2.4"/><circle cx="24" cy="24" r="5" stroke="#B5613A" stroke-width="2.4"/><path d="M24 4.5 V8 M24 40 V43.5 M4.5 24 H8 M40 24 H43.5" stroke="#2C3A2E" stroke-width="2.2" stroke-linecap="round"/></svg><div class="label">Circle 4</div><h4>What you can be paid for</h4><p>Skills with real market value — now or with time invested.</p></div>
         </div>
         <div class="cat-header"><div class="line"></div><span>Where circles overlap</span><div class="line"></div></div>
         <div class="overlap-row">
@@ -733,10 +738,10 @@ body{
           <h3>Your 4 life areas</h3>
           <p style="margin-bottom:1rem">Set goals in all four for a complete picture of your life.</p>
           <div class="life-cats">
-            <div class="life-cat"><div class="cat-name">Health</div><div class="cat-subs">Physical fitness<br>Mental wellbeing & stress</div></div>
-            <div class="life-cat"><div class="cat-name">Relationships</div><div class="cat-subs">Close personal bonds<br>Social & professional circles</div></div>
-            <div class="life-cat"><div class="cat-name">Career</div><div class="cat-subs">Passion projects & craft<br>Professional service & skills</div></div>
-            <div class="life-cat"><div class="cat-name">Finance</div><div class="cat-subs">Active income & growth<br>Passive income & investments</div></div>
+            <div class="life-cat"><svg class="cat-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 26 H16 L20 17 L26 34 L30 23 H41" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="41" cy="23" r="2.4" fill="#B5613A"/></svg><div class="cat-name">Health</div><div class="cat-subs">Physical fitness<br>Mental wellbeing & stress</div></div>
+            <div class="life-cat"><svg class="cat-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="24" r="9" stroke="#2C3A2E" stroke-width="2.4"/><circle cx="30" cy="24" r="9" stroke="#B5613A" stroke-width="2.4"/></svg><div class="cat-name">Relationships</div><div class="cat-subs">Close personal bonds<br>Social & professional circles</div></div>
+            <div class="life-cat"><svg class="cat-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 37 L19 17 L26 27 L33 14 L42 37" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="33" cy="10" r="2.4" fill="#B5613A"/></svg><div class="cat-name">Career</div><div class="cat-subs">Passion projects & craft<br>Professional service & skills</div></div>
+            <div class="life-cat"><svg class="cat-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="24" cy="33" rx="11" ry="4.5" stroke="#2C3A2E" stroke-width="2.4"/><ellipse cx="24" cy="25" rx="11" ry="4.5" stroke="#2C3A2E" stroke-width="2.4"/><ellipse cx="24" cy="17" rx="11" ry="4.5" stroke="#B5613A" stroke-width="2.4"/></svg><div class="cat-name">Finance</div><div class="cat-subs">Active income & growth<br>Passive income & investments</div></div>
           </div>
         </div>
         <div class="section-card">
@@ -760,7 +765,7 @@ body{
         <!-- HEALTH -->
         <div class="goal-cat-section">
           <div class="goal-cat-header">
-            <div class="goal-cat-icon" style="background:#FEF0E8;color:#B5613A">H</div>
+            <div class="goal-cat-icon" style="background:#FEF0E8;color:#B5613A"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 26 H16 L20 17 L26 34 L30 23 H41" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <h3>Health</h3>
           </div>
           <div class="goal-rows">
@@ -776,7 +781,7 @@ body{
         <!-- RELATIONSHIPS -->
         <div class="goal-cat-section">
           <div class="goal-cat-header">
-            <div class="goal-cat-icon" style="background:#E8F3E8;color:#3A6E3A">R</div>
+            <div class="goal-cat-icon" style="background:#E8F3E8;color:#3A6E3A"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="18" cy="24" r="9" stroke="currentColor" stroke-width="3.4"/><circle cx="30" cy="24" r="9" stroke="currentColor" stroke-width="3.4"/></svg></div>
             <h3>Relationships</h3>
           </div>
           <div class="goal-rows">
@@ -792,7 +797,7 @@ body{
         <!-- CAREER -->
         <div class="goal-cat-section">
           <div class="goal-cat-header">
-            <div class="goal-cat-icon" style="background:#EAE8F8;color:#5248A0">C</div>
+            <div class="goal-cat-icon" style="background:#EAE8F8;color:#5248A0"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 37 L19 17 L26 27 L33 14 L42 37" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <h3>Career</h3>
           </div>
           <div class="goal-rows">
@@ -808,7 +813,7 @@ body{
         <!-- FINANCE -->
         <div class="goal-cat-section">
           <div class="goal-cat-header">
-            <div class="goal-cat-icon" style="background:#FDF4E0;color:#A07828">F</div>
+            <div class="goal-cat-icon" style="background:#FDF4E0;color:#A07828"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="24" cy="33" rx="11" ry="4.5" stroke="currentColor" stroke-width="3.2"/><ellipse cx="24" cy="25" rx="11" ry="4.5" stroke="currentColor" stroke-width="3.2"/><ellipse cx="24" cy="17" rx="11" ry="4.5" stroke="currentColor" stroke-width="3.2"/></svg></div>
             <h3>Finance</h3>
           </div>
           <div class="goal-rows">
@@ -850,6 +855,7 @@ body{
       <div id="sw-guide">
         <div class="video-embed"><iframe src="https://www.youtube.com/embed/eUTKGdSkKus" title="Shadow Work" allowfullscreen></iframe></div>
         <div class="shadow-header">
+          <svg class="shadow-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="28" cy="27" r="12" fill="#7A9E7E" opacity="0.45"/><circle cx="20" cy="21" r="12" stroke="#F7F3EC" stroke-width="2.4"/></svg>
           <h2>The part of you you've been hiding from</h2>
           <p>In psychology, the "shadow" describes the parts of your personality that your conscious mind doesn't recognise or accept — the side of you that stays hidden, even from yourself. Not because you're bad, but because life taught you to push these parts away. Ignored, they quietly run the show from behind the scenes. Faced, they become your greatest source of wholeness.</p>
         </div>
@@ -1016,7 +1022,7 @@ body{
         <p style="font-size:13px;color:#7A9E7E;margin-bottom:1.75rem;font-style:italic">Use these templates as a starting point. Adapt them — remove what doesn't fit, add questions that matter to you. Your journal should feel like yours.</p>
 
         <!-- MORNING -->
-        <div class="cat-header"><div class="line"></div><span>Morning template</span><div class="line"></div></div>
+        <div class="cat-header"><div class="line"></div><span><svg class="hdr-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="26" r="8" stroke="#B5613A" stroke-width="2.6"/><path d="M24 8 V13 M36.7 13.3 L33.2 16.8 M40 26 H35 M11.3 13.3 L14.8 16.8 M8 26 H13" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/></svg>Morning template</span><div class="line"></div></div>
         <p style="font-size:13px;color:#4A5E4C;margin-bottom:1.25rem;line-height:1.65">Do this before you check your phone. Sets the tone for the whole day. Takes 10–15 minutes.</p>
 
         <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">M1</div><div><div class="q-text">What is the one most important thing I must do today?</div><div class="q-sub">If you do nothing else — what's the one action that moves your life forward most?</div></div></div><div class="q-body"><textarea id="jn_m1" placeholder="Be specific. Not 'work on my project' — 'finish the introduction section of my report'..."></textarea><div class="q-tip">Everything else in your day is secondary to this. Protect time for it first.</div></div></div>
@@ -1028,7 +1034,7 @@ body{
         <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">M4</div><div><div class="q-text">What am I looking forward to today — even something small?</div></div></div><div class="q-body"><textarea id="jn_m4" placeholder="A meal, a conversation, a task you actually enjoy, a moment of quiet..."></textarea><div class="q-tip">Starting the day by finding something to anticipate trains your mind toward positivity without faking it.</div></div></div>
 
         <!-- EVENING -->
-        <div class="cat-header" style="margin-top:2.5rem"><div class="line"></div><span>Evening template</span><div class="line"></div></div>
+        <div class="cat-header" style="margin-top:2.5rem"><div class="line"></div><span><svg class="hdr-glyph" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 9 C22 12 17 19 17 26 C17 33 22 38 29 39 C21 42 10 37 9 27 C8 17 18 8 30 9 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round" transform="translate(6 0)"/><circle cx="14" cy="14" r="2.2" fill="#B5613A"/></svg>Evening template</span><div class="line"></div></div>
         <p style="font-size:13px;color:#4A5E4C;margin-bottom:1.25rem;line-height:1.65">Do this before bed. Closes the day with reflection and sets up tomorrow. Takes 10–20 minutes.</p>
 
         <div class="q-block"><div class="q-header" onclick="toggleQ(this)"><div class="q-num">E1</div><div><div class="q-text">What are three things I learned today?</div><div class="q-sub">Big or small — anything that was new information, a new skill, or a new perspective.</div></div></div><div class="q-body"><textarea id="jn_e1" placeholder="e.g. Learned a shortcut in my editing software / Realised I work better in the afternoon / Had a conversation that changed my view on X..."></textarea></div></div>
