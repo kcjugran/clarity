@@ -174,6 +174,26 @@ body{
 .life-cat .cat-name{font-family:Georgia,serif;font-size:14px;color:#2C3A2E;margin-bottom:4px}
 .life-cat .cat-subs{font-size:12px;color:#7A9E7E;line-height:1.6}
 
+/* Clarity Genie */
+.genie-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:0.5rem 0 0.5rem}
+.genie-tile{background:#fff;border:1px solid rgba(232,223,208,0.8);border-radius:14px;padding:1.25rem 1.3rem;text-align:left;cursor:pointer;box-shadow:var(--card-shadow);transition:box-shadow 220ms var(--ease-out),transform 220ms var(--ease-out),border-color 220ms var(--ease-out);display:flex;flex-direction:column;gap:5px}
+.genie-tile:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px);border-color:rgba(181,97,58,0.3)}
+.genie-tile:active{transform:scale(0.985)}
+.genie-tile .gt-name{font-family:Georgia,serif;font-size:17px;color:#2C3A2E}
+.genie-tile .gt-blurb{font-size:13px;color:#7A9E7E;line-height:1.55}
+.genie-back{background:none;border:none;cursor:pointer;color:#B5613A;font-size:13px;padding:6px 0;margin-bottom:0.5rem;display:inline-flex;align-items:center;gap:6px;transition:gap 180ms var(--ease-out)}
+.genie-back:hover{gap:10px}
+.genie-flow-head{display:flex;align-items:baseline;gap:10px;margin-bottom:0.35rem;flex-wrap:wrap}
+.genie-flow-head h3{font-family:Georgia,serif;font-size:22px;font-weight:400;color:#2C3A2E}
+.genie-flow-head .gt-tag{font-size:11px;text-transform:uppercase;letter-spacing:0.09em;color:#B5613A}
+.genie-flow-intro{font-size:14px;color:#6A7E6C;line-height:1.65;margin-bottom:1.5rem;font-style:italic}
+.genie-q-item{margin-bottom:1.1rem}
+.genie-q-item label{display:block;font-size:14.5px;color:#2C3A2E;line-height:1.6;margin-bottom:8px}
+.genie-q-item .gq-num{color:#B5613A;font-weight:500;margin-right:6px}
+.genie-q-item textarea{width:100%;min-height:80px;border:1px solid #E8DFD0;border-radius:10px;padding:0.75rem;font-size:13.5px;color:#2C3A2E;background:#FDFAF6;resize:vertical;font-family:inherit;line-height:1.6}
+.genie-q-item textarea:focus{outline:none;border-color:#B5613A;background:#fff}
+.genie-q-item textarea::placeholder{color:#A0B0A2}
+
 /* Timeline */
 .timeline{margin:1.5rem 0}
 .t-row{display:flex;gap:12px;align-items:center;margin-bottom:10px}
@@ -317,7 +337,7 @@ body{
   .tab-row{gap:8px}
   .tab-btn{padding:10px 14px;font-size:14px;flex:1;text-align:center}
 
-  .ikigai-grid,.life-cats{grid-template-columns:1fr}
+  .ikigai-grid,.life-cats,.genie-grid{grid-template-columns:1fr}
 
   .q-header{padding:0.95rem 1rem;gap:10px}
   .q-text{font-size:15px;line-height:1.55}
@@ -515,6 +535,7 @@ body{
       <button class="nav-item" onclick="showPage('part1',this)"><div class="nav-dot"></div>Part 1 — Ikigai</button>
       <button class="nav-item" onclick="showPage('part2',this)"><div class="nav-dot"></div>Part 2 — Your values</button>
       <button class="nav-item" onclick="showPage('part3',this)"><div class="nav-dot"></div>Part 3 — Goals</button>
+      <button class="nav-item" onclick="showPage('genie',this)"><div class="nav-dot"></div>Clarity Genie</button>
     </nav>
     <div class="nav-bonus">
       <button class="nav-item" onclick="showPage('shadow',this)"><div class="nav-dot"></div>Shadow work</button>
@@ -1142,6 +1163,14 @@ body{
       </div>
     </div>
 
+    <!-- CLARITY GENIE -->
+    <div id="page-genie" class="page">
+      <p class="page-eyebrow">Clarity Genie</p>
+      <h2 class="page-title">Feeling something? Start here.</h2>
+      <p class="page-intro">Pick what you're feeling right now. The Genie gives you a short set of questions built for exactly that state — answer them honestly, then copy everything into your favourite AI (ChatGPT, Claude, etc.) for a personal reflection. Nothing is sent anywhere; your answers stay on your device.</p>
+      <div id="genie-root"></div>
+    </div>
+
   </main>
 </div>
 
@@ -1447,6 +1476,172 @@ function copyAnswers(part) {
     setTimeout(function(){ el.style.display = 'none'; }, 2500);
   });
 }
+
+
+// ============ Clarity Genie ============
+var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely'];
+var GENIE = {
+  anxious: {
+    name: "Anxious or worried",
+    blurb: "Racing thoughts, tension, or a sense of dread.",
+    tag: "Settle the feeling",
+    intro: "When the feeling is loud, meet it before trying to fix anything.",
+    questions: [
+      "What am I most trying to avoid feeling or facing right now?",
+      "If this anxious feeling had a positive intention — something it's trying to protect me from or point me toward — what might that be?",
+      "What am I assuming about this situation (or another person) that I haven't actually checked is true?",
+      "What would I gain, and what would I lose, if this feeling fully resolved?",
+      "What is the key lesson this situation might be here to teach me?",
+      "What is one small action that would help ease or resolve this?"
+    ]
+  },
+  stuck: {
+    name: "Stuck or putting something off",
+    blurb: "Procrastinating on something that matters.",
+    tag: "Get unstuck",
+    intro: "There's usually a hidden reason you haven't moved yet. Let's find it.",
+    questions: [
+      "What do I actually want here, versus what I have right now?",
+      "What has consistently stopped me from already making this happen?",
+      "What am I quietly getting out of NOT having it yet? (comfort, safety, an excuse, avoiding risk)",
+      "What do I fear it might cost me — in time, responsibility, or change — if I actually had it?",
+      "If nothing changes, what will this have cost me one year from now?",
+      "If my current limitations didn't exist, what would the best next step be?",
+      "What is the smallest action I can take in the next 24 hours that proves I've chosen this over staying comfortable?"
+    ]
+  },
+  bored: {
+    name: "Bored or restless",
+    blurb: "Flat, going through the motions.",
+    tag: "Reconnect with what matters",
+    intro: "Boredom is often a signal you've drifted from what actually inspires you.",
+    questions: [
+      "What do I value most in life — and where have I already lived those values today, even in a small way?",
+      "What future am I genuinely inspired to create over the next 12 months?",
+      "If I were fully aligned with what inspires me, how would I spend the rest of today?",
+      "What is my current way of spending the day giving me that a more inspired day wouldn't?",
+      "What have I learned about myself from answering these?"
+    ]
+  },
+  unsure: {
+    name: "Unsure what I really want",
+    blurb: "Can't tell what you actually want.",
+    tag: "Find what truly matters",
+    intro: "Strip away the noise and see what rises to the top.",
+    questions: [
+      "If I had only one year left to live, what would I do, create, or experience? List everything — then pick your top five.",
+      "For each of your top five, what has stopped you from pursuing it until now?",
+      "For each, what are you quietly gaining by NOT pursuing it?",
+      "For each, what is it costing you to keep putting it off?",
+      "For each, what is the simplest version you could begin right now?",
+      "Which of these could you start living today without harming your long-term future?"
+    ]
+  },
+  work: {
+    name: "Frustrated with my work",
+    blurb: "Checked out or resentful about what you're doing.",
+    tag: "Make the work matter",
+    intro: "Before you quit or push through, find the meaning that's actually there.",
+    questions: [
+      "How is the work I'm doing connected to what I value most?",
+      "If I could start this over knowing what I know now, what would I do differently?",
+      "If I had the choice, how much of this would I delegate versus do myself?",
+      "How could I turn this into something I'd genuinely enjoy?",
+      "What is the smallest meaningful step I can take right now?"
+    ]
+  },
+  lonely: {
+    name: "Lonely or disconnected",
+    blurb: "Distant from others, or from yourself.",
+    tag: "Come back to connection",
+    intro: "Connection starts with remembering what it actually feels like for you.",
+    questions: [
+      "What is my favourite way to receive love or care from others?",
+      "What is my favourite way to give love or care to others?",
+      "What was the last thing that made me feel real connection — with a person, a place, or an activity?",
+      "When was the last interaction that genuinely moved me, and why?",
+      "If I had three months left, who and what would I give my time to?"
+    ]
+  }
+};
+
+function renderGenie() {
+  var root = document.getElementById('genie-root');
+  if (!root) return;
+  var html = '<div id="genie-picker"><div class="genie-grid">';
+  GENIE_ORDER.forEach(function(key) {
+    var g = GENIE[key];
+    html += '<button class="genie-tile" onclick="showGenieFeeling(\'' + key + '\')">' +
+      '<span class="gt-name">' + g.name + '</span>' +
+      '<span class="gt-blurb">' + g.blurb + '</span></button>';
+  });
+  html += '</div></div>';
+  GENIE_ORDER.forEach(function(key) {
+    var g = GENIE[key];
+    html += '<div class="genie-flow" id="genie-flow-' + key + '" style="display:none">';
+    html += '<button class="genie-back" onclick="genieBack()">← Choose a different feeling</button>';
+    html += '<div class="genie-flow-head"><h3>' + g.name + '</h3><span class="gt-tag">' + g.tag + '</span></div>';
+    html += '<p class="genie-flow-intro">' + g.intro + '</p>';
+    g.questions.forEach(function(q, i) {
+      var id = 'genie_' + key + '_' + (i + 1);
+      html += '<div class="genie-q-item"><label for="' + id + '"><span class="gq-num">' + (i + 1) + '</span>' + q + '</label>' +
+        '<textarea id="' + id + '" placeholder="Write freely..."></textarea></div>';
+    });
+    html += '<div class="analyze-section" style="margin-top:1.75rem">';
+    html += '<h3>Done? Get your reflection</h3>';
+    html += '<p>Copy everything below and paste it into ChatGPT, Claude, or any AI for a personal, honest reflection on what you\'re feeling.</p>';
+    html += '<div class="analyze-btns"><button class="btn-copy" onclick="copyGenie(\'' + key + '\')">Copy to clipboard</button></div>';
+    html += '<div class="copy-success" id="genie-' + key + '-copy-success">Copied to clipboard!</div>';
+    html += '<button class="btn-clear-all" onclick="clearAllAnswers(\'genie_' + key + '\')">Clear these answers</button>';
+    html += '</div></div>';
+  });
+  root.innerHTML = html;
+}
+
+function showGenieFeeling(key) {
+  var picker = document.getElementById('genie-picker');
+  if (picker) picker.style.display = 'none';
+  GENIE_ORDER.forEach(function(k) {
+    var el = document.getElementById('genie-flow-' + k);
+    if (el) el.style.display = (k === key ? 'block' : 'none');
+  });
+  var contentEl = document.querySelector('.content');
+  if (contentEl) contentEl.scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+function genieBack() {
+  GENIE_ORDER.forEach(function(k) {
+    var el = document.getElementById('genie-flow-' + k);
+    if (el) el.style.display = 'none';
+  });
+  var picker = document.getElementById('genie-picker');
+  if (picker) picker.style.display = 'block';
+  var contentEl = document.querySelector('.content');
+  if (contentEl) contentEl.scrollTop = 0;
+  window.scrollTo(0, 0);
+}
+
+function gatherGenie(key) {
+  var g = GENIE[key];
+  var text = "CLARITY GENIE — Living Foundations\nFeeling: " + g.name + "\n\n";
+  g.questions.forEach(function(q, i) {
+    var ans = (document.getElementById('genie_' + key + '_' + (i + 1)) || {}).value || '';
+    text += "Q" + (i + 1) + ": " + q + "\nA: " + (ans.trim() || "(not answered)") + "\n\n";
+  });
+  return text;
+}
+
+function copyGenie(key) {
+  var prompt = "\n\nI answered these questions while feeling \"" + GENIE[key].name.toLowerCase() +
+    "\". Please read my answers and give me a warm, honest, specific reflection: the patterns you notice, what might be underneath this feeling, and one small concrete action I could take next. Be direct and kind, and reference my actual answers.";
+  navigator.clipboard.writeText(gatherGenie(key) + prompt).then(function() {
+    var el = document.getElementById('genie-' + key + '-copy-success');
+    if (el) { el.style.display = 'block'; setTimeout(function() { el.style.display = 'none'; }, 2500); }
+  });
+}
+
+renderGenie();
 
 
 // ============ Breathwork ============
