@@ -110,12 +110,23 @@ button { cursor: pointer; }
   font-size: 16px;
   padding: var(--cg-grid) calc(var(--cg-grid) * 1.5);
   display: flex;
+  flex-direction: column;
+  gap: 4px;
   align-items: center;
   justify-content: center;
   text-align: center;
   transition: transform var(--cg-t-press) ease-out, border-color var(--cg-t-press) ease-out,
     background-color var(--cg-t-press) ease-out;
 }
+
+.cg-tile-emoji {
+  font-size: 26px;
+  line-height: 1;
+  /* keep emoji glyphs colourful on every OS, immune to the pixel theme */
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+
+.cg-tile-label { display: block; }
 
 .cg-tile:hover, .cg-tile:focus-visible {
   border-color: var(--cg-accent);
@@ -276,8 +287,8 @@ button { cursor: pointer; }
     <div class="cg-journal-row">
       <div class="cg-journal-divider" aria-hidden="true"></div>
       <div class="cg-journal-split">
-        <button type="button" class="cg-journal-button cg-journal-button-half" id="journalMorningButton">Morning</button>
-        <button type="button" class="cg-journal-button cg-journal-button-half" id="journalEveningButton">Evening</button>
+        <button type="button" class="cg-journal-button cg-journal-button-half" id="journalMorningButton"><span class="cg-tile-emoji" aria-hidden="true">🌅</span> Morning</button>
+        <button type="button" class="cg-journal-button cg-journal-button-half" id="journalEveningButton"><span class="cg-tile-emoji" aria-hidden="true">🌙</span> Evening</button>
       </div>
     </div>
   </div>
@@ -303,6 +314,27 @@ button { cursor: pointer; }
 // Feeling.tsx's cg-journal-split layout). ----
 var DATA = {"moods":[{"id":"bored","label":"bored","questions":["What are your greatest values, and how have those values already been expressed today?","What future am I genuinely inspired to create over the next 12 months?","If I were fully aligned with my inspiration, how would I naturally spend the rest of today?","What is my current way of spending the day giving me that this ideal day is not?","What have I learned about myself through answering these questions?"]},{"id":"confused","label":"confused","questions":["What are your greatest values, and how have those values already been expressed today?","What future am I genuinely inspired to create over the next 12 months?","If I were fully aligned with my inspiration, how would I naturally spend the rest of today?","What is my current way of spending the day giving me that this ideal day is not?","What have I learned about myself through answering these questions?"]},{"id":"notSure","label":"not sure how I feel","questions":["If you could not fail or be judged, and had to spend the next 20 years building them, what projects would you pursue? List as many as come to mind.","Of those projects, which ones feel most uniquely suited to your strengths, experiences, and perspective? Which ones call to you the most deeply?","For each of those projects, what evidence suggests you could successfully pursue it?","For each project, what is the real reason you haven't pursued or achieved it yet?","For each project, what benefit are you getting from not fully pursuing or achieving it?","For each project, how could you make the journey more enjoyable, meaningful, and sustainable instead of overwhelming?","If you started today and gave each project your best effort for one year, what's the highest level you could realistically reach?","For each project, what people, skills, resources, habits, systems, or support would give you the best chance of reaching that one-year goal?","Imagine you've achieved the one-year goal for each project. What does a typical day in your life look like, and how is it different from your life today?","What is the single highest-impact action you can take in the next 30 minutes to move one or more of these projects forward?"]},{"id":"procrastinating","label":"procrastinating","questions":["What do I want truly here vs what I have?","If I say I truly want this, what has consistently stopped me from already creating it?","What benefits am I currently receiving from not having this?","What costs, responsibilities, or changes do I believe will come with having this?","If I don't create this outcome, what will it cost me one year from now?","If my current limitations didn't exist, what would the most effective next step be?","What would success look like for me one year from now if I stayed committed to this goal?","What do I need right now to ensure I reach this vision?","How could I make the process of achieving this 20–50% more enjoyable?","What have I learned from this about me?","What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"]},{"id":"anxious","label":"anxious","questions":["What part of yourself can't you love here that you're trying to avoid?","What is the positive intention of this feeling?","What is the benefit of the unresolved behaviours?","What is the loss of not experiencing this?","How is this helping you align with your purpose?","What unverified assumptions do I have here about the situation or the other person?","What benefit would you get in completely resolving this?","What is the key lesson to take from this?","What's one key action you could take that would help resolve this situation?"]},{"id":"overwhelmed","label":"overwhelmed","questions":["What do I want truly here vs what I have?","If I say I truly want this, what has consistently stopped me from already creating it?","What benefits am I currently receiving from not having this?","What costs, responsibilities, or changes do I believe will come with having this?","If I don't create this outcome, what will it cost me one year from now?","If my current limitations didn't exist, what would the most effective next step be?","What would success look like for me one year from now if I stayed committed to this goal?","What do I need right now to ensure I reach this vision?","How could I make the process of achieving this 20–50% more enjoyable?","What have I learned from this about me?","What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"]},{"id":"volatile","label":"volatile","questions":["What part of yourself can't you love here that you're trying to avoid?","What is the positive intention of this feeling?","What is the benefit of the unresolved behaviours?","What is the loss of not experiencing this?","How is this helping you align with your purpose?","What unverified assumptions do I have here about the situation or the other person?","What benefit would you get in completely resolving this?","What is the key lesson to take from this?","What's one key action you could take that would help resolve this situation?"]},{"id":"drained","label":"drained","questions":["What are your greatest values, and how have those values already been expressed today?","What future am I genuinely inspired to create over the next 12 months?","If I were fully aligned with my inspiration, how would I naturally spend the rest of today?","What is my current way of spending the day giving me that this ideal day is not?","What have I learned about myself through answering these questions?"]},{"id":"demotivated","label":"demotivated","questions":["What matters most in life right now?","What's the one most useful thing to accomplish today?","What's stopping me from doing it?","What's the smallest step I can take right now to address that resistance?","What's one tiny move toward what I actually want?","What did I learn or notice?","Where does this fit in my 6–12 month vision?"]},{"id":"wantSomething","label":"I want something","questions":["What do I want truly here vs what I have?","If I say I truly want this, what has consistently stopped me from already creating it?","What benefits am I currently receiving from not having this?","What costs, responsibilities, or changes do I believe will come with having this?","If I don't create this outcome, what will it cost me one year from now?","If my current limitations didn't exist, what would the most effective next step be?","What would success look like for me one year from now if I stayed committed to this goal?","What do I need right now to ensure I reach this vision?","How could I make the process of achieving this 20–50% more enjoyable?","What have I learned from this about me?","What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"]},{"id":"overcomeHabit","label":"I want to overcome a habit","questions":["What do I want truly here vs what I have?","If I say I truly want this, what has consistently stopped me from already creating it?","What benefits am I currently receiving from not having this?","What costs, responsibilities, or changes do I believe will come with having this?","If I don't create this outcome, what will it cost me one year from now?","If my current limitations didn't exist, what would the most effective next step be?","What would success look like for me one year from now if I stayed committed to this goal?","What do I need right now to ensure I reach this vision?","How could I make the process of achieving this 20–50% more enjoyable?","What have I learned from this about me?","What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"]},{"id":"overcomeFear","label":"Overcome a fear","questions":["What is the fear you're feeling versus the feeling you want to feel?","What is stopping you from feeling the way you want to feel?","What benefit do you get from feeling this fear?","What price are you paying by staying the same?","What would your life look like in one year if you overcame this fear?","Think of others who have overcome this fear — what do you think they did?","What do you need to overcome these fears?","What is stopping you from taking these steps?","What would you need to overcome these obstacles?","What can you do today to make progress on this?","What did today teach you?","What is your immediate action now?"]},{"id":"loneliness","label":"Loneliness","questions":["When you think of love, what comes to mind?","When was the last time you felt a deep connection with someone?","Describe the ideal person you wish you could talk to right now.","What is the price of not having such people in your life?","What stops you from finding such people right now?","How can you overcome these obstacles?","What do you need to ensure you follow through?","What can you do today to make progress?","What did this journal teach you?","What is your immediate action right now?"]},{"id":"somethingElse","label":"something else","questions":["What do I want truly here vs what I have?","If I say I truly want this, what has consistently stopped me from already creating it?","What benefits am I currently receiving from not having this?","What costs, responsibilities, or changes do I believe will come with having this?","If I don't create this outcome, what will it cost me one year from now?","If my current limitations didn't exist, what would the most effective next step be?","What would success look like for me one year from now if I stayed committed to this goal?","What do I need right now to ensure I reach this vision?","How could I make the process of achieving this 20–50% more enjoyable?","What have I learned from this about me?","What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"]},{"id":"journalMorning","label":"Morning","questions":["What do I want most in life?","What stops me from getting it?","What is the benefit of my current life over my ideal?","What is the cost of living my current life?","What happens in a year's time if I live my ideals?","What do I need to come closer to my ideals?","What can I do today to come closer to my vision?","What did I learn from this journal?"]},{"id":"journal","label":"Evening","questions":["What's one thing that went well today?","What's one thing that was hard or draining today?","What did today teach you about yourself?","Where did your actions match what you actually value today — and where did they drift?","What's the one thing you want to carry into tomorrow?","What is the one thing for tomorrow?"]}]};
 
+// One emoji per feeling — the offline Lite has no SVG icon set, so emojis
+// carry the mood glyph (render on every OS via the emoji font stack above).
+var EMOJI = {
+  bored: '😑',            // 😑
+  confused: '😕',         // 😕
+  notSure: '🤔',          // 🤔
+  procrastinating: '⏳',        // ⏳
+  anxious: '😰',          // 😰
+  overwhelmed: '🤯',      // 🤯 (single codepoint — ZWJ 😵‍💫 splits on some OSes)
+  volatile: '🌋',         // 🌋
+  drained: '😫',          // 😫 (single codepoint — ZWJ 😮‍💨 splits on some OSes)
+  demotivated: '😞',      // 😞
+  wantSomething: '🎯',    // 🎯
+  overcomeHabit: '🔁',    // 🔁
+  overcomeFear: '🦁',     // 🦁
+  loneliness: '🕊️', // 🕊️
+  somethingElse: '💭',    // 💭
+  journalMorning: '🌅',   // 🌅
+  journal: '🌙'           // 🌙
+};
+
 var answers = {}; // { moodId: [answerStr, ...] } kept in memory for the session
 
 var tileGrid = document.getElementById('tileGrid');
@@ -324,7 +356,15 @@ DATA.moods.filter(function (m) { return m.id !== 'journal' && m.id !== 'journalM
   var btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'cg-tile';
-  btn.textContent = m.label;
+  var emoji = document.createElement('span');
+  emoji.className = 'cg-tile-emoji';
+  emoji.setAttribute('aria-hidden', 'true');
+  emoji.textContent = EMOJI[m.id] || '';
+  var label = document.createElement('span');
+  label.className = 'cg-tile-label';
+  label.textContent = m.label;
+  btn.appendChild(emoji);
+  btn.appendChild(label);
   btn.addEventListener('click', function () { openMood(m.id); });
   tileGrid.appendChild(btn);
 });
@@ -346,7 +386,7 @@ function openMood(id) {
   if (!mood) return;
   if (!answers[id]) answers[id] = mood.questions.map(function () { return ''; });
 
-  moodTitle.textContent = mood.label;
+  moodTitle.textContent = (EMOJI[id] ? EMOJI[id] + '  ' : '') + mood.label;
   qaContainer.innerHTML = '';
 
   mood.questions.forEach(function (q, i) {
