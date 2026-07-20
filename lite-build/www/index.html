@@ -28,34 +28,46 @@
 }
 
 :root {
-  --cg-canvas: #151726;
-  --cg-panel: #232742;
-  --cg-border-light: #8b93c9;
-  --cg-border-dark: #0d0e18;
+  /* Living Foundations palette — matches the Clarity website (warm cream
+     parchment, ink-green text, terracotta accent). */
+  --cg-canvas: #EDE6D9;
+  --cg-panel: #ffffff;
+  --cg-border-light: rgba(232, 223, 208, 0.8);
+  --cg-border-dark: #2C3A2E;
   --cg-border: var(--cg-border-light);
-  --cg-accent: #8b93c9;
-  --cg-accent-hi: #f0eef7;
-  --cg-accent-dim: color-mix(in srgb, var(--cg-accent) 55%, black);
-  --cg-gold: #ffd166;
+  --cg-accent: #B5613A;
+  --cg-accent-hi: #2C3A2E;
+  --cg-accent-dim: color-mix(in srgb, var(--cg-accent) 55%, white);
+  --cg-gold: #7A9E7E;
   --cg-frame: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges"><defs><g id="c"><rect x="3" y="0" width="5" height="1" fill="%230d0e18"/><rect x="2" y="1" width="1" height="1" fill="%230d0e18"/><rect x="1" y="2" width="1" height="1" fill="%230d0e18"/><rect x="0" y="3" width="1" height="5" fill="%230d0e18"/><rect x="3" y="1" width="5" height="2" fill="%238b93c9"/><rect x="2" y="2" width="1" height="1" fill="%238b93c9"/><rect x="1" y="3" width="2" height="5" fill="%238b93c9"/><rect x="3" y="3" width="5" height="1" fill="%233a4066"/><rect x="3" y="4" width="1" height="4" fill="%233a4066"/><rect x="4" y="4" width="4" height="1" fill="%230d0e18"/><rect x="4" y="5" width="1" height="3" fill="%230d0e18"/></g><g id="e"><rect x="8" y="0" width="8" height="1" fill="%230d0e18"/><rect x="8" y="1" width="8" height="2" fill="%238b93c9"/><rect x="8" y="3" width="8" height="1" fill="%233a4066"/><rect x="8" y="4" width="8" height="1" fill="%230d0e18"/></g></defs><use href="%23c"/><use href="%23c" transform="rotate(90 12 12)"/><use href="%23c" transform="rotate(180 12 12)"/><use href="%23c" transform="rotate(270 12 12)"/><use href="%23e"/><use href="%23e" transform="rotate(90 12 12)"/><use href="%23e" transform="rotate(180 12 12)"/><use href="%23e" transform="rotate(270 12 12)"/></svg>');
-  --cg-text: #f0eef7;
-  --cg-text-secondary: #9a9ab8;
+  --cg-text: #2C3A2E;
+  --cg-text-secondary: #4A5E4C;
   --cg-grid: 8px;
-  /* Professional native font stack — SF on macOS/iOS, Segoe UI on Windows,
-     Roboto on Android. No embedded pixel fonts; clean and offline-safe. */
-  --cg-font-display: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --cg-font-question: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --cg-radius: 12px;
+  /* Titles use Georgia serif (matches the website's headings); body/questions
+     use a clean native sans (SF / Segoe UI / Roboto). Offline-safe, no
+     embedded fonts. */
+  --cg-font-display: Georgia, 'Times New Roman', serif;
+  --cg-font-question: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --cg-radius: 14px;
   --cg-radius-sm: 10px;
-  --cg-tile-border: 1px solid #363b5c;
-  --cg-shadow: 0 1px 2px rgba(0,0,0,0.35), 0 4px 14px rgba(0,0,0,0.25);
+  --cg-tile-border: 1px solid var(--cg-border-light);
+  --cg-shadow: 0 1px 2px rgba(44,58,46,0.04), 0 6px 16px -10px rgba(44,58,46,0.14);
+  --cg-shadow-hover: 0 2px 4px rgba(44,58,46,0.05), 0 14px 32px -14px rgba(44,58,46,0.22);
   --cg-t-press: 130ms;
   --cg-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * { box-sizing: border-box; }
 
-html, body { height: 100%; background: var(--cg-canvas); }
+html, body { height: 100%; }
+/* Warm parchment background — identical to the Clarity website. */
+body {
+  background:
+    radial-gradient(120% 90% at 15% 0%, #EFE7D8 0%, rgba(239,231,216,0) 55%),
+    radial-gradient(120% 100% at 100% 100%, #E4E9DE 0%, rgba(228,233,222,0) 50%),
+    var(--cg-canvas);
+  background-attachment: fixed;
+}
 
 body {
   margin: 0;
@@ -86,10 +98,10 @@ button { cursor: pointer; }
 }
 
 .cg-signal-label {
-  font-family: var(--cg-font-display);
-  font-size: 13px;
+  font-family: var(--cg-font-question);
+  font-size: 12px;
   font-weight: 600;
-  color: var(--cg-text-secondary);
+  color: var(--cg-accent);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-align: center;
@@ -140,12 +152,12 @@ button { cursor: pointer; }
 .cg-tile:hover, .cg-tile:focus-visible {
   border-color: var(--cg-accent);
   transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.35), 0 10px 24px rgba(0,0,0,0.3);
+  box-shadow: var(--cg-shadow-hover);
   outline: none;
 }
 
 .cg-tile:active {
-  background: color-mix(in srgb, var(--cg-accent) 18%, var(--cg-panel));
+  background: color-mix(in srgb, var(--cg-accent) 8%, var(--cg-panel));
   transform: translateY(0);
   box-shadow: var(--cg-shadow);
 }
@@ -198,7 +210,7 @@ button { cursor: pointer; }
 .cg-journal-button:hover {
   border-color: var(--cg-accent);
   transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.35), 0 10px 24px rgba(0,0,0,0.3);
+  box-shadow: var(--cg-shadow-hover);
 }
 
 /* ---- questions screen ---- */
@@ -243,8 +255,8 @@ button { cursor: pointer; }
 
 .cg-free-input {
   width: 100%;
-  background: #1c1f34;
-  border: var(--cg-tile-border);
+  background: #FDFAF6;
+  border: 1px solid #E0D6C4;
   border-radius: var(--cg-radius-sm);
   color: var(--cg-text);
   padding: calc(var(--cg-grid) * 1.5);
@@ -256,12 +268,12 @@ button { cursor: pointer; }
   transition: border-color var(--cg-t-press) ease-out, box-shadow var(--cg-t-press) ease-out;
 }
 
-.cg-free-input::placeholder { color: var(--cg-text-secondary); }
+.cg-free-input::placeholder { color: #9aa89b; }
 
 .cg-free-input:focus {
   outline: none;
   border-color: var(--cg-accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cg-accent) 25%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cg-accent) 18%, transparent);
 }
 
 .cg-footer-row {
@@ -278,8 +290,8 @@ button { cursor: pointer; }
   background: var(--cg-accent);
   border: 1px solid var(--cg-accent);
   border-radius: var(--cg-radius-sm);
-  color: #14162a;
-  font-family: var(--cg-font-display);
+  color: #F7F3EC;
+  font-family: var(--cg-font-question);
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -292,9 +304,9 @@ button { cursor: pointer; }
 .cg-copy-status {
   text-align: center;
   color: var(--cg-gold);
-  font-family: var(--cg-font-display);
+  font-family: var(--cg-font-question);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   min-height: 1.2em;
 }
 

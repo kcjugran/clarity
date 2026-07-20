@@ -25,6 +25,13 @@ function createWindow() {
     ? path.join(process.resourcesPath, 'www', 'index.html')
     : path.join(__dirname, '..', 'www', 'index.html');
   win.loadFile(indexPath);
+
+  // Desktop (PC/Mac) reads from farther away than a phone — zoom the whole UI
+  // 20% larger for comfortable reading. Desktop-only: the Android build uses
+  // Capacitor, not this file, so its sizing is unaffected.
+  win.webContents.on('did-finish-load', () => {
+    win.webContents.setZoomFactor(1.2);
+  });
 }
 
 app.whenReady().then(() => {
