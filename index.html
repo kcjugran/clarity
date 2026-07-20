@@ -173,6 +173,14 @@ body{
 .life-cat .cat-subs{font-size:12px;color:#7A9E7E;line-height:1.6}
 
 /* Clarity Genie */
+.lite-dl-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0.85rem}
+.lite-dl{display:flex;flex-direction:column;align-items:center;gap:4px;padding:1.15rem 0.5rem;border:1px solid rgba(232,223,208,0.9);border-radius:14px;background:#fff;color:#2C3A2E;text-decoration:none;box-shadow:var(--card-shadow);transition:box-shadow 220ms var(--ease-out),transform 220ms var(--ease-out),border-color 220ms var(--ease-out),color 220ms var(--ease-out)}
+.lite-dl:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px);border-color:rgba(181,97,58,0.4);color:#B5613A}
+.lite-dl:active{transform:scale(0.985)}
+.lite-dl svg{width:38px;height:38px;display:block}
+.lite-dl-os{font-family:Georgia,serif;font-size:15px;margin-top:4px}
+.lite-dl-file{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#7A9E7E}
+@media (max-width:480px){.lite-dl-row{grid-template-columns:1fr;gap:0.6rem}.lite-dl{flex-direction:row;justify-content:flex-start;gap:12px;padding:0.85rem 1.1rem}.lite-dl svg{width:30px;height:30px}.lite-dl-file{margin-left:auto}}
 .genie-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:0.5rem 0 0.5rem}
 .genie-tile{background:#fff;border:1px solid rgba(232,223,208,0.8);border-radius:14px;padding:1.25rem 1.3rem;text-align:left;cursor:pointer;box-shadow:var(--card-shadow);transition:box-shadow 220ms var(--ease-out),transform 220ms var(--ease-out),border-color 220ms var(--ease-out);display:flex;flex-direction:column;gap:5px}
 .genie-tile:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px);border-color:rgba(181,97,58,0.3)}
@@ -577,7 +585,7 @@ body{
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="17" r="6.5" stroke="currentColor" stroke-width="2.4"/><path d="M11 38 C11 28 37 28 37 38" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
         Work with me
       </a>
-      <a class="sx-link" href="https://github.com/kcjugran/clarity/releases/latest/download/ClarityLite.exe" title="Clarity Lite — standalone offline app for Windows. Pick a mood, answer the questions offline, copy them out.">
+      <a class="sx-link" href="#download" onclick="openDownloads();return false;" title="Clarity Lite — standalone offline app for Windows, macOS and Android. Pick a mood, answer offline, copy it out.">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 9 V29 M16 22 L24 30 L32 22" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 33 V37 A2 2 0 0 0 13 39 H35 A2 2 0 0 0 37 37 V33" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Download offline app
       </a>
@@ -1214,6 +1222,31 @@ body{
       <h2 class="page-title">Feeling something? Start here.</h2>
       <p class="page-intro">Pick what you're feeling right now. The Genie gives you a short set of questions built for exactly that state — answer them honestly, then copy everything into your favourite AI (ChatGPT, Claude, etc.) for a personal reflection. Nothing is sent anywhere; your answers stay on your device.</p>
       <div id="genie-root"></div>
+
+      <!-- OFFLINE LITE — downloadable apps (no AI, no internet) -->
+      <div id="lite-download" class="section-card" style="margin-top:2.5rem">
+        <h3>Prefer it offline? Download Clarity Lite</h3>
+        <p style="font-size:14.5px;line-height:1.7;color:#4A5E4C;margin:0.4rem 0 1.25rem">
+          The same mood-to-questions flow as a standalone app — fully offline, no AI, nothing leaves your device. Pick a mood, answer, copy it all out.
+        </p>
+        <div class="lite-dl-row">
+          <a class="lite-dl" href="https://github.com/kcjugran/clarity/releases/latest/download/ClarityLite-Windows.exe" title="Windows — portable .exe. If SmartScreen warns: More info then Run anyway.">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12 L22 10 V23 H8 Z M25 9.6 L40 8 V23 H25 Z M8 25 H22 V38 L8 36 Z M25 25 H40 V40 L25 38 Z" fill="currentColor"/></svg>
+            <span class="lite-dl-os">Windows</span>
+            <span class="lite-dl-file">.exe</span>
+          </a>
+          <a class="lite-dl" href="https://github.com/kcjugran/clarity/releases/latest/download/ClarityLite-Mac.dmg" title="macOS — .dmg. Unsigned: right-click the app then Open the first time.">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M31 8 C31 12 28 15 24 15 C24 11 27.5 8 31 8 Z M33 24 C33 20 36 18 36 18 C34.5 15.5 31.5 15 30 15 C28 15 26.5 16 24.5 16 C22.5 16 20.5 15 18.5 15 C15 15 12 18 12 23 C12 31 17 40 21 40 C22.8 40 23.5 38.8 25.8 38.8 C28 38.8 28.6 40 30.5 40 C34 40 38 32 38 30 C38 30 33 28.5 33 24 Z" fill="currentColor"/></svg>
+            <span class="lite-dl-os">macOS</span>
+            <span class="lite-dl-file">.dmg</span>
+          </a>
+          <a class="lite-dl" href="https://github.com/kcjugran/clarity/releases/latest/download/ClarityLite-Android.apk" title="Android — .apk. Allow installs from this source when prompted.">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 10 L14 6 M32 10 L34 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12 20 C12 15 17 12 24 12 C31 12 36 15 36 20 Z" fill="currentColor"/><circle cx="19" cy="17" r="1.4" fill="#fff"/><circle cx="29" cy="17" r="1.4" fill="#fff"/><rect x="12" y="22" width="24" height="15" rx="3" fill="currentColor"/><rect x="7" y="22" width="4" height="12" rx="2" fill="currentColor"/><rect x="37" y="22" width="4" height="12" rx="2" fill="currentColor"/><rect x="16" y="38" width="4" height="7" rx="2" fill="currentColor"/><rect x="28" y="38" width="4" height="7" rx="2" fill="currentColor"/></svg>
+            <span class="lite-dl-os">Android</span>
+            <span class="lite-dl-file">.apk</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <footer class="site-footer">
@@ -1250,11 +1283,25 @@ function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
-  btn.classList.add('active');
+  // btn may be omitted (deep-link / sidebar) — sync the matching nav item instead.
+  var navBtn = btn || document.querySelector('.nav-item[onclick*="\'' + id + '\'"]');
+  if (navBtn) navBtn.classList.add('active');
   closeMobileNav();
   var contentEl = document.querySelector('.content');
   if (contentEl) contentEl.scrollTop = 0;
   window.scrollTo(0, 0);
+}
+
+// Open the Genie page and scroll to the offline-download card. Used by the
+// sidebar link and by #download deep-links from the article pages.
+function openDownloads() {
+  showPage('genie');
+  var card = document.getElementById('lite-download');
+  if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+// Article pages link here as index.html#download.
+if (location.hash === '#download') {
+  window.addEventListener('DOMContentLoaded', function () { setTimeout(openDownloads, 60); });
 }
 
 function toggleMobileNav() {
