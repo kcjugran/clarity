@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Electron build output
+electron/dist/
+
+# Capacitor Android build outputs (commit the android/ project itself,
+# just not its generated build artifacts/caches)
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/captures/
+android/.cxx/

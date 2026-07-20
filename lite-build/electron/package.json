@@ -1,0 +1,42 @@
+{
+  "name": "clarity-lite",
+  "productName": "Clarity Lite",
+  "version": "1.0.0",
+  "description": "Clarity Lite — offline, self-contained desktop app.",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "build": "electron-builder --mac dmg --x64"
+  },
+  "devDependencies": {
+    "electron": "^42.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.karan.claritylite",
+    "productName": "Clarity Lite",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../www",
+        "to": "www"
+      }
+    ],
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.lifestyle",
+      "identity": null,
+      "artifactName": "ClarityLite-Mac.${ext}"
+    },
+    "win": {
+      "target": "portable",
+      "artifactName": "ClarityLite-Windows.${ext}"
+    }
+  }
+}

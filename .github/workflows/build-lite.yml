@@ -1,0 +1,156 @@
+name: Build Clarity Lite (Win + Mac + Android)
+
+# Builds the offline Clarity Lite app for Windows (.exe) + macOS (.dmg) via
+# Electron and Android (.apk) via Capacitor, and attaches all three to one
+# GitHub Release so the download URLs stay consistent.
+on:
+  push:
+    tags:
+      - 'lite-v*'
+  workflow_dispatch: {}
+
+jobs:
+  # --- macOS: Electron -> .dmg -----------------------------------------
+  mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps and build .dmg
+        working-directory: lite-build/electron
+        # CSC_IDENTITY_AUTO_DISCOVERY=false disables macOS code signing
+        # (we ship unsigned; mac.identity is also null in package.json).
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: |
+          npm install
+          npx electron-builder --mac dmg --x64
+
+      - name: Upload .dmg artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clarity-lite-mac
+          path: lite-build/electron/dist/*.dmg
+          if-no-files-found: error
+
+  # --- Windows: Electron -> portable .exe -------------------------------
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps and build .exe
+        working-directory: lite-build/electron
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: |
+          npm install
+          npx electron-builder --win portable --x64
+
+      - name: Upload .exe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clarity-lite-windows
+          path: lite-build/electron/dist/*.exe
+          if-no-files-found: error
+
+  # --- Android: Capacitor -> debug .apk ---------------------------------
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install deps, sync, and build debug APK
+        working-directory: lite-build
+        run: |
+          npm install
+          npx cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Rename APK for release
+        run: |
+          mkdir -p lite-build/android/app/build/outputs/apk/debug/renamed
+          cp lite-build/android/app/build/outputs/apk/debug/app-debug.apk \
+             lite-build/android/app/build/outputs/apk/debug/renamed/ClarityLite-Android.apk
+
+      - name: Upload .apk artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: clarity-lite-android
+          path: lite-build/android/app/build/outputs/apk/debug/renamed/ClarityLite-Android.apk
+          if-no-files-found: error
+
+  # --- Release: attach both build outputs to a GitHub Release ----------
+  release:
+    needs: [windows, mac, android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: clarity-lite-windows
+          path: dist/windows
+
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: clarity-lite-mac
+          path: dist/mac
+
+      - name: Download Android artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: clarity-lite-android
+          path: dist/android
+
+      - name: Collect assets under fixed names
+        run: |
+          mkdir -p dist/release
+          cp dist/windows/*.exe dist/release/ClarityLite-Windows.exe
+          cp dist/mac/*.dmg dist/release/ClarityLite-Mac.dmg
+          cp dist/android/ClarityLite-Android.apk dist/release/ClarityLite-Android.apk
+
+      - name: Create/update GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # Use the pushed tag, or a fixed tag for manual runs.
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'lite-latest' }}
+          name: ${{ github.ref_type == 'tag' && github.ref_name || 'Clarity Lite (latest manual build)' }}
+          files: |
+            dist/release/ClarityLite-Windows.exe
+            dist/release/ClarityLite-Mac.dmg
+            dist/release/ClarityLite-Android.apk
