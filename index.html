@@ -1597,14 +1597,27 @@ function copyAnswers(part) {
 
 
 // ============ Clarity Genie ============
-var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely'];
+var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely','confused','overwhelmed','volatile','drained','demotivated','wantSomething','overcomeHabit','overcomeFear','selfEsteem','idealPartner','somethingElse','journalMorning','journal'];
 var GENIE_ICONS = {
   anxious: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 31 C14 13, 23 11, 24 20 C25 29, 13 32, 17 23 C21 13, 33 12, 35 21 C37 30, 27 34, 29 27" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><circle cx="38" cy="14" r="2.6" fill="#B5613A"/></svg>',
   stuck:   '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 24 H26" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round"/><path d="M20 17 L27 24 L20 31" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 11 V37" stroke="#2C3A2E" stroke-width="2.6" stroke-linecap="round"/></svg>',
   bored:   '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 26 C14 26 17 31 24 31 C31 31 34 26 40 26" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><circle cx="24" cy="15" r="2.6" fill="#B5613A"/></svg>',
   unsure:  '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40 V27 C24 19 15 17 13 10" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M24 27 C24 19 33 17 35 10" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="8" r="2.6" fill="#B5613A"/><circle cx="36" cy="8" r="2.6" fill="#B5613A"/></svg>',
   work:    '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="13" y="30" width="21" height="8" rx="2" stroke="#2C3A2E" stroke-width="2.4"/><rect x="17" y="20" width="21" height="8" rx="2" stroke="#2C3A2E" stroke-width="2.4"/><rect x="9" y="10" width="21" height="8" rx="2" stroke="#B5613A" stroke-width="2.4"/></svg>',
-  lonely:  '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="26" r="4.5" stroke="#B5613A" stroke-width="2.4"/><circle cx="33" cy="15" r="3" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="39" cy="26" r="3" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="32" cy="35" r="3" stroke="#2C3A2E" stroke-width="2.2"/></svg>'
+  lonely:  '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="26" r="4.5" stroke="#B5613A" stroke-width="2.4"/><circle cx="33" cy="15" r="3" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="39" cy="26" r="3" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="32" cy="35" r="3" stroke="#2C3A2E" stroke-width="2.2"/></svg>',
+  confused: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 15 C16 15, 16 24, 24 24 C32 24, 32 33, 40 33" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><path d="M8 33 C16 33, 16 24, 24 24 C32 24, 32 15, 40 15" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  overwhelmed: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 20 C13 17 16 17 21 20 C26 23 29 23 34 20" stroke="#2C3A2E" stroke-width="2.2" stroke-linecap="round"/><path d="M8 28 C13 25 16 25 21 28 C26 31 29 31 34 28" stroke="#2C3A2E" stroke-width="2.2" stroke-linecap="round"/><path d="M8 36 C13 33 16 33 21 36 C26 39 29 39 34 36" stroke="#2C3A2E" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="10" r="2.6" fill="#B5613A"/></svg>',
+  volatile: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M27 6 L14 26 H22 L18 42 L34 20 H26 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="18" cy="42" r="2.6" fill="#B5613A"/></svg>',
+  drained: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="14" width="20" height="28" rx="3" stroke="#2C3A2E" stroke-width="2.4"/><path d="M19 10 H29" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><rect x="16" y="34" width="12" height="5" fill="#B5613A"/></svg>',
+  demotivated: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8 V32" stroke="#2C3A2E" stroke-width="2.6" stroke-linecap="round"/><path d="M15 25 L24 34 L33 25" stroke="#B5613A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  wantSomething: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="15" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="24" cy="24" r="9" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="24" cy="24" r="3.2" fill="#B5613A"/></svg>',
+  overcomeHabit: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="13" stroke="#2C3A2E" stroke-width="2.4" stroke-dasharray="70 12"/><path d="M20 8 L28 8 L24 15 Z" fill="#B5613A"/></svg>',
+  overcomeFear: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 L38 12 V24 C38 34 32 40 24 43 C16 40 10 34 10 24 V12 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="24" r="3" fill="#B5613A"/></svg>',
+  selfEsteem: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="16" r="4" stroke="#2C3A2E" stroke-width="2.2"/><path d="M15 22 C10 22 8 27 8 32" stroke="#2C3A2E" stroke-width="2.2" stroke-linecap="round"/><path d="M24 8 V40" stroke="#2C3A2E" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 4"/><circle cx="33" cy="16" r="4" stroke="#B5613A" stroke-width="2.2"/><path d="M33 22 C38 22 40 27 40 32" stroke="#B5613A" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  idealPartner: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="19" cy="24" r="10" stroke="#2C3A2E" stroke-width="2.4"/><circle cx="31" cy="24" r="10" stroke="#B5613A" stroke-width="2.4"/></svg>',
+  somethingElse: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="24" cy="24" r="3.4" fill="#B5613A"/><circle cx="36" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/></svg>',
+  journalMorning: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="26" r="8" stroke="#B5613A" stroke-width="2.6"/><path d="M24 8 V13 M36.7 13.3 L33.2 16.8 M40 26 H35 M11.3 13.3 L14.8 16.8 M8 26 H13" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  journal: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 9 C22 12 17 19 17 26 C17 33 22 38 29 39 C21 42 10 37 9 27 C8 17 18 8 30 9 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round" transform="translate(6 0)"/><circle cx="14" cy="14" r="2.2" fill="#B5613A"/></svg>'
 };
 var GENIE = {
   anxious: {
@@ -1687,6 +1700,236 @@ var GENIE = {
       "What was the last thing that made me feel real connection — with a person, a place, or an activity?",
       "When was the last interaction that genuinely moved me, and why?",
       "If I had three months left, who and what would I give my time to?"
+    ]
+  },
+  confused: {
+    name: "Confused",
+    blurb: "Can't tell what's actually true here.",
+    tag: "Find clarity",
+    intro: "Confusion usually clears once you look at what you actually value.",
+    questions: [
+      "What are your greatest values, and how have those values already been expressed today?",
+      "What future am I genuinely inspired to create over the next 12 months?",
+      "If I were fully aligned with my inspiration, how would I naturally spend the rest of today?",
+      "What is my current way of spending the day giving me that this ideal day is not?",
+      "What have I learned about myself through answering these questions?"
+    ]
+  },
+  overwhelmed: {
+    name: "Overwhelmed",
+    blurb: "Too much at once, no clear next step.",
+    tag: "Find the next step",
+    intro: "When everything feels urgent, one honest question at a time helps.",
+    questions: [
+      "What do I want truly here vs what I have?",
+      "If I say I truly want this, what has consistently stopped me from already creating it?",
+      "What benefits am I currently receiving from not having this?",
+      "What costs, responsibilities, or changes do I believe will come with having this?",
+      "If I don't create this outcome, what will it cost me one year from now?",
+      "If my current limitations didn't exist, what would the most effective next step be?",
+      "What would success look like for me one year from now if I stayed committed to this goal?",
+      "What do I need right now to ensure I reach this vision?",
+      "How could I make the process of achieving this 20–50% more enjoyable?",
+      "What have I learned from this about me?",
+      "What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"
+    ]
+  },
+  volatile: {
+    name: "Volatile or on edge",
+    blurb: "Reactive, short-fused, hard to settle.",
+    tag: "Settle the feeling",
+    intro: "Strong reactions usually protect something. Let's find what it is.",
+    questions: [
+      "What part of yourself can't you love here that you're trying to avoid?",
+      "What is the positive intention of this feeling?",
+      "What is the benefit of the unresolved behaviours?",
+      "What is the loss of not experiencing this?",
+      "How is this helping you align with your purpose?",
+      "What unverified assumptions do I have here about the situation or the other person?",
+      "What benefit would you get in completely resolving this?",
+      "What is the key lesson to take from this?",
+      "What's one key action you could take that would help resolve this situation?"
+    ]
+  },
+  drained: {
+    name: "Drained",
+    blurb: "Low energy, running on empty.",
+    tag: "Reconnect with what matters",
+    intro: "Feeling drained often means you've drifted from what actually gives you energy.",
+    questions: [
+      "What are your greatest values, and how have those values already been expressed today?",
+      "What future am I genuinely inspired to create over the next 12 months?",
+      "If I were fully aligned with my inspiration, how would I naturally spend the rest of today?",
+      "What is my current way of spending the day giving me that this ideal day is not?",
+      "What have I learned about myself through answering these questions?"
+    ]
+  },
+  demotivated: {
+    name: "Demotivated",
+    blurb: "No drive to do what matters.",
+    tag: "Find your next move",
+    intro: "Motivation returns once you know what's actually worth doing today.",
+    questions: [
+      "What matters most in life right now?",
+      "What's the one most useful thing to accomplish today?",
+      "What's stopping me from doing it?",
+      "What's the smallest step I can take right now to address that resistance?",
+      "What's one tiny move toward what I actually want?",
+      "What did I learn or notice?",
+      "Where does this fit in my 6–12 month vision?"
+    ]
+  },
+  wantSomething: {
+    name: "I want something",
+    blurb: "There's something you want but don't have.",
+    tag: "Get clear on the goal",
+    intro: "Wanting something is the easy part. Let's find what's really in the way.",
+    questions: [
+      "What do I want truly here vs what I have?",
+      "If I say I truly want this, what has consistently stopped me from already creating it?",
+      "What benefits am I currently receiving from not having this?",
+      "What costs, responsibilities, or changes do I believe will come with having this?",
+      "If I don't create this outcome, what will it cost me one year from now?",
+      "If my current limitations didn't exist, what would the most effective next step be?",
+      "What would success look like for me one year from now if I stayed committed to this goal?",
+      "What do I need right now to ensure I reach this vision?",
+      "How could I make the process of achieving this 20–50% more enjoyable?",
+      "What have I learned from this about me?",
+      "What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"
+    ]
+  },
+  overcomeHabit: {
+    name: "I want to overcome a habit",
+    blurb: "Trying to break a pattern that isn't working.",
+    tag: "Break the pattern",
+    intro: "Habits stick around because they're giving you something. Let's find out what.",
+    questions: [
+      "What do I want truly here vs what I have?",
+      "If I say I truly want this, what has consistently stopped me from already creating it?",
+      "What benefits am I currently receiving from not having this?",
+      "What costs, responsibilities, or changes do I believe will come with having this?",
+      "If I don't create this outcome, what will it cost me one year from now?",
+      "If my current limitations didn't exist, what would the most effective next step be?",
+      "What would success look like for me one year from now if I stayed committed to this goal?",
+      "What do I need right now to ensure I reach this vision?",
+      "How could I make the process of achieving this 20–50% more enjoyable?",
+      "What have I learned from this about me?",
+      "What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"
+    ]
+  },
+  overcomeFear: {
+    name: "Overcome a fear",
+    blurb: "Something you want to do, but fear stops you.",
+    tag: "Move through the fear",
+    intro: "Fear usually has a job to do. Understand it, then move anyway.",
+    questions: [
+      "What is the fear you're feeling versus the feeling you want to feel?",
+      "What is stopping you from feeling the way you want to feel?",
+      "What benefit do you get from feeling this fear?",
+      "What price are you paying by staying the same?",
+      "What would your life look like in one year if you overcame this fear?",
+      "Think of others who have overcome this fear — what do you think they did?",
+      "What do you need to overcome these fears?",
+      "What is stopping you from taking these steps?",
+      "What would you need to overcome these obstacles?",
+      "What can you do today to make progress on this?",
+      "What did today teach you?",
+      "What is your immediate action now?"
+    ]
+  },
+  selfEsteem: {
+    name: "I feel bad about myself",
+    blurb: "Low sense of self-worth.",
+    tag: "Rebuild self-worth",
+    intro: "Self-esteem shifts once you see yourself clearly instead of harshly.",
+    questions: [
+      "What do you mean when you say you have low self-esteem? What makes you believe your self-esteem is low?",
+      "What situations, people, or areas of your life tend to make you feel the lowest sense of self-esteem?",
+      "If you had high self-esteem instead of low self-esteem, what would be different about your thoughts, feelings, behaviors, or life?",
+      "What benefits are you currently receiving from maintaining low self-esteem? What does it protect you from, allow you to avoid, or help you gain?",
+      "If you continue living with your current level of self-esteem for the next year, what opportunities, experiences, relationships, or goals are you likely to lose or miss out on?",
+      "If you woke up tomorrow with healthy, grounded self-esteem, how would your life look one year from now?",
+      "What qualities, strengths, or abilities do you know you possess? What have others consistently appreciated, complimented, or admired about you?",
+      "Imagine someone knew everything about you—your strengths, flaws, successes, and mistakes—and still deeply admired, respected, and loved you. What reasons would they give for feeling that way?",
+      "What would it take for you to see yourself in the same way that this person sees you?",
+      "If you already have an idea of what high self-esteem looks like, what do you believe is preventing you from embodying it right now?",
+      "Looking at the gap between your current self-esteem and the level of self-esteem you want, what people, skills, resources, habits, support, time, or environment would help you bridge that gap?",
+      "What have you learned about yourself through answering these questions today?",
+      "What is the smallest action you can take within the next 24 hours that moves you toward greater self-esteem?",
+      "What is your immediate next action, and when will you take it?"
+    ]
+  },
+  idealPartner: {
+    name: "I want to find a partner",
+    blurb: "Looking for the right relationship.",
+    tag: "Get clear on who you want",
+    intro: "Knowing exactly who you're looking for makes them easier to recognize.",
+    questions: [
+      "What qualities are you truly looking for in an ideal partner, both physically and psychologically? Which qualities are essential, and which are simply preferences?",
+      "Thinking about your previous relationships, what qualities, experiences, or dynamics would you like to keep? What would you like to be different in your next relationship?",
+      "What qualities, values, habits, and lifestyle would your ideal partner have? Describe what a typical day in their life looks like.",
+      "What habits, behaviors, or personality traits of your own do you recognize could occasionally frustrate or annoy your partner? Which of these would you hope they could understand, accept, or even appreciate as part of who you are?",
+      "What habits, behaviors, or personality traits of your ideal partner would occasionally frustrate or annoy you, yet still be acceptable? Try to balance your likes with realistic imperfections.",
+      "What qualities or behaviors are absolute deal-breakers that would make the relationship incompatible?",
+      "What has consistently prevented you from attracting, recognizing, or building a relationship with someone like this?",
+      "What benefits are you currently receiving from remaining single or from not having this relationship yet?",
+      "What responsibilities, sacrifices, changes, or challenges do you believe would come with having the relationship you desire?",
+      "If you do not create this kind of relationship within the next year, what opportunities or experiences do you believe you will miss out on?",
+      "If you were in this ideal relationship one year from now, what would your life together realistically look like?",
+      "What qualities, values, habits, communication skills, emotional maturity, or life circumstances do you need to develop in yourself to become a suitable partner for the person you described?",
+      "What people, environments, communities, opportunities, or systems would increase the likelihood of meeting and building a relationship with someone like this?",
+      "How could you make the process of meeting, dating, and building a relationship more enjoyable, authentic, and sustainable rather than stressful or forced?",
+      "What have you learned about yourself through describing your ideal partner? What patterns, values, or priorities became clearer?",
+      "What is the smallest action you can take within the next 24 hours that moves you one step closer to becoming—and attracting—the partner you described?"
+    ]
+  },
+  somethingElse: {
+    name: "Something else",
+    blurb: "Not on this list, but still on your mind.",
+    tag: "Work through it",
+    intro: "Use this general set of questions for whatever's actually going on.",
+    questions: [
+      "What do I want truly here vs what I have?",
+      "If I say I truly want this, what has consistently stopped me from already creating it?",
+      "What benefits am I currently receiving from not having this?",
+      "What costs, responsibilities, or changes do I believe will come with having this?",
+      "If I don't create this outcome, what will it cost me one year from now?",
+      "If my current limitations didn't exist, what would the most effective next step be?",
+      "What would success look like for me one year from now if I stayed committed to this goal?",
+      "What do I need right now to ensure I reach this vision?",
+      "How could I make the process of achieving this 20–50% more enjoyable?",
+      "What have I learned from this about me?",
+      "What is the smallest action I can take in the next 24 hours that proves I have chosen this goal over my current comfort?"
+    ]
+  },
+  journalMorning: {
+    name: "Morning journal",
+    blurb: "Start the day with intention.",
+    tag: "Set the day up",
+    intro: "A few honest questions before the day takes over.",
+    questions: [
+      "What do I want most in life?",
+      "What stops me from getting it?",
+      "What is the benefit of my current life over my ideal?",
+      "What is the cost of living my current life?",
+      "What happens in a year's time if I live my ideals?",
+      "What do I need to come closer to my ideals?",
+      "What can I do today to come closer to my vision?",
+      "What did I learn from this journal?"
+    ]
+  },
+  journal: {
+    name: "Evening journal",
+    blurb: "Close the day with reflection.",
+    tag: "Review the day",
+    intro: "Look back on today before you let it go.",
+    questions: [
+      "What's one thing that went well today?",
+      "What's one thing that was hard or draining today?",
+      "What did today teach you about yourself?",
+      "Where did your actions match what you actually value today — and where did they drift?",
+      "What's the one thing you want to carry into tomorrow?",
+      "What is the one thing for tomorrow?"
     ]
   }
 };
