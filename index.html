@@ -565,6 +565,7 @@ body{
       <button class="nav-item" onclick="showPage('part2',this)"><div class="nav-dot"></div>Part 2 — Your values</button>
       <button class="nav-item" onclick="showPage('part3',this)"><div class="nav-dot"></div>Part 3 — Goals</button>
       <button class="nav-item" onclick="showPage('genie',this)"><div class="nav-dot"></div>Clarity Genie</button>
+      <button class="nav-item" onclick="showPage('relationship',this)"><div class="nav-dot"></div>Relationship Genie</button>
     </nav>
     <div class="nav-bonus">
       <button class="nav-item" onclick="showPage('shadow',this)"><div class="nav-dot"></div>Shadow work</button>
@@ -1247,6 +1248,236 @@ body{
           </a>
         </div>
       </div>
+    </div>
+
+    <!-- RELATIONSHIP GENIE -->
+    <div id="page-relationship" class="page">
+      <p class="page-eyebrow">Relationship Genie</p>
+      <h2 class="page-title">Do you actually understand each other?</h2>
+      <p class="page-intro">A conversation for two, not a test. Fifty questions across thirteen chapters, had out loud with your partner over several evenings — money, children, conflict, family, intimacy, the things most couples never quite get around to. Best done early: before moving in, before getting engaged, before marrying.</p>
+      <p class="page-intro"><strong>What you need:</strong> the two of you, an hour, and a notebook each. Nothing is typed in here and nothing is saved — you write your own answer down before you say it out loud, so what you say is what you actually think rather than a version shaped by what you just heard. There is no score and nothing leaves your device.</p>
+<!-- RELATIONSHIP-GENIE:START -->
+<!-- Generated from Couples App/content/questions.json by build.py — do not edit here. -->
+<style>
+.rg-marks{display:none}
+.rg-lede{font-size:14.5px;line-height:1.7;color:#4A5E4C;margin:0 0 1.5rem}
+.rg-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:0.5rem 0}
+.rg-tile{background:#fff;border:1px solid rgba(232,223,208,0.8);border-radius:14px;padding:1.15rem 1.25rem;text-align:left;cursor:pointer;box-shadow:var(--card-shadow);transition:box-shadow 220ms var(--ease-out),transform 220ms var(--ease-out),border-color 220ms var(--ease-out);display:flex;flex-direction:column;gap:4px}
+.rg-tile:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px);border-color:rgba(181,97,58,0.3)}
+.rg-tile:active{transform:scale(0.985)}
+.rg-tile svg{width:40px;height:40px;display:block;margin-bottom:6px;transition:transform 260ms var(--ease-out)}
+.rg-tile:hover svg{transform:translateY(-2px)}
+.rg-tile .rg-ch{font-size:11px;letter-spacing:0.09em;text-transform:uppercase;color:#B5613A}
+.rg-tile .rg-nm{font-family:Georgia,serif;font-size:17px;color:#2C3A2E}
+.rg-tile .rg-ct{font-size:12.5px;color:#7A9E7E}
+.rg-start{display:flex;flex-wrap:wrap;gap:0.6rem;margin:1.25rem 0 1.75rem}
+.rg-btn{font:inherit;font-size:13.5px;padding:0.7rem 1.25rem;border-radius:10px;border:1px solid #B5613A;background:#B5613A;color:#F7F3EC;cursor:pointer;transition:opacity 180ms var(--ease-out)}
+.rg-btn:hover{opacity:0.88}
+.rg-btn.ghost{background:none;color:#B5613A}
+.rg-btn.ghost:hover{background:rgba(181,97,58,0.07);opacity:1}
+.rg-read{background:#fff;border:1px solid rgba(232,223,208,0.9);border-radius:14px;padding:1.75rem 1.6rem 1.4rem;box-shadow:var(--card-shadow);min-height:340px;display:flex;flex-direction:column}
+.rg-where{font-size:11px;letter-spacing:0.09em;text-transform:uppercase;color:#B5613A;margin-bottom:1rem}
+.rg-body{flex:1}
+.rg-q{font-family:Georgia,serif;font-size:clamp(20px,2.6vw,29px);line-height:1.3;color:#2C3A2E;font-weight:400}
+.rg-note{margin-top:1rem;border-left:2px solid #B5613A;padding-left:0.9rem;font-size:13.5px;color:#4A5E4C;line-height:1.65;max-width:52ch}
+.rg-lead{margin-top:1.1rem;font-size:14px;color:#4A5E4C;line-height:1.65;padding-left:1rem;position:relative;max-width:52ch}
+.rg-lead:before{content:"";position:absolute;left:0;top:0.72em;width:7px;height:1px;background:#B5613A}
+.rg-more{margin-top:0.9rem;max-width:52ch}
+.rg-more summary{cursor:pointer;list-style:none;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;color:#7A9E7E;display:inline-block;border-bottom:1px solid #E8DFD0;padding-bottom:3px}
+.rg-more summary::-webkit-details-marker{display:none}
+.rg-more summary:hover{color:#B5613A;border-color:#B5613A}
+.rg-more ul{margin:0.85rem 0 0;padding:0;list-style:none;display:grid;gap:0.55rem}
+.rg-more li{font-size:13.5px;color:#4A5E4C;line-height:1.6;padding-left:1rem;position:relative}
+.rg-more li:before{content:"";position:absolute;left:0;top:0.72em;width:7px;height:1px;background:#B5613A}
+.rg-chap{text-align:left}
+.rg-chap svg{width:64px;height:64px;margin-bottom:1.1rem}
+.rg-chap h3{font-family:Georgia,serif;font-size:clamp(21px,2.8vw,30px);font-weight:400;color:#2C3A2E;line-height:1.25}
+.rg-chap p{font-size:14.5px;color:#4A5E4C;line-height:1.7;margin-top:0.8rem;max-width:52ch}
+.rg-chap .rg-ct{margin-top:1.5rem;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;color:#7A9E7E}
+.rg-soft{margin-top:1.2rem;font-size:12.5px;color:#7A9E7E;line-height:1.6;max-width:52ch}
+.rg-nav{display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:1.75rem;padding-top:1.1rem;border-top:1px solid #E8DFD0}
+.rg-nav button{font:inherit;background:none;border:0;cursor:pointer;font-size:12px;letter-spacing:0.09em;text-transform:uppercase;color:#7A9E7E;padding:0.6rem 0;min-height:44px;transition:color 180ms var(--ease-out)}
+.rg-nav button:hover:not(:disabled){color:#B5613A}
+.rg-nav button:disabled{opacity:0.35;cursor:default}
+.rg-tick{height:2px;background:#E8DFD0;border-radius:2px;margin-top:0.9rem;overflow:hidden}
+.rg-tick i{display:block;height:2px;background:#B5613A;transition:width 300ms var(--ease-out)}
+@media (max-width:640px){.rg-grid{grid-template-columns:1fr}.rg-read{padding:1.35rem 1.15rem 1.1rem}}
+</style>
+
+<div class="rg-marks"><svg xmlns="http://www.w3.org/2000/svg"><symbol id="rg0" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M5 58C12 50 6 40 14 33C22 26 24 28 29 21"/>
+  <path d="M59 58C52 50 58 40 50 33C42 26 40 28 35 21"/>
+  <circle cx="32" cy="16" r="5" stroke="#B5613A"/>
+</symbol><symbol id="rg1" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M24 12a22 22 0 1 0 16 0"/>
+  <path stroke="#B5613A" d="M25 16 39 9M25 9 39 16"/>
+</symbol><symbol id="rg2" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M8 28a11 11 0 0 0 22 0"/><path d="M19 39v9"/><path d="M12 48h14"/>
+  <path d="M34 28a11 11 0 0 0 22 0"/><path d="M45 39v9"/><path d="M38 48h14"/>
+  <path stroke="#B5613A" d="M32 10v11"/>
+</symbol><symbol id="rg3" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <circle cx="32" cy="15" r="8.5" stroke="#B5613A"/>
+  <path d="M26 21 15 52M38 21 49 52"/>
+  <path d="M16.6 45h7M47.4 45h-7M18.4 39h5M45.6 39h-5"/>
+</symbol><symbol id="rg4" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M9 19h46M32 19v33M21 55h22"/><path d="M14 19v6M50 19v6"/>
+  <path d="M7 25a7 5 0 0 0 14 0"/><path d="M43 25a7 5 0 0 0 14 0"/>
+  <circle cx="50" cy="23" r="2.6" stroke="#B5613A"/>
+</symbol><symbol id="rg5" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M8 31 32 12l24 19"/><path d="M15 31v22h34V31"/>
+  <path stroke="#B5613A" d="M32 37v13M26 43.5h12"/>
+  <rect x="26" y="37" width="12" height="13"/>
+</symbol><symbol id="rg6" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <circle cx="32" cy="21" r="17"/>
+  <path d="M24 55c0-12 5-15 8-19M40 55c0-12-5-15-8-19"/>
+  <path stroke="#B5613A" d="M17 58h30"/>
+</symbol><symbol id="rg7" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M11 53h42"/><path d="M19 53V27M45 53V27M32 53V37"/>
+  <circle cx="19" cy="22" r="4.5"/><circle cx="45" cy="22" r="4.5"/>
+  <circle cx="32" cy="32" r="4" stroke="#B5613A"/>
+</symbol><symbol id="rg8" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <circle cx="25" cy="32" r="16"/><circle cx="39" cy="32" r="16"/>
+  <path stroke="#B5613A" d="M32 20.5v23"/>
+</symbol><symbol id="rg9" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M5 40h54"/><path d="M14 56 29 40M50 56 35 40"/>
+  <circle cx="32" cy="24" r="7" stroke="#B5613A"/>
+</symbol><symbol id="rg10" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M14 53h36"/><path d="M22 53V29M42 53V29"/><path d="M22 29 32 20M42 29 32 20"/>
+  <path stroke="#B5613A" d="M32 20c4-4 4-8 0-11-4 3-4 7 0 11z"/>
+</symbol><symbol id="rg11" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M9 33a23 17 0 0 1 46 0z"/><path d="M32 16v-6"/>
+  <path d="M32 33v14a6 6 0 0 0 11 0"/>
+  <path stroke="#B5613A" d="M14 41l-3 8M52 41l3 8"/>
+</symbol><symbol id="rg12" viewBox="0 0 64 64" fill="none" stroke="#2C3A2E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M32 19v31"/>
+  <path d="M32 19c-6-4-14-5-23-4v31c9-1 17 0 23 4"/>
+  <path d="M32 19c6-4 14-5 23-4v31c-9-1-17 0-23 4"/>
+  <path stroke="#B5613A" d="M14 26h11M39 26h11"/>
+</symbol></svg></div>
+<div id="rg-root"></div>
+
+<script>
+(function(){
+  var D = {"prologue": {"lede": "Not a conversation, and not one of the 57. Two minutes, on paper, no discussion.", "q": "What are your three non-negotiables — and what do you think your partner’s three are?", "note": "A non-negotiable is something you’d actually end a relationship over. Not a preference, not an irritation. A line.", "tail": "The last chapter asks for these again. Your guess today, against what turns out to be true, is the most useful thing this will tell you — and it only works if you write it before you know anything.", "followups": ["Write both lists. Don’t compare them. Fold the page and carry on."]}, "sections": [{"name": "History & Accountability", "intro": "How someone tells the story of their past predicts how they’ll tell the story of this.", "heavy": false, "rest": null, "questions": [{"q": "Tell me why your last serious relationship ended — first the way you’d tell a close friend, then the way your ex would tell it.", "followups": ["Which version would a neutral person find closer to the truth?", "What did you learn that you actually changed?"]}, {"q": "What criticism have you heard about yourself from more than one person — a partner, a parent, a friend, a boss?", "followups": ["Do you think it’s fair?", "What’s the kernel of truth in it, even if it’s mostly unfair?", "Has anyone ever said it kindly?"]}, {"q": "What did you do in a past relationship that you’re still not proud of?", "followups": ["Did you ever acknowledge it to them?", "What would you do differently now, concretely?", "What made you capable of it at the time?"]}, {"q": "Think of the first relationship you watched up close — your parents, or whoever raised you. What did it teach you about how partners treat each other?", "followups": ["What did you swear you’d never repeat?", "Where have you caught yourself repeating it anyway?", "What did they do well that you’d want for us?"]}, {"q": "What pattern in yourself have you genuinely tried to change, and not been able to?", "followups": ["What have you tried?", "What sets it off?", "What do you need from me when it shows up — and what makes it worse?"]}, {"q": "When have you been the one who was hard to live with?", "followups": ["What was going on in your life?", "Did you know at the time?", "How would I be able to tell it’s happening?"]}]}, {"name": "Conflict & Repair", "intro": "Not how much you fight. How you fight, and how you come back.", "heavy": false, "rest": null, "questions": [{"q": "Describe the last real argument you had with anyone. What did you do in the first ten minutes, and what did you do in the hours after?", "followups": ["Is that typical for you?", "What did the other person do?", "Who repaired it, and how?"]}, {"q": "When we disagree, what does “winning” look like to you?", "followups": ["Have you ever conceded a fight you believed you were right about?", "What did that cost you?", "Do you keep score across arguments?"]}, {"q": "How long can an argument sit unresolved before it becomes a problem for you — and what does a real apology sound like?", "followups": ["Who apologised first in your past relationships?", "What does an apology need to include to land — words, changed behaviour, time, touch?", "Have you ever received one that didn’t count?"]}, {"q": "When you’re upset, do you want space or contact? And what happens if you get the wrong one?", "followups": ["How would I know which one you need in the moment?", "Is there a signal we could agree on now?"]}, {"q": "What’s off-limits in a fight — and what have you said in anger that you regret?", "followups": ["Has anyone crossed a line with you that you never fully got over?", "What would you want me to do if I crossed one?"]}, {"q": "When we argue, who else ends up hearing about it?", "followups": ["Is there anyone who should never hear about us?", "Would you tell a therapist?", "Would you tell them if I asked you not to?"]}]}, {"name": "What We Each Need", "intro": "The daily mechanics people assume are obvious, and aren’t.", "heavy": false, "rest": null, "questions": [{"q": "What’s a specific thing someone did that made you feel truly loved — and what do you do for people that goes unnoticed?", "followups": ["What was happening in your life that made it land so hard?", "What have I done that you noticed and I probably didn’t know about?"]}, {"q": "How much time alone do you need in a week to feel like yourself?", "followups": ["What happened the last time you didn’t get it?", "How do you behave when you’re depleted?", "Would you tell me you needed it, or just start withdrawing?"]}, {"q": "What’s your expectation for contact during an ordinary workday — and when we’re apart for a week?", "followups": ["What does an unanswered message for six hours mean to you?", "Has this been an issue before?"]}, {"q": "When you’re struggling, do you want to be helped, heard, distracted, or left alone?", "followups": ["Has a partner repeatedly gotten this wrong?", "Does it change depending on what the problem is?", "What’s the worst thing I could do when you’re low?"]}]}, {"name": "Trust, Privacy & Jealousy", "intro": "Most of this section is about definitions two people assumed they shared.", "heavy": true, "rest": {"heading": "Some of that can’t be unsaid. That’s the point of asking now.", "body": "Finding a difference here before you commit is the entire reason for doing this. It doesn’t feel like a win tonight. It is one."}, "questions": [{"q": "Define cheating. Where exactly is the line for you?", "note": "Flirting, sustained texting with one person, emotional intimacy, porn, dating apps “just looking”, secret spending, an old flame’s messages. Go through them one at a time.", "followups": ["Where did that line come from?", "Has it moved over your life?", "Which of these would you want to know about, and which would you rather not?"]}, {"q": "Should we have access to each other’s phones, passwords, and locations?", "followups": ["If I said no to that, what would you conclude?", "Is there anything you’d need to delete first — and what does that tell you?", "Does the answer change if trust has already been broken once?"]}, {"q": "What has made you jealous — and looking back, was it a real signal or your own insecurity?", "followups": ["How do you tell the difference in the moment?", "What do you do with the feeling — ask, watch, withdraw, test me?", "What would actually help?"]}, {"q": "What friendships and freedoms would you want to keep, no matter how serious we got?", "followups": ["Which would you give up if it genuinely hurt me, and which would you resent giving up?", "Has a partner asked you to end a friendship before? What happened?"]}, {"q": "What’s the biggest thing you’ve ever kept from a partner? And if I ever cheated, would you actually want to know?", "followups": ["What made hiding it feel necessary at the time?", "Is there any version of an affair you could repair from?", "What would you need — full disclosure, therapy, time, a clean break?", "Do you know that from experience, or from principle?"]}]}, {"name": "Money", "intro": "Discussed late in most relationships. Cited early in most divorces.", "heavy": false, "rest": null, "questions": [{"q": "What did money feel like in your house growing up — scarce, tense, controlled, invisible, generous?", "followups": ["What do you do now because of it?", "Do you save out of security or fear?", "Do you spend out of pleasure or relief?"]}, {"q": "Show me the actual numbers — income, debt, savings, credit history, anything owed or promised to family.", "note": "The revealing part isn’t the numbers. It’s what each of you almost didn’t mention.", "followups": ["What did you almost leave out, and why?", "Is there debt you’ve hidden from someone before?", "What’s the worst financial decision you’ve made?"]}, {"q": "Separate, joint, or hybrid accounts — and if one of us earns significantly more, what does that entitle them to?", "followups": ["What’s the amount you’d spend without mentioning it to me?", "Would that number change if I earned less than you?", "If one of us stopped earning entirely, is the money still “ours”?"]}, {"q": "Is supporting parents or siblings financially an obligation, a choice, or out of the question?", "followups": ["How much, how often, and for how long?", "Does the other person get a say, or a veto?", "What if it’s an emergency versus a pattern?", "What would you do if I said no?"]}, {"q": "Would you rather take a risk that could change our life, or protect what we already have?", "followups": ["What’s the biggest financial risk you’ve actually taken, and how did it end?", "What’s the number that would make you feel safe?", "What would you need from me to say yes to a risk that scared you?"]}]}, {"name": "Home & Daily Life", "intro": "The texture of an ordinary week — where most of a life actually happens.", "heavy": false, "rest": null, "questions": [{"q": "Describe an ordinary Tuesday evening in our life five years from now. Hour by hour.", "followups": ["Where did that picture come from?", "What’s the part you’d fight hardest to keep?", "Now describe an ordinary Saturday."]}, {"q": "Who does what at home — and how did you decide that’s fair?", "note": "Include the invisible work: remembering birthdays, booking appointments, managing the calendar, noticing what’s running out, keeping up with both families.", "followups": ["What did your parents’ split look like?", "What are your actual standards for cleanliness, and what happens when someone doesn’t meet them?", "If we could afford help, what’s the first thing you’d hand over?"]}, {"q": "How much alcohol, weed, or anything else is normal for you — and has anyone ever suggested it was too much?", "followups": ["What’s your relationship with it — social, unwinding, coping?", "Is there addiction in your family?", "What would you want me to do if I thought it had become a problem?"]}, {"q": "How much do health, fitness, food and appearance matter to you — and would it affect us if my body changed significantly?", "followups": ["Would you say something to me, and how?", "Do you want us active together, or separately?", "What did you learn about food and bodies growing up?"]}]}, {"name": "Family", "intro": "Where two sets of unspoken defaults collide, usually after the wedding.", "heavy": false, "rest": null, "questions": [{"q": "What role do our parents get in our life — how often do we see them, can they stay, for how long, would we ever live with them?", "followups": ["Do they get a key?", "Do they get told about our problems?", "Would you move to be near them?", "Would you have them move in if they needed care — and who provides that care in practice?"]}, {"q": "If my family disrespected you, what would you want me to do?", "followups": ["What if I disagreed that it was disrespect?", "What if it was my mother?", "Has this happened to you before, and what did your partner do?"]}, {"q": "Is there anyone in either family you’d want limited contact with — and what did your family do badly with boundaries?", "followups": ["How were boundaries received in your family — respected, punished, ignored?", "Are you comfortable being the one to say no, or would you need me to?"]}]}, {"name": "Children", "intro": "The most common irreconcilable difference, and the one people most hope resolves itself.", "heavy": true, "rest": {"heading": "Don’t try to solve it tonight.", "body": "If you found a real difference in there, it won’t move in one conversation — and pushing at it now usually just hardens both of you. Let it sit. Come back to it on a day when nothing else is at stake."}, "questions": [{"q": "Do you want children — how certain are you, how many, and by roughly when?", "note": "Say which one this is: a preference, important, or a line you won’t cross.", "followups": ["What would you do if I changed my mind?", "What would you do if I couldn’t change mine?", "Has your answer ever moved?"]}, {"q": "If we couldn’t conceive, how far would you go?", "note": "IVF rounds and cost, donor conception, surrogacy, adoption, or accepting a life without children.", "followups": ["Is there a financial ceiling? A time limit?", "Would a child that isn’t biologically yours feel the same to you — honestly?", "What would that pressure do to us?"]}, {"q": "After a baby arrives, who changes their career or hours — and for how long?", "followups": ["What if the person who wants to stay home is the higher earner?", "Who does nights?", "What does your version of “helping out” look like, versus sharing?", "What did your parents do?"]}, {"q": "Describe how a child of ours gets raised — discipline, screens, religion, schooling, grandparents.", "followups": ["Were you smacked, and what do you think about that now?", "Who has final say when we disagree in front of them?", "How much access do grandparents get?"]}, {"q": "If we had a child with a serious disability or long-term needs, what do you imagine that would do to us?", "followups": ["What frightens you most about it?", "What would you need in order to cope?", "Do you have any experience of this in your family?"]}]}, {"name": "Intimacy", "intro": "Its own evening. Nothing here has a right answer.", "heavy": true, "rest": {"heading": "The next hour matters more than the next question.", "body": "If your partner told you something in there they’ve never said out loud, how you behave for the rest of tonight will teach them whether it was safe to say. That’s the whole test, and it isn’t a verbal one."}, "questions": [{"q": "How often do you expect to have sex — and what happened in past relationships when you and your partner wanted it differently?", "followups": ["Was it ever discussed out loud, or did it just become a silence?", "Who initiated, and what happened when the answer was no?", "How do you take rejection?"]}, {"q": "What makes you feel desired — and what kills desire for you?", "followups": ["Does desire come before or after connection for you?", "What’s the thing you’ve wanted to ask for and haven’t?", "What would make it easier to ask?"]}, {"q": "Is sex a barometer of our relationship, a need, or a bonus — and what would a year without it mean?", "followups": ["What would you do — talk, wait, withdraw, leave?", "Has that already happened to you?", "What kept you in it, or what ended it?"]}, {"q": "Is there anything about your sexuality, your history, or your health that I should know before we commit?", "note": "Whoever finds this easier should go first. The usual failure here is reciprocating only as much as the other person disclosed — say the whole thing, or skip it. Not half.", "followups": ["What made this hard to say?", "What do you need from me in response?", "Is there anything you want me to never ask about again?"]}]}, {"name": "Work, Ambition & Place", "intro": "Everyone says family comes first. The calendar says otherwise.", "heavy": false, "rest": null, "questions": [{"q": "Where do we live — city, country, distance from family — and whose career leads if they conflict?", "followups": ["Would you move abroad for me?", "Would you move back for a sick parent?", "Is there a place you’d never live? A place you’d never leave?"]}, {"q": "What has work already cost you in past relationships — and what would you still sacrifice for it?", "followups": ["Would you accept a year of long distance for the right job? Would you want me to?", "What would you expect me to give up for your career, and what would you give up for mine?"]}, {"q": "What does “enough” look like — and does that point actually exist for you?", "followups": ["What would you do if you got there tomorrow?", "What are you actually chasing — money, proof, security, status, freedom?", "Who are you proving it to?"]}]}, {"name": "Belief & Values", "intro": "Less about what you believe. More about what it requires in practice.", "heavy": false, "rest": null, "questions": [{"q": "What role does religion or spirituality play in your life now — and what role does it play at a wedding, in raising a child, and at a funeral?", "followups": ["What would your family expect?", "What would you concede, and what couldn’t you?", "Has your belief changed over your life — could it change again?"]}, {"q": "Is there a belief you hold where you’d struggle to respect someone who disagreed with you?", "followups": ["Where does that come from?", "Have you ever been close to someone who held the opposite view?", "What would happen if I changed my mind about it in ten years?"]}]}, {"name": "Hard Futures", "intro": "Named while calm, rather than discovered mid-crisis.", "heavy": true, "rest": {"heading": "That was the heaviest one.", "body": "Go and do something completely ordinary now — a walk, food, a bad film. Coming back down from a conversation like that is a normal thing to need, not a sign it went badly."}, "questions": [{"q": "If I became seriously ill or disabled, describe what caring for me would actually look like — practically, and what you fear about it.", "followups": ["Have you cared for someone before?", "What would you need to keep going?", "What would you want if it were reversed — including where your line is on life support and long-term care?"]}, {"q": "Which of these are you genuinely unsure you could survive with me: long-term unemployment, addiction, a criminal conviction, a mental health crisis, a serious betrayal, losing a child?", "note": "“All of them” isn’t the stronger answer. It’s usually the less examined one.", "followups": ["What’s the difference between the ones you could and couldn’t?", "What would you need from me during it?", "Has your family been through any of these?"]}, {"q": "What ends this relationship for you — and if it ended, how would you want us to behave?", "followups": ["What resentment do you hold longest, and what has forgiveness genuinely looked like for you — not in theory?", "Would you go to therapy before leaving?", "Would you tell me you were unhappy, or decide privately first?"]}]}, {"name": "Reflection", "intro": "Not about the topics anymore. About what just happened. Worth its own evening — and read your notes first.", "heavy": false, "rest": null, "questions": [{"q": "What are the five biggest things you learned about me?", "followups": ["Which of the five changed how you see me, rather than just adding a fact?", "Which did you half-know already, but had never heard me say out loud?"]}, {"q": "What surprised you most — and what did you find out you’d been assuming?", "followups": ["How long had you been assuming it?", "What would have happened if we’d never talked about it?", "Is there anything you’re still assuming?"]}, {"q": "Which of my answers was hardest to hear — and did you say so at the time?", "followups": ["What did you do with it instead of saying it?", "Do you want to talk about it now, or do you need longer?"]}, {"q": "What did you avoid answering fully?", "followups": ["What made it hard — was it me, the question, or the thing itself?", "What would make it easier?", "Do you want to come back to it, and when?"]}, {"q": "Name your three non-negotiables, and three things you thought were non-negotiable that turned out to be preferences. Then guess what my three are.", "note": "Now find the list you wrote on the very first page, before any of this. Read both out.", "followups": ["How close was your guess at the start, and what did you get wrong about me?", "Which of my three surprised you?", "Is any one of mine something you can’t live with?", "Did anything move from a line to a preference during this — and what moved it?"]}, {"q": "What did you learn about yourself?", "followups": ["Was there a moment you heard your own answer and didn’t like it?", "Is there a pattern you saw in yourself more than once across these questions?"]}, {"q": "What’s the one conversation we still need to have?"}]}]};
+  var ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII"];
+  // Named STORE, not KEY: a var called KEY holding an entropic string
+  // trips gitleaks' generic-api-key rule on every commit.
+  var STORE="clarity.relationshipGenie.v1";
+  var root=document.getElementById("rg-root");
+  if(!root) return;
+
+  // screens: prologue -> [chapter card, questions..., (rest if heavy)] -> end
+  var FLAT=[{kind:"pro"}];
+  D.sections.forEach(function(s,si){
+    FLAT.push({kind:"chap",si:si});
+    s.questions.forEach(function(q){FLAT.push({kind:"q",si:si,q:q});});
+    if(s.heavy) FLAT.push({kind:"rest",si:si});
+  });
+  FLAT.push({kind:"end"});
+  var TOTAL=FLAT.filter(function(f){return f.kind==="q";}).length;
+  var i=0;
+
+  function esc(t){return String(t).replace(/[&<>]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c];});}
+  function qNum(n){var c=0;for(var k=0;k<=n;k++){if(FLAT[k].kind==="q")c++;}return c;}
+  function chapStart(si){for(var k=0;k<FLAT.length;k++){if(FLAT[k].kind==="chap"&&FLAT[k].si===si)return k;}return 0;}
+  function save(){try{localStorage.setItem(STORE,String(i));}catch(e){}}
+  function saved(){var v=0;try{v=parseInt(localStorage.getItem(STORE)||"0",10)||0;}catch(e){}return (v>0&&v<FLAT.length)?v:0;}
+  function where(n){var f=FLAT[n];
+    if(f.kind==="pro") return "the first page";
+    if(f.kind==="end") return "the last page";
+    if(f.kind==="chap") return "Chapter "+(f.si+1)+" — "+D.sections[f.si].name;
+    if(f.kind==="rest") return "the end of "+D.sections[f.si].name;
+    return "Question "+qNum(n)+" — "+D.sections[f.si].name;}
+
+  function qBody(q){
+    var f=q.followups||[];
+    return '<div class="rg-q">'+esc(q.q)+'</div>'+
+      (q.note?'<p class="rg-note">'+esc(q.note)+'</p>':'')+
+      (f.length?'<p class="rg-lead">'+esc(f[0])+'</p>':'')+
+      (f.length>1?'<details class="rg-more"><summary>Go further</summary><ul>'+
+        f.slice(1).map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></details>':'');
+  }
+
+  function menu(){
+    var s=saved();
+    root.innerHTML=
+      '<p class="rg-lede">Fifty questions to have out loud with your partner, one at a time, over several evenings. Nothing is typed in and nothing is saved — keep a notebook each. There is no score and almost none of these have a right answer.</p>'+
+      '<div class="rg-start">'+
+        '<button class="rg-btn" data-a="begin">'+(s?"Start again":"Begin")+'</button>'+
+        (s?'<button class="rg-btn ghost" data-a="resume">Continue — '+esc(where(s))+'</button>':'')+
+      '</div>'+
+      '<div class="rg-grid">'+D.sections.map(function(sec,n){
+        return '<button class="rg-tile" data-ch="'+n+'">'+
+          '<svg viewBox="0 0 64 64"><use href="#rg'+n+'"/></svg>'+
+          '<span class="rg-ch">Chapter '+ROMAN[n]+'</span>'+
+          '<span class="rg-nm">'+esc(sec.name)+'</span>'+
+          '<span class="rg-ct">'+sec.questions.length+' questions</span></button>';
+      }).join('')+'</div>';
+  }
+
+  function screen(){
+    var f=FLAT[i], s=D.sections[f.si], html="", label="";
+    if(f.kind==="pro"){
+      label="Before we start";
+      html='<div class="rg-chap"><p class="rg-lede" style="margin-bottom:1.25rem">'+esc(D.prologue.lede)+'</p></div>'+
+        qBody({q:D.prologue.q,note:D.prologue.note,followups:D.prologue.followups})+
+        '<p class="rg-soft">'+esc(D.prologue.tail)+'</p>';
+    } else if(f.kind==="chap"){
+      label="Chapter "+(f.si+1)+" of "+D.sections.length;
+      html='<div class="rg-chap"><svg viewBox="0 0 64 64"><use href="#rg'+f.si+'"/></svg>'+
+        '<span class="rg-ch" style="display:block;margin-bottom:0.5rem">Chapter '+ROMAN[f.si]+'</span>'+
+        '<h3>'+esc(s.name)+'</h3><p>'+esc(s.intro)+'</p>'+
+        '<div class="rg-ct">'+s.questions.length+' questions'+(f.si>0?' · take a break before this one if you need to':'')+'</div></div>';
+    } else if(f.kind==="rest"){
+      label="End of "+s.name;
+      html='<div class="rg-chap"><h3>'+esc(s.rest.heading)+'</h3><p>'+esc(s.rest.body)+'</p>'+
+        '<p class="rg-soft">Talking to someone together is an ordinary thing to do — not a sign anything is wrong.</p></div>';
+    } else if(f.kind==="end"){
+      label="That\u2019s all of them";
+      html='<div class="rg-chap"><h3>There\u2019s no result. You already have it.</h3>'+
+        '<p>Most couples take a few days to finish reacting to this, and that\u2019s the point. Come back in a year or two if things change — a new city, a new job, a marriage, a child, a hard year.</p></div>';
+    } else {
+      label=s.name+" · Question "+qNum(i)+" of "+TOTAL;
+      html=qBody(f.q);
+    }
+    root.innerHTML='<div class="rg-read"><div class="rg-where">'+esc(label)+'</div>'+
+      '<div class="rg-body">'+html+'</div>'+
+      '<div class="rg-nav">'+
+        '<button data-a="prev"'+(i===0?" disabled":"")+'>&larr; Back</button>'+
+        '<button data-a="menu">Stop here</button>'+
+        '<button data-a="next"'+(i===FLAT.length-1?" disabled":"")+'>Next &rarr;</button>'+
+      '</div><div class="rg-tick"><i style="width:'+(qNum(i)/TOTAL*100)+'%"></i></div></div>';
+    save();
+  }
+
+  root.addEventListener("click",function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    if(b.dataset.ch!==undefined){i=chapStart(+b.dataset.ch);return screen();}
+    var a=b.dataset.a;
+    if(a==="begin"){i=0;return screen();}
+    if(a==="resume"){i=saved();return screen();}
+    if(a==="menu"){return menu();}
+    if(a==="prev"&&i>0){i--;return screen();}
+    if(a==="next"&&i<FLAT.length-1){i++;return screen();}
+  });
+
+  menu();
+})();
+</script>
+<!-- RELATIONSHIP-GENIE:END -->
     </div>
 
     <footer class="site-footer">
