@@ -1828,7 +1828,7 @@ function copyAnswers(part) {
 
 
 // ============ Clarity Genie ============
-var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely','confused','overwhelmed','volatile','drained','demotivated','wantSomething','overcomeHabit','overcomeFear','selfEsteem','idealPartner','somethingElse','journalMorning','journal'];
+var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely','confused','overwhelmed','volatile','drained','demotivated','wantSomething','overcomeHabit','overcomeFear','selfEsteem','idealPartner','triggered','avoiding','mission','crisis','somethingElse','journalMorning','journal'];
 var GENIE_ICONS = {
   anxious: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 31 C14 13, 23 11, 24 20 C25 29, 13 32, 17 23 C21 13, 33 12, 35 21 C37 30, 27 34, 29 27" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><circle cx="38" cy="14" r="2.6" fill="#B5613A"/></svg>',
   stuck:   '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 24 H26" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round"/><path d="M20 17 L27 24 L20 31" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 11 V37" stroke="#2C3A2E" stroke-width="2.6" stroke-linecap="round"/></svg>',
@@ -1846,6 +1846,10 @@ var GENIE_ICONS = {
   overcomeFear: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 L38 12 V24 C38 34 32 40 24 43 C16 40 10 34 10 24 V12 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="24" r="3" fill="#B5613A"/></svg>',
   selfEsteem: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="15" cy="16" r="4" stroke="#2C3A2E" stroke-width="2.2"/><path d="M15 22 C10 22 8 27 8 32" stroke="#2C3A2E" stroke-width="2.2" stroke-linecap="round"/><path d="M24 8 V40" stroke="#2C3A2E" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 4"/><circle cx="33" cy="16" r="4" stroke="#B5613A" stroke-width="2.2"/><path d="M33 22 C38 22 40 27 40 32" stroke="#B5613A" stroke-width="2.2" stroke-linecap="round"/></svg>',
   idealPartner: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="19" cy="24" r="10" stroke="#2C3A2E" stroke-width="2.4"/><circle cx="31" cy="24" r="10" stroke="#B5613A" stroke-width="2.4"/></svg>',
+  triggered: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 V15 M24 33 V42 M6 24 H15 M33 24 H42 M11 11 L17 17 M31 31 L37 37 M37 11 L31 17 M11 37 L17 31" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><circle cx="24" cy="24" r="3.2" fill="#B5613A"/></svg>',
+  avoiding: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 24 C14 16 34 16 40 24 C34 32 14 32 8 24 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M14 12 L34 36" stroke="#B5613A" stroke-width="2.6" stroke-linecap="round"/></svg>',
+  mission: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 L28 20 L42 24 L28 28 L24 42 L20 28 L6 24 L20 20 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="24" r="2.6" fill="#B5613A"/></svg>',
+  crisis: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8 L42 40 H6 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 20 V30" stroke="#B5613A" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="35" r="1.9" fill="#B5613A"/></svg>',
   somethingElse: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="24" cy="24" r="3.4" fill="#B5613A"/><circle cx="36" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/></svg>',
   journalMorning: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="26" r="8" stroke="#B5613A" stroke-width="2.6"/><path d="M24 8 V13 M36.7 13.3 L33.2 16.8 M40 26 H35 M11.3 13.3 L14.8 16.8 M8 26 H13" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/></svg>',
   journal: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 9 C22 12 17 19 17 26 C17 33 22 38 29 39 C21 42 10 37 9 27 C8 17 18 8 30 9 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round" transform="translate(6 0)"/><circle cx="14" cy="14" r="2.2" fill="#B5613A"/></svg>'
@@ -2112,6 +2116,88 @@ var GENIE = {
       "How could you make the process of meeting, dating, and building a relationship more enjoyable, authentic, and sustainable rather than stressful or forced?",
       "What have you learned about yourself through describing your ideal partner? What patterns, values, or priorities became clearer?",
       "What is the smallest action you can take within the next 24 hours that moves you one step closer to becoming—and attracting—the partner you described?"
+    ]
+  },
+  triggered: {
+    name: "Triggered",
+    blurb: "Something someone said or did set you off.",
+    tag: "Work through the trigger",
+    intro: "A trigger is a doorway. Walk through it and see what it's really protecting.",
+    questions: [
+      "What is the ideal outcome that you're looking for in this situation?",
+      "If things had gone in an ideal manner, how would they have gone?",
+      "How would the conversation have needed to happen for there to be no trigger?",
+      "How would the other person have needed to communicate this for you to not be triggered?",
+      "How would you need to take what the person originally said for you to not feel triggered?",
+      "What is this emotion trying to protect you from?",
+      "What is it that this situation is revealing about you that you haven't been able to love about yourself?",
+      "What would you need to believe about yourself for this statement to not even trigger you?",
+      "If you could go back again, knowing what the other person was going to say, how would you respond in a way that enhances the communication, enhances the harmony between you two, and reduces the chance of being triggered?",
+      "What can you do now to ensure that the next time someone brings up this topic, you feel gratitude instead of being triggered?",
+      "How would you explain this situation to your past self, knowing what you know now?",
+      "What did you learn about yourself today?",
+      "What can you do in the next 24 hours to ensure that this lesson goes from theory to practical?"
+    ]
+  },
+  avoiding: {
+    name: "What am I avoiding?",
+    blurb: "Circling a decision you can't seem to make.",
+    tag: "Face the avoidance",
+    intro: "Indecision is often avoidance wearing a disguise. Let's name what's underneath.",
+    questions: [
+      "What is your main dilemma?",
+      "What is the ideal outcome you wish here? (Name the things you currently know for sure.)",
+      "What are the upsides of each potential decision?",
+      "What are the downsides of each potential decision?",
+      "With this clarity, does something stop you from picking the right answer? If yes, what?",
+      "Gun to your head, if you had to choose one, which one would it be? Why that one?",
+      "What is the scenario you're fearing the most?",
+      "What are ways to mitigate each fallout in case the worst case happens?",
+      "How can we bring your current best answer as close as possible to your ideal answer?",
+      "If you reach the ideal decision, how will it affect your life one year from now?",
+      "What is something you can do in the next 30 minutes to ensure you follow through on your answer?",
+      "What did you learn about yourself today?"
+    ]
+  },
+  mission: {
+    name: "My mission in life",
+    blurb: "Searching for your calling or direction.",
+    tag: "Uncover your calling",
+    intro: "Your calling shows up in what you already do. Let's find the pattern.",
+    questions: [
+      "If nobody could judge or misunderstand you, what work would you naturally spend most of your time doing?",
+      "Looking at the last 2–5 years, what activities have you consistently returned to, even when you didn't have to?",
+      "When people voluntarily come to you for help, what specific problems do they usually want you to solve?",
+      "After interacting with you, what changes do people most commonly experience?",
+      "What subjects are you genuinely capable of teaching or coaching today, based on your current knowledge and experience (not aspiration)?",
+      "Which of those subjects have you embodied enough that you feel comfortable being a public example—not perfect, but credible?",
+      "Which parts of your desired identity feel uncomfortable to claim, and why?",
+      "If someone observed your daily life for the last six months without speaking to you, what profession would they most likely guess you have?",
+      "If someone observed your ideal daily life five years from now, what profession would they most likely guess you have?",
+      "Complete this sentence: \"I help people __________________________.\"",
+      "What evidence do you believe someone in your profession should visibly demonstrate before claiming that identity?",
+      "For each standard you listed in the previous question, classify it as one of the following: Essential, or Social expectation."
+    ]
+  },
+  crisis: {
+    name: "Handling a crisis",
+    blurb: "Something's gone wrong and you need to steady.",
+    tag: "Steady and respond",
+    intro: "In a crisis, clarity comes one honest fact at a time.",
+    questions: [
+      "What is the crisis? Describe only the objective facts of the situation.",
+      "What do you believe caused this crisis? What evidence supports that conclusion?",
+      "Based on the facts, was this crisis avoidable? Why or why not?",
+      "How is this crisis making you feel right now?",
+      "How do you believe you need to feel in order to handle this crisis effectively?",
+      "What is preventing you from feeling that way right now?",
+      "If you already felt calm, clear, and capable, what would your next step be?",
+      "What do you need right now to make this crisis feel more manageable? What support, resources, information, or people would help?",
+      "If this crisis were trying to teach you something, what would its message be?",
+      "What is this crisis revealing about what truly matters in your life? What feels less important now, and what feels more important?",
+      "If someone you deeply loved were facing this exact crisis, what would you want them to hear from you?",
+      "Knowing what you know now, what advice would you give to the version of yourself just before this crisis began?",
+      "What have you learned about yourself through this crisis?"
     ]
   },
   somethingElse: {
