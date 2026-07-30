@@ -181,6 +181,13 @@ body{
 .lite-dl-os{font-family:Georgia,serif;font-size:15px;margin-top:4px}
 .lite-dl-file{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#7A9E7E}
 @media (max-width:480px){.lite-dl-row{grid-template-columns:1fr;gap:0.6rem}.lite-dl{flex-direction:row;justify-content:flex-start;gap:12px;padding:0.85rem 1.1rem}.lite-dl svg{width:30px;height:30px}.lite-dl-file{margin-left:auto}}
+.genie-quickrow{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:0.55rem;margin:0 0 1rem}
+.genie-quick{display:inline-flex;align-items:center;gap:8px;background:#FBF7F0;border:1px solid rgba(232,223,208,0.9);border-radius:11px;padding:0.5rem 0.9rem;cursor:pointer;box-shadow:var(--card-shadow);transition:box-shadow 200ms var(--ease-out),transform 200ms var(--ease-out),border-color 200ms var(--ease-out);font-family:Georgia,serif;font-size:14px;color:#2C3A2E}
+.genie-quick:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-1px);border-color:rgba(181,97,58,0.3)}
+.genie-quick:active{transform:scale(0.985)}
+.genie-quick .gq-ic{display:inline-flex;width:22px;height:22px;flex-shrink:0}
+.genie-quick .gq-ic svg{width:100%;height:100%}
+@media (max-width:480px){.genie-quickrow{justify-content:flex-start}}
 .genie-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:0.5rem 0 0.5rem}
 .genie-tile{background:#fff;border:1px solid rgba(232,223,208,0.8);border-radius:14px;padding:1.25rem 1.3rem;text-align:left;cursor:pointer;box-shadow:var(--card-shadow);transition:box-shadow 220ms var(--ease-out),transform 220ms var(--ease-out),border-color 220ms var(--ease-out);display:flex;flex-direction:column;gap:5px}
 .genie-tile:hover{box-shadow:var(--card-shadow-hover);transform:translateY(-2px);border-color:rgba(181,97,58,0.3)}
@@ -2254,8 +2261,22 @@ var GENIE = {
 function renderGenie() {
   var root = document.getElementById('genie-root');
   if (!root) return;
-  var html = '<div id="genie-picker"><div class="genie-grid">';
+  // The three recurring entries (morning/evening journal + something else) sit apart in a compact
+  // top-right quick row; the rest stay in the main mood grid below.
+  var QUICK_KEYS = ['journalMorning', 'journal', 'somethingElse'];
+  var html = '<div id="genie-picker">';
+  html += '<div class="genie-quickrow">';
+  QUICK_KEYS.forEach(function(key) {
+    var g = GENIE[key];
+    if (!g) return;
+    html += '<button class="genie-quick" onclick="showGenieFeeling(\'' + key + '\')">' +
+      '<span class="gq-ic">' + (GENIE_ICONS[key] || '') + '</span>' +
+      '<span>' + g.name + '</span></button>';
+  });
+  html += '</div>';
+  html += '<div class="genie-grid">';
   GENIE_ORDER.forEach(function(key) {
+    if (QUICK_KEYS.indexOf(key) !== -1) return; // rendered in the quick row above
     var g = GENIE[key];
     html += '<button class="genie-tile" onclick="showGenieFeeling(\'' + key + '\')">' +
       '<span class="gt-icon">' + (GENIE_ICONS[key] || '') + '</span>' +
