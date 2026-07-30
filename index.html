@@ -1835,7 +1835,7 @@ function copyAnswers(part) {
 
 
 // ============ Clarity Genie ============
-var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely','confused','overwhelmed','volatile','drained','demotivated','wantSomething','overcomeHabit','overcomeFear','selfEsteem','idealPartner','triggered','avoiding','mission','crisis','somethingElse','journalMorning','journal'];
+var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely','confused','overwhelmed','volatile','drained','demotivated','wantSomething','overcomeHabit','overcomeFear','selfEsteem','idealPartner','triggered','avoiding','mission','crisis','selfHate','somethingElse','journalMorning','journal'];
 var GENIE_ICONS = {
   anxious: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 31 C14 13, 23 11, 24 20 C25 29, 13 32, 17 23 C21 13, 33 12, 35 21 C37 30, 27 34, 29 27" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><circle cx="38" cy="14" r="2.6" fill="#B5613A"/></svg>',
   stuck:   '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 24 H26" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round"/><path d="M20 17 L27 24 L20 31" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 11 V37" stroke="#2C3A2E" stroke-width="2.6" stroke-linecap="round"/></svg>',
@@ -1857,6 +1857,7 @@ var GENIE_ICONS = {
   avoiding: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 24 C14 16 34 16 40 24 C34 32 14 32 8 24 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M14 12 L34 36" stroke="#B5613A" stroke-width="2.6" stroke-linecap="round"/></svg>',
   mission: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 L28 20 L42 24 L28 28 L24 42 L20 28 L6 24 L20 20 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="24" r="2.6" fill="#B5613A"/></svg>',
   crisis: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8 L42 40 H6 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 20 V30" stroke="#B5613A" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="35" r="1.9" fill="#B5613A"/></svg>',
+  selfHate: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40 C10 30 6 22 6 16 C6 10 11 7 16 7 C20 7 23 9 24 12 C25 9 28 7 32 7 C37 7 42 10 42 16 C42 22 38 30 24 40 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 12 L20 22 L27 26 L23 34" stroke="#B5613A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   somethingElse: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="24" cy="24" r="3.4" fill="#B5613A"/><circle cx="36" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/></svg>',
   journalMorning: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="26" r="8" stroke="#B5613A" stroke-width="2.6"/><path d="M24 8 V13 M36.7 13.3 L33.2 16.8 M40 26 H35 M11.3 13.3 L14.8 16.8 M8 26 H13" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/></svg>',
   journal: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 9 C22 12 17 19 17 26 C17 33 22 38 29 39 C21 42 10 37 9 27 C8 17 18 8 30 9 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round" transform="translate(6 0)"/><circle cx="14" cy="14" r="2.2" fill="#B5613A"/></svg>'
@@ -2205,6 +2206,27 @@ var GENIE = {
       "If someone you deeply loved were facing this exact crisis, what would you want them to hear from you?",
       "Knowing what you know now, what advice would you give to the version of yourself just before this crisis began?",
       "What have you learned about yourself through this crisis?"
+    ]
+  },
+  selfHate: {
+    name: "Hating who you are",
+    blurb: "Rejecting, hating, or feeling ashamed of yourself.",
+    tag: "Move toward self-acceptance",
+    intro: "Self-hatred loosens its grip when you look at it honestly — and meet it with the compassion you'd give someone you love.",
+    questions: [
+      "What do you dislike or reject about yourself? What would you rather be instead?",
+      "What parts of yourself do you hope people never bring up? What topics about you are you most uncomfortable discussing?",
+      "What are you ashamed to admit about yourself? What parts of yourself do you try to hide from others?",
+      "Who do you most envy or compare yourself to? What do they have that you wish you had?",
+      "If someone were jealous of you, what reasons might they have?",
+      "What qualities, achievements, or parts of yourself do you wish people noticed or appreciated more?",
+      "If you fully accepted yourself exactly as you are, what would you do differently in your daily life?",
+      "If you lived with that level of self-acceptance for the next year, how would your life be different?",
+      "What is the cost of continuing to hate or reject yourself? What will it cost you if nothing changes?",
+      "What would you need to believe in order to feel that you are enough? What is preventing you from believing it today?",
+      "If someone you deeply loved struggled with self-hatred, what would you tell them to help them begin loving themselves?",
+      "What is the smallest action you can take in the next 24 hours that moves you toward greater self-love and self-acceptance?",
+      "What have you learned about yourself through answering these questions?"
     ]
   },
   somethingElse: {
