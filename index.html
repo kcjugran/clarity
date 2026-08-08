@@ -983,6 +983,18 @@ body{
       <div class="tab-row">
         <button class="tab-btn active" onclick="switchTab('jn','guide',this)">Guide</button>
         <button class="tab-btn" onclick="switchTab('jn','practice',this)">Templates</button>
+        <button class="tab-btn" onclick="switchTab('jn','genie',this)">Clarity Genie</button>
+      </div>
+
+      <!-- Clarity Genie tab: the same picker as the Genie page, but the tiles hand off to that
+           page rather than opening a second copy of the flow here. The flow's textareas carry
+           fixed ids (genie_<key>_<n>) that localStorage saves against, so a second live instance
+           would collide on every one of them. -->
+      <div id="jn-genie" style="display:none">
+        <div class="concept-block">
+          <p>Journaling works best when something is actually being asked of you. The Clarity Genie is a set of question banks — pick whatever is closest to how you feel right now and it gives you the questions to write against.</p>
+        </div>
+        <div id="jn-genie-picker"></div>
       </div>
 
       <div id="jn-guide">
@@ -2346,32 +2358,54 @@ var GENIE = {
   }
 };
 
-function renderGenie() {
-  var root = document.getElementById('genie-root');
-  if (!root) return;
-  // The three recurring entries (morning/evening journal + something else) sit apart in a compact
-  // top-right quick row; the rest stay in the main mood grid below.
-  var QUICK_KEYS = ['journalMorning', 'journal', 'somethingElse'];
-  var html = '<div id="genie-picker">';
+// The three recurring entries (morning/evening journal + something else) sit apart in a compact
+// top-right quick row; the rest stay in the main mood grid below.
+var GENIE_QUICK_KEYS = ['journalMorning', 'journal', 'somethingElse'];
+
+// One builder for both pickers (the Genie page and the How-to-journal tab) so a new tile can never
+// appear in one and not the other. `handler` is the JS called with the key on click; `pickerId` is
+// omitted for the journal copy, which must not duplicate the id the page picker is toggled by.
+function buildGeniePicker(handler, pickerId) {
+  var html = '<div' + (pickerId ? ' id="' + pickerId + '"' : '') + '>';
   html += '<div class="genie-quickrow">';
-  QUICK_KEYS.forEach(function(key) {
+  GENIE_QUICK_KEYS.forEach(function(key) {
     var g = GENIE[key];
     if (!g) return;
-    html += '<button class="genie-quick" onclick="showGenieFeeling(\'' + key + '\')">' +
+    html += '<button class="genie-quick" onclick="' + handler + '(\'' + key + '\')">' +
       '<span class="gq-ic">' + (GENIE_ICONS[key] || '') + '</span>' +
       '<span>' + g.name + '</span></button>';
   });
   html += '</div>';
   html += '<div class="genie-grid">';
   GENIE_ORDER.forEach(function(key) {
-    if (QUICK_KEYS.indexOf(key) !== -1) return; // rendered in the quick row above
+    if (GENIE_QUICK_KEYS.indexOf(key) !== -1) return; // rendered in the quick row above
     var g = GENIE[key];
-    html += '<button class="genie-tile" onclick="showGenieFeeling(\'' + key + '\')">' +
+    html += '<button class="genie-tile" onclick="' + handler + '(\'' + key + '\')">' +
       '<span class="gt-icon">' + (GENIE_ICONS[key] || '') + '</span>' +
       '<span class="gt-name">' + g.name + '</span>' +
       '<span class="gt-blurb">' + g.blurb + '</span></button>';
   });
   html += '</div></div>';
+  return html;
+}
+
+// How-to-journal tab: same tiles, but picking one jumps to the Genie page and opens that flow
+// there, rather than rendering a second copy of the flow (its textarea ids are fixed and saved
+// against, so two live copies would collide).
+function renderJournalGenie() {
+  var el = document.getElementById('jn-genie-picker');
+  if (el) el.innerHTML = buildGeniePicker('openGenieFromJournal');
+}
+
+function openGenieFromJournal(key) {
+  showPage('genie');
+  showGenieFeeling(key);
+}
+
+function renderGenie() {
+  var root = document.getElementById('genie-root');
+  if (!root) return;
+  var html = buildGeniePicker('showGenieFeeling', 'genie-picker');
   GENIE_ORDER.forEach(function(key) {
     var g = GENIE[key];
     html += '<div class="genie-flow" id="genie-flow-' + key + '" style="display:none">';
@@ -2438,6 +2472,7 @@ function copyGenie(key) {
 }
 
 renderGenie();
+renderJournalGenie();
 
 
 // ============ Breathwork ============
