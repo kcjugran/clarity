@@ -994,7 +994,9 @@ body{
         <div class="concept-block">
           <p>Journaling works best when something is actually being asked of you. The Clarity Genie is a set of question banks — pick whatever is closest to how you feel right now and it gives you the questions to write against.</p>
         </div>
-        <div id="jn-genie-picker"></div>
+        <!-- NOT id="jn-genie-picker": switchTab() hides every element matching [id^="jn-"], so a
+             nested id sharing the tab prefix gets hidden along with the panes and never restored. -->
+        <div id="journalGeniePicker"></div>
       </div>
 
       <div id="jn-guide">
@@ -2393,7 +2395,7 @@ function buildGeniePicker(handler, pickerId) {
 // there, rather than rendering a second copy of the flow (its textarea ids are fixed and saved
 // against, so two live copies would collide).
 function renderJournalGenie() {
-  var el = document.getElementById('jn-genie-picker');
+  var el = document.getElementById('journalGeniePicker');
   if (el) el.innerHTML = buildGeniePicker('openGenieFromJournal');
 }
 
