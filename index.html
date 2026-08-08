@@ -1835,7 +1835,7 @@ function copyAnswers(part) {
 
 
 // ============ Clarity Genie ============
-var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely','confused','overwhelmed','volatile','drained','demotivated','wantSomething','overcomeHabit','overcomeFear','selfEsteem','idealPartner','triggered','avoiding','mission','crisis','selfHate','somethingElse','journalMorning','journal'];
+var GENIE_ORDER = ['anxious','stuck','bored','unsure','work','lonely','confused','overwhelmed','volatile','drained','demotivated','wantSomething','overcomeHabit','overcomeFear','selfEsteem','idealPartner','triggered','avoiding','mission','crisis','selfHate','greatDay','badDay','painfulInteractions','somethingElse','journalMorning','journal'];
 var GENIE_ICONS = {
   anxious: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 31 C14 13, 23 11, 24 20 C25 29, 13 32, 17 23 C21 13, 33 12, 35 21 C37 30, 27 34, 29 27" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/><circle cx="38" cy="14" r="2.6" fill="#B5613A"/></svg>',
   stuck:   '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 24 H26" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round"/><path d="M20 17 L27 24 L20 31" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 11 V37" stroke="#2C3A2E" stroke-width="2.6" stroke-linecap="round"/></svg>',
@@ -1858,6 +1858,9 @@ var GENIE_ICONS = {
   mission: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 6 L28 20 L42 24 L28 28 L24 42 L20 28 L6 24 L20 20 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><circle cx="24" cy="24" r="2.6" fill="#B5613A"/></svg>',
   crisis: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8 L42 40 H6 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 20 V30" stroke="#B5613A" stroke-width="2.6" stroke-linecap="round"/><circle cx="24" cy="35" r="1.9" fill="#B5613A"/></svg>',
   selfHate: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40 C10 30 6 22 6 16 C6 10 11 7 16 7 C20 7 23 9 24 12 C25 9 28 7 32 7 C37 7 42 10 42 16 C42 22 38 30 24 40 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 12 L20 22 L27 26 L23 34" stroke="#B5613A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  greatDay: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="8" stroke="#B5613A" stroke-width="2.6"/><path d="M24 6 V11 M24 37 V42 M6 24 H11 M37 24 H42 M11.3 11.3 L14.8 14.8 M33.2 33.2 L36.7 36.7 M36.7 11.3 L33.2 14.8 M14.8 33.2 L11.3 36.7" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  badDay: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 27 C10 27 7 23.5 7 19.5 C7 15.5 10 12 14.5 12 C16 8.5 19.5 6 24 6 C30 6 35 10.5 35.5 16.5 C39.5 17 42 20 42 23 C42 25.5 40 27 37.5 27 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 33 L14 40 M26 33 L23 40 M35 33 L32 40" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  painfulInteractions: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 8 H10 C8.3 8 7 9.3 7 11 V21 C7 22.7 8.3 24 10 24 H12 V29 L17 24 H19" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 24 H38 C39.7 24 41 25.3 41 27 V37 C41 38.7 39.7 40 38 40 H36 V45 L31 40 H29" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 6 L22 17 L28 20 L23 32" stroke="#B5613A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   somethingElse: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/><circle cx="24" cy="24" r="3.4" fill="#B5613A"/><circle cx="36" cy="24" r="3.4" stroke="#2C3A2E" stroke-width="2.2"/></svg>',
   journalMorning: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="26" r="8" stroke="#B5613A" stroke-width="2.6"/><path d="M24 8 V13 M36.7 13.3 L33.2 16.8 M40 26 H35 M11.3 13.3 L14.8 16.8 M8 26 H13" stroke="#2C3A2E" stroke-width="2.4" stroke-linecap="round"/></svg>',
   journal: '<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M30 9 C22 12 17 19 17 26 C17 33 22 38 29 39 C21 42 10 37 9 27 C8 17 18 8 30 9 Z" stroke="#2C3A2E" stroke-width="2.4" stroke-linejoin="round" transform="translate(6 0)"/><circle cx="14" cy="14" r="2.2" fill="#B5613A"/></svg>'
@@ -2081,7 +2084,7 @@ var GENIE = {
     ]
   },
   selfEsteem: {
-    name: "I feel bad about myself",
+    name: "Low self-esteem",
     blurb: "Low sense of self-worth.",
     tag: "Rebuild self-worth",
     intro: "Self-esteem shifts once you see yourself clearly instead of harshly.",
@@ -2274,8 +2277,70 @@ var GENIE = {
       "What's one thing that was hard or draining today?",
       "What did today teach you about yourself?",
       "Where did your actions match what you actually value today — and where did they drift?",
+      "If I could repeat today, what would I have done differently?",
       "What's the one thing you want to carry into tomorrow?",
       "What is the one thing for tomorrow?"
+    ]
+  },
+  greatDay: {
+    name: "Great day blueprint",
+    blurb: "Work out what reliably makes your days good.",
+    tag: "Design a better day",
+    intro: "Good days are not luck — they have ingredients. This finds yours.",
+    questions: [
+      "Recall a day that felt genuinely wonderful from start to finish. What happened, and what made it so special?",
+      "Recall three moments when you felt truly alive — joyful, engaged, peaceful, or fulfilled. What were you doing, and who were you with?",
+      "What activities absorb you so completely that you lose track of time? Why do you think they have that effect?",
+      "Name three people whose company you genuinely enjoy. What do they bring into your life, and how do you feel around them?",
+      "If someone sincerely wanted a happier life, what advice would you naturally give them — and why does it matter?",
+      "Think of someone who seems genuinely happy. What habits, attitudes, or priorities create that — and which of them resonate with you?",
+      "Looking back at your answers, what patterns keep appearing? Which activities, people, environments, or values show up repeatedly?",
+      "Design your ideal but realistic day, start to finish. What would you do, with whom, and why would it leave you deeply satisfied?",
+      "Put the keyboard away — on pen and paper, list the specific things that reliably make your days better. Individual items, not paragraphs.",
+      "From that list, circle the five things with the biggest positive impact. If you could keep only five, which would they be?",
+      "Using your top five, write a simple \"great day\" checklist — the smallest version of a day that reliably leaves you happy. Then ask: \"If I lived more days like this, would I genuinely enjoy my life more?\""
+    ]
+  },
+  badDay: {
+    name: "Bad day blueprint",
+    blurb: "Work out what reliably ruins your days.",
+    tag: "Decode the bad days",
+    intro: "Bad days follow a recipe too. Naming it is how you stop cooking it.",
+    questions: [
+      "Recall a day that felt genuinely miserable — draining, anxious, or exhausting. What happened, and what did you do throughout it?",
+      "Recall three moments when you felt at your lowest. What were you doing, who were you with, and what contributed to those feelings?",
+      "What activities reliably leave you feeling worse afterward? Why do you think they have that effect?",
+      "Which people, conversations, or environments consistently drain your energy? What is it about them that affects you?",
+      "If someone wanted to make themselves deeply unhappy, what habits, choices, or attitudes would almost guarantee it — and why?",
+      "Think of someone who seems consistently unhappy. What patterns create that — and which, if any, do you recognize in yourself?",
+      "Looking back at your answers, what patterns keep appearing? Which activities, people, habits, or decisions show up whenever you have a bad day?",
+      "If your goal were to ruin tomorrow using only your own choices, how would you spend the day — and why would it leave you feeling terrible?",
+      "Put the keyboard away — on pen and paper, list the specific things that reliably make your days worse. Individual items, not paragraphs.",
+      "From that list, circle the five patterns with the biggest negative impact. If you could eliminate only five, which would they be?",
+      "Using your top five, write your honest \"bad day\" recipe — the checklist that reliably leaves you feeling terrible. Then ask: \"How often do I unknowingly follow this blueprint?\""
+    ]
+  },
+  painfulInteractions: {
+    name: "Painful interactions",
+    blurb: "A conversation you keep replaying.",
+    tag: "Work the interaction",
+    intro: "Retell it plainly first. The insight is underneath the retelling, not in it.",
+    questions: [
+      "What's been occupying you? Walk through it plainly — what happened, who was there, what was said. Whether it was this morning or fifteen years ago. No interpretation yet.",
+      "In whatever you're replaying, which interaction took the most effort? What made it take so much effort?",
+      "Where in this were you yourself, and where were you performing or managing yourself? What made you choose one way in the one interaction, and the other way in the other?",
+      "What was true in that room that nobody said out loud?",
+      "What did you decide not to say — and what did you predict would happen if you said it?",
+      "What's stinging, even slightly? Is the sting about what they did, or did they just happen to touch something that was already yours?",
+      "Where are you quietly building a case — for doing something, or for not doing something? What does the case make permissible that you couldn't do openly, and what were you actually needing when it started building?",
+      "What do you want here that you haven't asked for?",
+      "What are you holding against yourself? Would you hold it against someone else in the same position, with the same information they had at the time?",
+      "What are you avoiding that will still be there tomorrow?",
+      "If you could live that moment again, what would you do differently — and what is the reasoning behind that different choice, not just the choice itself?",
+      "If you had the guts, what could you do right now that would clarify the situation — for you and for the other person? Say the actual action, not the intention.",
+      "What's stopping you from doing it?",
+      "What did you learn about yourself in this?",
+      "Based on that — one concrete thing you could do today or tomorrow. Specific enough that you'd know by tonight whether you did it."
     ]
   }
 };
