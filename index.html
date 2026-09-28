@@ -100,6 +100,17 @@ body{
 .tab-btn:hover{border-color:#B79E86}
 .tab-btn:active{transform:scale(0.97)}
 .tab-btn.active{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+/* Guide / Questions tabs: big enough to read as the main choice on the page */
+.tabs-main{gap:12px;margin-bottom:0.75rem;flex-wrap:wrap}
+.tabs-main .tab-btn{padding:13px 28px;font-size:15.5px;font-weight:600;border-radius:11px;border-width:1.5px}
+.tabs-main .tab-btn:not(.active){background:#fff;border-color:#CBBBA4;color:#4A5E4C;box-shadow:0 1px 2px rgba(44,58,46,0.06)}
+.tabs-main .tab-btn:not(.active):hover{border-color:#B5613A;color:var(--ink);transform:translateY(-1px);box-shadow:0 5px 12px rgba(44,58,46,0.10)}
+.tabs-main .tab-btn.active{box-shadow:0 2px 6px rgba(44,58,46,0.16)}
+.tabs-main .tab-btn.nudge{border-color:#B5613A;color:#B5613A;animation:tabnudge 2.6s var(--ease-out) infinite}
+@keyframes tabnudge{0%,100%{box-shadow:0 0 0 0 rgba(181,97,58,0)}50%{box-shadow:0 0 0 7px rgba(181,97,58,0.12)}}
+@media (prefers-reduced-motion:reduce){.tabs-main .tab-btn.nudge{animation:none}}
+.tab-hint{font-size:14px;line-height:1.6;color:#7A6A56;margin:0 0 1.5rem;display:flex;align-items:flex-start;gap:7px}
+.tab-hint .th-ic{color:#B5613A;font-size:15px;line-height:1.5}
 
 /* Cards */
 .section-card{background:#fff;border-radius:14px;border:1px solid rgba(232,223,208,0.7);padding:1.5rem;margin-bottom:1.25rem;box-shadow:var(--card-shadow)}
@@ -383,6 +394,7 @@ body{
 
   .tab-row{gap:8px}
   .tab-btn{padding:10px 14px;font-size:14px;flex:1;text-align:center}
+  .tabs-main .tab-btn{padding:13px 16px;font-size:15px;flex:1 1 auto}
 
   .ikigai-grid,.life-cats,.genie-grid{grid-template-columns:1fr}
 
@@ -676,10 +688,11 @@ body{
     <div id="page-part1" class="page">
       <p class="page-eyebrow">Part 1</p>
       <h2 class="page-title">Your Ikigai</h2>
-      <div class="tab-row">
+      <div class="tab-row tabs-main">
         <button class="tab-btn active" onclick="switchTab('p1','guide',this)">Guide</button>
         <button class="tab-btn" onclick="switchTab('p1','questions',this)">Questions</button>
       </div>
+      <p class="tab-hint"><span class="th-ic">&#9656;</span><span>The video and the explanation are here in <strong>Guide</strong>. The questions you answer are in <strong>Questions</strong> &mdash; tap it when you're ready to write.</span></p>
 
       <div id="p1-guide">
         <div class="video-embed"><iframe src="https://www.youtube.com/embed/8DIwdh67RQs" title="Part 1 — Ikigai" allowfullscreen></iframe></div>
@@ -751,10 +764,11 @@ body{
     <div id="page-part2" class="page">
       <p class="page-eyebrow">Part 2</p>
       <h2 class="page-title">Surfacing your real values</h2>
-      <div class="tab-row">
+      <div class="tab-row tabs-main">
         <button class="tab-btn active" onclick="switchTab('p2','guide',this)">Guide</button>
         <button class="tab-btn" onclick="switchTab('p2','questions',this)">Questions</button>
       </div>
+      <p class="tab-hint"><span class="th-ic">&#9656;</span><span>The video and the explanation are here in <strong>Guide</strong>. The questions you answer are in <strong>Questions</strong> &mdash; tap it when you're ready to write.</span></p>
 
       <div id="p2-guide">
         <div class="video-embed"><iframe src="https://www.youtube.com/embed/_F_nBRWcsis" title="Part 2 — Your values" allowfullscreen></iframe></div>
@@ -807,10 +821,11 @@ body{
     <div id="page-part3" class="page">
       <p class="page-eyebrow">Part 3</p>
       <h2 class="page-title">Turning clarity into action</h2>
-      <div class="tab-row">
+      <div class="tab-row tabs-main">
         <button class="tab-btn active" onclick="switchTab('p3','guide',this)">Guide</button>
         <button class="tab-btn" onclick="switchTab('p3','questions',this)">Questions</button>
       </div>
+      <p class="tab-hint"><span class="th-ic">&#9656;</span><span>The video and the explanation are here in <strong>Guide</strong>. The questions you answer are in <strong>Questions</strong> &mdash; tap it when you're ready to write.</span></p>
 
       <div id="p3-guide">
         <div class="video-embed"><iframe src="https://www.youtube.com/embed/4dL0p7fta60" title="Part 3 — Turning clarity into action" allowfullscreen></iframe></div>
@@ -928,10 +943,11 @@ body{
     <div id="page-shadow" class="page">
       <p class="page-eyebrow" style="color:#7A9E7E">Bonus</p>
       <h2 class="page-title">Shadow work</h2>
-      <div class="tab-row">
+      <div class="tab-row tabs-main">
         <button class="tab-btn active" onclick="switchTab('sw','guide',this)">Guide</button>
         <button class="tab-btn" onclick="switchTab('sw','questions',this)">Questions</button>
       </div>
+      <p class="tab-hint"><span class="th-ic">&#9656;</span><span>The video and the explanation are here in <strong>Guide</strong>. The questions you answer are in <strong>Questions</strong> &mdash; tap it when you're ready to write.</span></p>
 
       <div id="sw-guide">
         <div class="video-embed"><iframe src="https://www.youtube.com/embed/eUTKGdSkKus" title="Shadow Work" allowfullscreen></iframe></div>
@@ -1012,11 +1028,12 @@ body{
     <div id="page-journal" class="page">
       <p class="page-eyebrow" style="color:#7A9E7E">Bonus</p>
       <h2 class="page-title">How to journal</h2>
-      <div class="tab-row">
+      <div class="tab-row tabs-main">
         <button class="tab-btn active" onclick="switchTab('jn','guide',this)">Guide</button>
         <button class="tab-btn" onclick="switchTab('jn','practice',this)">Templates</button>
         <button class="tab-btn" onclick="switchTab('jn','genie',this)">Clarity Genie</button>
       </div>
+      <p class="tab-hint"><span class="th-ic">&#9656;</span><span>This is the guide. <strong>Templates</strong> and <strong>Clarity Genie</strong> hold the prompts you write from &mdash; tap either one.</span></p>
 
       <!-- Clarity Genie tab: the same picker as the Genie page, but the tiles hand off to that
            page rather than opening a second copy of the flow here. The flow's textareas carry
@@ -1683,9 +1700,17 @@ function switchTab(prefix, tab, btn) {
   var target = document.getElementById(prefix + '-' + tab);
   if (target) target.style.display = 'block';
   var tabBtns = tabRow.querySelectorAll('.tab-btn');
-  tabBtns.forEach(function(b) { b.classList.remove('active'); });
+  tabBtns.forEach(function(b) { b.classList.remove('active'); b.classList.remove('nudge'); });
   btn.classList.add('active');
+  var hint = page.querySelector('.tab-hint');
+  if (hint) hint.style.display = (tab === 'guide') ? '' : 'none';
 }
+// The questions sit behind the second tab and people miss them, so it pulses until it is used.
+window.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.tabs-main .tab-btn').forEach(function (b) {
+    if (!b.classList.contains('active') && /Questions/.test(b.textContent)) b.classList.add('nudge');
+  });
+});
 
 var SW_QUESTIONS = [
   "What do you hate most in other people?",
