@@ -47,12 +47,15 @@ body{
 
 
 /* Sidebar */
-.sidebar{width:220px;background:#2C3A2E;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh}
-.sidebar-title{padding:1.5rem 1.25rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.1)}
+.sidebar{width:220px;background:#2C3A2E;display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(247,243,236,0.16) transparent}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(247,243,236,0.16);border-radius:3px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar-title{padding:1.15rem 1.25rem 0.95rem;border-bottom:1px solid rgba(255,255,255,0.1)}
 .sidebar-title h1{font-family:Georgia,serif;font-size:19px;font-weight:400;color:#F7F3EC;line-height:1.4}
 .sidebar-title p{font-size:12px;color:#7A9E7E;margin-top:4px;letter-spacing:0.05em;text-transform:uppercase}
-.nav{flex:1;padding:1rem 0;overflow-y:auto}
-.nav-item{display:flex;align-items:center;gap:11px;padding:12px 1.25rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;color:rgba(247,243,236,0.6);font-size:15px;transition:background 180ms var(--ease-out),color 180ms var(--ease-out),border-color 180ms var(--ease-out),padding-left 200ms var(--ease-out);border-left:3px solid transparent}
+.nav{flex:0 0 auto;padding:0.45rem 0}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 1.25rem;cursor:pointer;border:none;background:none;width:100%;text-align:left;color:rgba(247,243,236,0.6);font-size:15px;transition:background 180ms var(--ease-out),color 180ms var(--ease-out),border-color 180ms var(--ease-out),padding-left 200ms var(--ease-out);border-left:3px solid transparent}
 .nav-item:hover{background:rgba(255,255,255,0.05);color:#F7F3EC;padding-left:1.45rem}
 .nav-item.active{background:rgba(181,97,58,0.15);color:#F7F3EC;border-left-color:#B5613A}
 .nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(247,243,236,0.2);flex-shrink:0;transition:background 180ms var(--ease-out),transform 220ms var(--ease-out)}
@@ -66,15 +69,15 @@ body{
 .nav-sub .nav-item:hover{padding-left:2.9rem}
 .nav-group.has-active>.nav-parent{color:#F7F3EC}
 .nav-group.has-active>.nav-parent .nav-dot{background:#B5613A}
-.nav-bonus{margin-top:auto;padding:0.75rem 0 0;border-top:1px solid rgba(255,255,255,0.08)}
+.nav-bonus{margin-top:auto;padding:0.4rem 0 0;flex:0 0 auto;border-top:1px solid rgba(255,255,255,0.08)}
 .nav-bonus .nav-item{color:rgba(122,158,126,0.7);font-style:italic}
 .nav-bonus .nav-item.active{color:#7A9E7E;border-left-color:#7A9E7E}
 .nav-bonus .nav-item.active .nav-dot{background:#7A9E7E}
 
 /* Sidebar external links (jump to other properties) */
-.sidebar-external{padding:0.85rem 1.25rem 1.1rem;border-top:1px solid rgba(255,255,255,0.08)}
+.sidebar-external{flex:0 0 auto;padding:0.7rem 1.25rem 0.85rem;border-top:1px solid rgba(255,255,255,0.08)}
 .sidebar-external .sx-label{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#7A9E7E;margin-bottom:0.55rem}
-.sx-link{display:flex;align-items:center;gap:9px;color:rgba(247,243,236,0.72);font-size:13px;text-decoration:none;padding:5px 0;transition:color 160ms var(--ease-out),transform 180ms var(--ease-out)}
+.sx-link{display:flex;align-items:center;gap:9px;color:rgba(247,243,236,0.72);font-size:13px;text-decoration:none;padding:4px 0;transition:color 160ms var(--ease-out),transform 180ms var(--ease-out)}
 .sx-link:hover{color:#F7F3EC;transform:translateX(2px)}
 .sx-link svg{width:15px;height:15px;flex-shrink:0}
 .sx-social{display:flex;gap:14px;margin-top:0.7rem}
@@ -363,7 +366,7 @@ body{
 
   .sidebar-title{display:none}
 
-  .nav{flex:none;padding:1rem 0 0;overflow-y:visible}
+  .nav{flex:none;padding:0.75rem 0 0}
   .nav-item{font-size:15.5px;padding:13px 1.25rem}
 
   .nav-bonus{margin-top:0;padding-top:0.5rem;flex:none}
@@ -623,21 +626,30 @@ body{
     <div id="page-home" class="page active">
       <p class="page-eyebrow">Welcome</p>
       <h2 class="page-title">Your companion to finding purpose</h2>
-      <p class="page-intro">This app walks alongside the three-part Clarity video series by Living Foundations. Each section has a guide and a questions section where you write and reflect — with built-in AI analysis at the end of each part.</p>
+      <p class="page-intro">This app walks alongside the three-part Clarity video series by Living Foundations. Each part has a guide to watch and a set of questions you answer in your own words. What you write is saved on this device and never sent anywhere.</p>
       <div class="section-card">
         <h3>How to use this</h3>
-        <p>Watch the video in the Guide tab first to get context, then move to the Questions tab and write your answers honestly. At the end of each section, use the "Copy to clipboard" button and paste it into your LLM of choice (ChatGPT, Claude, etc.) to get further insights on your answers.</p>
-        <p style="margin-top:0.75rem;font-style:italic;color:#7A9E7E">Note: "Analyse my answers" is not functional yet, but will be available very soon.</p>
+        <p>Watch the video in the Guide tab first, then move to the Questions tab and answer honestly. Your answers save as you type, so you can stop and come back to them.</p>
+        <p style="margin-top:0.75rem">At the end of each part, press "Copy to clipboard". Your answers are copied along with a prompt that asks for a reflection on them — paste the lot into ChatGPT, Claude or any AI you use.</p>
+        <p style="margin-top:0.75rem;font-style:italic;color:#7A9E7E">"Analyse my answers" will do that inside the app. It isn't switched on yet.</p>
       </div>
       <div class="section-card">
         <h3>The journey ahead</h3>
-        <p style="margin-bottom:1rem">Three parts, one bonus. Start with Part 1, move through to Part 3, then explore Shadow Work any time.</p>
+        <p style="margin-bottom:1rem">Three parts, in order, under "Find your purpose" in the menu. The bonuses are there whenever you want them.</p>
         <div style="display:flex;flex-direction:column;gap:10px">
           <div class="step-row"><div class="step-dot"></div>Part 1 — Discover your Ikigai across 4 dimensions</div>
           <div class="step-row"><div class="step-dot"></div>Part 2 — Surface your real values through daily journaling</div>
           <div class="step-row"><div class="step-dot"></div>Part 3 — Set goals across 4 life areas and break them down to today</div>
           <div class="step-row"><div class="step-dot" style="background:#7A9E7E"></div><span style="color:#6A7E6C;font-style:italic">Bonus — Shadow work to meet your hidden self</span></div>
-          <div class="step-row"><div class="step-dot" style="background:#7A9E7E"></div><span style="color:#6A7E6C;font-style:italic">Bonus — How to journal effectively</span></div>
+          <div class="step-row"><div class="step-dot" style="background:#7A9E7E"></div><span style="color:#6A7E6C;font-style:italic">Bonus — How to journal, and a breathing practice to steady yourself</span></div>
+        </div>
+      </div>
+      <div class="section-card">
+        <h3>Not sure where to start</h3>
+        <p style="margin-bottom:1rem">Two shortcuts for when the three parts feel like too much right now.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="step-row"><div class="step-dot"></div><span><a href="#" onclick="showPage('genie');return false;" style="color:#4A5E4C;text-decoration:none"><strong>Clarity Genie</strong></a> — say what you're feeling and get a short set of questions built for that state, plus a morning and an evening journal.</span></div>
+          <div class="step-row"><div class="step-dot"></div><span><a href="#" onclick="showPage('relationship');return false;" style="color:#4A5E4C;text-decoration:none"><strong>Relationship Genie</strong></a> — fifty questions across thirteen chapters, asked out loud with your partner. Nothing is typed in and nothing is saved.</span></div>
         </div>
       </div>
       <div class="section-card">
@@ -649,6 +661,13 @@ body{
           <div class="step-row"><div class="step-dot"></div><a href="goals.html" style="color:#4A5E4C;text-decoration:none">How to set goals that stick</a></div>
           <div class="step-row"><div class="step-dot" style="background:#7A9E7E"></div><a href="shadow-work.html" style="color:#4A5E4C;text-decoration:none">Shadow work: how to start</a></div>
           <div class="step-row"><div class="step-dot" style="background:#7A9E7E"></div><a href="how-to-journal.html" style="color:#4A5E4C;text-decoration:none">How to journal for clarity</a></div>
+        </div>
+      </div>
+      <div class="section-card">
+        <h3>Also free</h3>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="step-row"><div class="step-dot"></div><span><a href="https://kcjugran.github.io/articles/prayer/" target="_blank" rel="noopener" style="color:#4A5E4C;text-decoration:none"><strong>Live Ho'oponopono class</strong></a> — every Saturday, online, with KC.</span></div>
+          <div class="step-row"><div class="step-dot"></div><span><a href="#download" onclick="openDownloads();return false;" style="color:#4A5E4C;text-decoration:none"><strong>Clarity Lite</strong></a> — the Genie as an offline app for Windows, macOS and Android.</span></div>
         </div>
       </div>
     </div>
