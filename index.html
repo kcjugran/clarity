@@ -58,6 +58,14 @@ body{
 .nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(247,243,236,0.2);flex-shrink:0;transition:background 180ms var(--ease-out),transform 220ms var(--ease-out)}
 .nav-item:hover .nav-dot{background:rgba(247,243,236,0.5)}
 .nav-item.active .nav-dot{background:#B5613A;transform:scale(1.25)}
+.nav-parent .nav-chev{width:14px;height:14px;margin-left:auto;opacity:0.55;transition:transform 220ms var(--ease-out)}
+.nav-group.open .nav-chev{transform:rotate(180deg)}
+.nav-sub{display:none}
+.nav-group.open .nav-sub{display:block}
+.nav-sub .nav-item{padding-left:2.7rem;font-size:14px}
+.nav-sub .nav-item:hover{padding-left:2.9rem}
+.nav-group.has-active>.nav-parent{color:#F7F3EC}
+.nav-group.has-active>.nav-parent .nav-dot{background:#B5613A}
 .nav-bonus{margin-top:auto;padding:0.75rem 0 0;border-top:1px solid rgba(255,255,255,0.08)}
 .nav-bonus .nav-item{color:rgba(122,158,126,0.7);font-style:italic}
 .nav-bonus .nav-item.active{color:#7A9E7E;border-left-color:#7A9E7E}
@@ -568,9 +576,14 @@ body{
     </div>
     <nav class="nav">
       <button class="nav-item active" onclick="showPage('home',this)"><div class="nav-dot"></div>Start here</button>
-      <button class="nav-item" onclick="showPage('part1',this)"><div class="nav-dot"></div>Part 1 — Ikigai</button>
-      <button class="nav-item" onclick="showPage('part2',this)"><div class="nav-dot"></div>Part 2 — Your values</button>
-      <button class="nav-item" onclick="showPage('part3',this)"><div class="nav-dot"></div>Part 3 — Goals</button>
+      <div class="nav-group" id="navPurpose">
+        <button class="nav-item nav-parent" onclick="togglePurpose()" aria-expanded="false" aria-controls="navPurposeSub"><div class="nav-dot"></div>Find your purpose<svg class="nav-chev" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 10 L12 14.5 L16 10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="nav-sub" id="navPurposeSub">
+          <button class="nav-item" onclick="showPage('part1',this)"><div class="nav-dot"></div>Part 1 — Ikigai</button>
+          <button class="nav-item" onclick="showPage('part2',this)"><div class="nav-dot"></div>Part 2 — Your values</button>
+          <button class="nav-item" onclick="showPage('part3',this)"><div class="nav-dot"></div>Part 3 — Goals</button>
+        </div>
+      </div>
       <button class="nav-item" onclick="showPage('genie',this)"><div class="nav-dot"></div>Clarity Genie</button>
       <button class="nav-item" onclick="showPage('relationship',this)"><div class="nav-dot"></div>Relationship Genie</button>
     </nav>
@@ -581,9 +594,9 @@ body{
     </div>
     <div class="sidebar-external">
       <p class="sx-label">Elsewhere</p>
-      <a class="sx-link" href="ikigai.html">
-        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 13 C20 10 14 10 10 12 V36 C14 34 20 34 24 37 C28 34 34 34 38 36 V12 C34 10 28 10 24 13 Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 13 V37" stroke="currentColor" stroke-width="2.2"/></svg>
-        Read the guides
+      <a class="sx-link" href="https://kcjugran.github.io/articles/prayer/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="4.2" fill="currentColor"/><path d="M15 15 A12 12 0 0 0 15 33 M33 15 A12 12 0 0 1 33 33" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M9.5 9.5 A19 19 0 0 0 9.5 38.5 M38.5 9.5 A19 19 0 0 1 38.5 38.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        Free Live Ho'oponopono Class
       </a>
       <a class="sx-link" href="https://kcjugran.github.io/course/" target="_blank" rel="noopener">
         <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 24 H39 M13 17 V31 M9 20 V28 M35 17 V31 M39 20 V28" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
@@ -1538,6 +1551,7 @@ function showPage(id, btn) {
   // btn may be omitted (deep-link / sidebar) — sync the matching nav item instead.
   var navBtn = btn || document.querySelector('.nav-item[onclick*="\'' + id + '\'"]');
   if (navBtn) navBtn.classList.add('active');
+  syncPurposeGroup(navBtn);
   closeMobileNav();
   var contentEl = document.querySelector('.content');
   if (contentEl) contentEl.scrollTop = 0;
@@ -1554,6 +1568,23 @@ function openDownloads() {
 // Article pages link here as index.html#download.
 if (location.hash === '#download') {
   window.addEventListener('DOMContentLoaded', function () { setTimeout(openDownloads, 60); });
+}
+
+// "Find your purpose" holds Parts 1-3: closed by default, opens on click or when one of its pages is shown.
+function togglePurpose() {
+  var group = document.getElementById('navPurpose');
+  if (!group) return;
+  var open = group.classList.toggle('open');
+  var parent = group.querySelector('.nav-parent');
+  if (parent) parent.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function syncPurposeGroup(navBtn) {
+  var group = document.getElementById('navPurpose');
+  if (!group) return;
+  var sub = document.getElementById('navPurposeSub');
+  var inside = !!(navBtn && sub && sub.contains(navBtn));
+  group.classList.toggle('has-active', inside);
+  if (inside && !group.classList.contains('open')) togglePurpose();
 }
 
 function toggleMobileNav() {
